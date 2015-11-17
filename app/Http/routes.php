@@ -12,5 +12,29 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('client');
+});
+Route::get('/accountActivation', function () {
+    return view('accountActivation');
+});
+Route::get('/adminInfo', function () {
+    return view('adminInfo');
+});
+Route::get('/createNewAdmin', function () {
+    return view('createNewAdmin');
+});
+Route::get('/editDocumentType', function () {
+    return view('editDocumentType');
+});
+Route::get('/permissionSetting', function () {
+    return view('permissionSetting');
+});
+Route::get('/resetPassword', function () {
+    return view('resetPassword');
+});
+Route::get('/searchUser', function () {
+    return view('searchUser');
+});
+Route::get('/uploadFile', function () {
+    return view('uploadFile');
 });

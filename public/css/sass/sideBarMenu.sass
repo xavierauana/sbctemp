@@ -1,0 +1,32 @@
+
+
+div.sidebar-nav
+  background-color: $themeColor
+  border-radius: $sideBarBorderRadius
+  a
+    color: white
+  li:first-child
+    a
+      border-top-left-radius: $sideBarBorderRadius
+      border-top-right-radius: $sideBarBorderRadius
+  li:last-child
+    a
+      border-bottom-left-radius: $sideBarBorderRadius
+      border-bottom-right-radius: $sideBarBorderRadius
+  a:hover, a.active
+    border: none
+    background-color: $secondaryColor
+    color: black
+
+
+  button.navbar-toggle
+    border-color: white
+    span.icon-bar
+      background-color: white
+    &:active, &:hover, &:focus
+      background-color: $secondaryColor
+      border-color: black
+      span.icon-bar
+        background-color: black
+  .navbar-brand
+    color: white

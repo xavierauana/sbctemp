@@ -1,0 +1,116 @@
+.purple {
+  background-color: #4f3587;
+  color: white; }
+
+.titleBox {
+  padding: 5px 10px; }
+
+.form-container {
+  margin-top: 30px; }
+
+div.empty {
+  min-height: 42px; }
+
+form button {
+  background-color: #4f3587;
+  color: white; }
+form button:hover, form button:active, form button:focus {
+  background-color: #edac23; }
+
+div.row.button-group {
+  margin-bottom: 20px; }
+  div.row.button-group button {
+    margin-left: 10px;
+    margin-right: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px; }
+
+.navbar .row {
+  margin-top: 20px; }
+
+.login-container {
+  margin-top: 30px;
+  border: 2px solid #c7c7c7;
+  border-radius: 10px; }
+
+#captcha {
+  display: table-cell;
+  padding: 0;
+  margin: 0;
+  width: 70%;
+  overflow: hidden;
+  position: relative;
+  transform: scale(0.89) translate(-6%); }
+
+.title {
+  position: relative;
+  color: white;
+  background-color: #4f3587;
+  font-size: 1.5em;
+  padding: 10px;
+  top: -20px; }
+  .title.default {
+    left: -40px; }
+
+#forgetPasswordLink {
+  max-width: 190px;
+  margin: 15px auto;
+  padding: 0 10px;
+  border-left: 1px solid #4f3587;
+  border-right: 1px solid #4f3587; }
+
+/* make sidebar nav vertical */
+@media (min-width: 768px) {
+  .sidebar-nav .navbar .navbar-collapse {
+    padding: 0;
+    max-height: none; }
+
+  .sidebar-nav .navbar ul {
+    float: none; }
+
+  .sidebar-nav .navbar ul:not {
+    display: block; }
+
+  .sidebar-nav .navbar li {
+    float: none;
+    display: block; }
+
+  .sidebar-nav .navbar li a {
+    padding-top: 12px;
+    padding-bottom: 12px; } }
+div.permissions input {
+  margin-bottom: 20px; }
+
+.dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate {
+  margin: 10px;
+  padding: 0; }
+
+div.sidebar-nav {
+  background-color: #4f3587;
+  border-radius: 5px; }
+  div.sidebar-nav a {
+    color: white; }
+  div.sidebar-nav li:first-child a {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px; }
+  div.sidebar-nav li:last-child a {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; }
+  div.sidebar-nav a:hover, div.sidebar-nav a.active {
+    border: none;
+    background-color: #edac23;
+    color: black; }
+  div.sidebar-nav button.navbar-toggle {
+    border-color: white; }
+    div.sidebar-nav button.navbar-toggle span.icon-bar {
+      background-color: white; }
+    div.sidebar-nav button.navbar-toggle:active, div.sidebar-nav button.navbar-toggle:hover, div.sidebar-nav button.navbar-toggle:focus {
+      background-color: #edac23;
+      border-color: black; }
+      div.sidebar-nav button.navbar-toggle:active span.icon-bar, div.sidebar-nav button.navbar-toggle:hover span.icon-bar, div.sidebar-nav button.navbar-toggle:focus span.icon-bar {
+        background-color: black; }
+  div.sidebar-nav .navbar-brand {
+    color: white; }
+
+/*# sourceMappingURL=main.css.map */
