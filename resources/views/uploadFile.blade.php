@@ -140,7 +140,8 @@
             checkValidility: function(e){
                 if(!e.target.checkValidity()) e.target.focus();
             },
-            browseFile:function(){
+            browseFile:function(e){
+                e.preventDefault();
               $("#files").click()
             },
             uploadFiles : function(e){
