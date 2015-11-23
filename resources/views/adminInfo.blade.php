@@ -2,8 +2,6 @@
 
 @section('content')
     <div id="editAdminInfo">
-
-
         <div class="panel panel-default">
             <userstable :users="users" :profiles="profiles" :selected-user.sync="user"></userstable>
         </div>

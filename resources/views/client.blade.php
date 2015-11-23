@@ -34,7 +34,7 @@
                 <div class="form-group">
                     <label for="login" class="sr-only">Email</label>
                     <div class="col-sm-offset-2 col-sm-8">
-                        <input type="text" name="login" class="form-control" id="login" placeholder="登入名稱 Login" autofocus>
+                        <input type="text" name="login" class="form-control" id="login" placeholder="登入名稱 Login Name" autofocus>
                     </div>
                 </div>
                 <div class="form-group">

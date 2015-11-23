@@ -39,9 +39,15 @@
     <form class="form-horizontal" method="POST" encrtype="multipart/form-data">
             <legend> Upload Files</legend>
             <div class="form-group">
+                <label for="uploadDate" class="sr-only">Document Upload Date</label>
+                <div class="col-sm-8">
+                    <input type="text" v-model="uploadDate" name="uploadDate" class="form-control" id="uploadDate" placeholder="文件日期" required disabled>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="cnumber" class="sr-only">C Number</label>
                 <div class="col-sm-8">
-                    <input type="number" name="cnumber" class="form-control" id="cnumber" placeholder="C No." v-on="blur: checkValidility" pattern="/[1-9]{10}/" title="This is an error message" required autofocus>
+                    <input type="number" name="cnumber" class="form-control" id="cnumber" placeholder="C No." v-on="blur: checkValidilaty" pattern="/[1-9]{10}/" title="This is an error message" required autofocus>
                 </div>
             </div>
             <div class="form-group">
@@ -71,7 +77,7 @@
             <div class="form-group">
                 <div class="col-sm-8">
                     <button class="btn btn-default" v-on="click: browseFile">Browser File</button>
-                    <p class="help-block">File size should not bigger than 5,000kb</p>
+                    <p class="help-block">File size should not bigger than 5Mb</p>
                     <input type="file" class="hidden" name="files" id="files" v-on="change: checkFileInput" accept=".pdf, application/pdf" required multiple>
 
                 </div>
@@ -102,7 +108,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-8">
-                    <button type="submit" class="btn btn-lg  btn-block" v-on="click: uploadFiles">Save</button>
+                    <button type="submit" class="btn btn-lg  btn-block" v-on="click:uploadFiles">Save</button>
                 </div>
             </div>
         </form>
@@ -110,26 +116,31 @@
 
 <script type="text/javascript">
 
+    var date = moment();
+
+    console.log(date);
     function cl(item){
         console.log(item)
     }
     $(function () {
         $('#docDate').datetimepicker({
             format: "DD MMM, YYYY",
-            useCurrent:true
+            useCurrent:true,
+            defaultDate: moment()
         });
-        var selectObject = $("#docType").select2();
-        var container =  $(".select2-selection");
-        container.on('focus', function(){
-            selectObject.select2('open')
-        });
+//        var selectObject = $("#docType").select2();
+//        var container =  $(".select2-selection");
+//        container.on('focus', function(){
+//            selectObject.select2('open')
+//        });
     });
 
     new Vue({
         el: "#app",
         data:{
           files:[],
-          maxSize: 5000000
+          maxSize: 5000000,
+          uploadDate: moment().format("DD MMM, YYYY")
         },
         computed:{
             hasFiles:function(){
@@ -137,7 +148,7 @@
             }
         },
         methods: {
-            checkValidility: function(e){
+            checkValidilaty: function(e){
                 if(!e.target.checkValidity()) e.target.focus();
             },
             browseFile:function(e){
@@ -146,7 +157,9 @@
             },
             uploadFiles : function(e){
                 e.preventDefault();
-                console.log('fired')
+                console.log('submit');
+                console.log(e.target.form.elements);
+                console.log($(e.target.form).serialize());
                 this.beforeSend()
             },
             beforeSend: function(){
@@ -167,12 +180,18 @@
                         if(!test.length){
                             file.size < this.maxSize? valid=true : valid=false;
                             size = (file.size/1000).toFixed(2);
-                            this.files.push({
+                            this.files = [{
                                 name: file.name,
                                 size: size,
                                 valid: valid,
                                 file: file
-                            })
+                            }]
+//                            this.files.push({
+//                                name: file.name,
+//                                size: size,
+//                                valid: valid,
+//                                file: file
+//                            })
                         }
                     }
                 }
