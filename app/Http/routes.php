@@ -38,3 +38,6 @@ Route::get('/searchUser', function () {
 Route::get('/uploadFile', function () {
     return view('uploadFile');
 });
+Route::get('/documentCenter', function () {
+    return view('documentCenter');
+});

@@ -1,138 +1,163 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/css/sass/main.css">
-</head>
-<body>
-<div class="container-fluid">
-    <nav class="navbar">
-        <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-4">
-                <img src="/imgs/sbc_logo.png" class="img-responsive" alt="">
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-8">
-                <ul class="list-inline list-unstyled pull-right">
-                    <li>Hello, Admin Rainbow</li>
-                    <li><a href="#">Logout</a></li>
-                </ul>
+@extends('partials.adminLayout')
+
+@section('content')
+    <form id="createNewAdmin" class="form-horizontal" @submit.prevent="submitForm">
+        <div class="form-group">
+            <label for="loginName" class="col-sm-3 control-label">管理人員登入名稱</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" v-model="inputs.loginName" id="loginName" placeholder="Login Name" autofocus required>
             </div>
         </div>
-    </nav>
-    <div class="row">
-        <div class="col-sm-3">
-            @include('sidemenu')
-
+        <div class="form-group">
+            <label for="profile" class="col-sm-3 control-label">管理人員權限類別</label>
+            <div class="col-sm-9">
+                <select name="profile" id="profile" class="form-control" required v-model="inputs.profile" >
+                    <option value="">Please select permission profile</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">自定</option>
+                </select>
+            </div>
         </div>
-        <div class="col-sm-9">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label for="loginName" class="col-sm-3 control-label">管理人員登入名稱</label>
-                    <div class="col-sm-9">
-                        <input type="email" class="form-control" id="loginName" placeholder="Login Name" autofocus>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="profile" class="col-sm-3 control-label">管理人員權限類別</label>
-                    <div class="col-sm-9">
-                        <select name="profile" id="profile" class="form-control">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">自定</option>
-                        </select>
-                    </div>
-                </div>
-
-                <h5><strong>設定權限</strong></h5>
-
-                <div class="row permissions" >
-                    <div class="col-md-4 col-xs-6">
-                        <label>
-                            <input type="checkbox" value="1" > 讀取客戶資料
-                        </label>
-                    </div>
-                    <div class="col-md-4 col-xs-6">
-                        <label>
-                            <input type="checkbox" value="1" > 讀取管理人員資料
-                        </label>
-                    </div>
-                    <div class="col-md-4 col-xs-6">
-                        <label>
-                            <input type="checkbox" value="1" > 上載文件
-                        </label>
-                    </div>
-                    <div class="col-md-4 col-xs-6">
-                        <label>
-                            <input type="checkbox" value="1" > 新增客戶
-                        </label>
-                    </div>
-                    <div class="col-md-4 col-xs-6">
-                        <label>
-                            <input type="checkbox" value="1" > 新增管理人員
-                        </label>
-                    </div>
-                    <div class="col-md-4 col-xs-6">
-                        <label>
-                            <input type="checkbox" value="1" > 刪除文件
-                        </label>
-                    </div>
-                    <div class="col-md-4 col-xs-6">
-                        <label>
-                            <input type="checkbox" value="1" > 更改客戶資料
-                        </label>
-                    </div>
-                    <div class="col-md-4 col-xs-6">
-                        <label>
-                            <input type="checkbox" value="1" > 更改管理人員資料
-                        </label>
-                    </div>
-                    <div class="col-md-4 col-xs-6">
-                        <label>
-                            <input type="checkbox" value="1" > 更改文件類別資料
-                        </label>
-                    </div>
-                    <div class="col-md-4 col-xs-6">
-                        <label>
-                            <input type="checkbox" value="1" > 刪除客戶
-                        </label>
-                    </div>
-                    <div class="col-md-4 col-xs-6">
-                        <label>
-                            <input type="checkbox" value="1" > 更改及刪除管理人員
-                        </label>
-                    </div>
-                    <div class="col-md-4 col-xs-6 hidden-xs">
-                        <div class="empty"></div>
-                    </div>
-                    <div class="col-md-4 col-xs-6">
-                        <label>
-                            <input type="checkbox" value="1" > 讀取 / 更改客戶登入名稱及密碼
-                        </label>
-                    </div>
-                    <div class="col-md-4 col-xs-6">
-                        <label>
-                            <input type="checkbox" value="1" > 讀取 / 更改管理人員登入名稱及密碼
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-xs-12 col-sm-4 pull-right">
-                        <button type="submit" class="btn btn-block">Confirm</button>
-                    </div>
-                </div>
-            </form>
+        <div class="form-group">
+            <label for="profile" class="col-sm-3 control-label">密碼</label>
+            <div class="col-sm-9">
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password" v-model="inputs.password"  pattern=".{3,}" required/>
+            </div>
         </div>
-    </div>
-</div>
+        <div class="form-group">
+            <label for="profile" class="col-sm-3 control-label">確認密碼</label>
+            <div class="col-sm-9">
+                <input type="password" name="confirmation_password" id="confirmation_password" class="form-control" placeholder="Type Password Again" v-model="inputs.confirmation_password"  required />
+            </div>
+        </div>
 
+        <h5 class="hidden"><strong>設定權限</strong></h5>
 
-</body>
-</html>
+        <div class="row permissions hidden" >
+            <div class="col-md-4 col-xs-6">
+                <label>
+                    <input type="checkbox" value="1" > 讀取客戶資料
+                </label>
+            </div>
+            <div class="col-md-4 col-xs-6">
+                <label>
+                    <input type="checkbox" value="1" > 讀取管理人員資料
+                </label>
+            </div>
+            <div class="col-md-4 col-xs-6">
+                <label>
+                    <input type="checkbox" value="1" > 上載文件
+                </label>
+            </div>
+            <div class="col-md-4 col-xs-6">
+                <label>
+                    <input type="checkbox" value="1" > 新增客戶
+                </label>
+            </div>
+            <div class="col-md-4 col-xs-6">
+                <label>
+                    <input type="checkbox" value="1" > 新增管理人員
+                </label>
+            </div>
+            <div class="col-md-4 col-xs-6">
+                <label>
+                    <input type="checkbox" value="1" > 刪除文件
+                </label>
+            </div>
+            <div class="col-md-4 col-xs-6">
+                <label>
+                    <input type="checkbox" value="1" > 更改客戶資料
+                </label>
+            </div>
+            <div class="col-md-4 col-xs-6">
+                <label>
+                    <input type="checkbox" value="1" > 更改管理人員資料
+                </label>
+            </div>
+            <div class="col-md-4 col-xs-6">
+                <label>
+                    <input type="checkbox" value="1" > 更改文件類別資料
+                </label>
+            </div>
+            <div class="col-md-4 col-xs-6">
+                <label>
+                    <input type="checkbox" value="1" > 刪除客戶
+                </label>
+            </div>
+            <div class="col-md-4 col-xs-6">
+                <label>
+                    <input type="checkbox" value="1" > 更改及刪除管理人員
+                </label>
+            </div>
+            <div class="col-md-4 col-xs-6 hidden-xs">
+                <div class="empty"></div>
+            </div>
+            <div class="col-md-4 col-xs-6">
+                <label>
+                    <input type="checkbox" value="1" > 讀取 / 更改客戶登入名稱及密碼
+                </label>
+            </div>
+            <div class="col-md-4 col-xs-6">
+                <label>
+                    <input type="checkbox" value="1" > 讀取 / 更改管理人員登入名稱及密碼
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-12 col-sm-4 pull-right">
+                <button type="submit" class="btn btn-block" @click.prevent="resetForm">Reset</button>
+            </div>
+            <div class="col-xs-12 col-sm-4 pull-right">
+                <button type="submit" class="btn btn-block">Confirm</button>
+            </div>
+        </div>
+    </form>
+@stop
+
+@section('scripts')
+    <script>
+        new Vue({
+            el: "#createNewAdmin",
+            data:{
+                inputs:{
+                    loginName:"",
+                    profile:"",
+                    password:"",
+                    confirmation_password:""
+                }
+            },
+            methods:{
+                resetForm: function(e){
+                    for(var key in this.inputs){
+                        this.inputs[key] = ""
+                    }
+                },
+                submitForm:function(){
+                    if(!this.inputs.loginName){
+                        alert('Have to input Login Name.');
+                        return false;
+                    }else if(!this.inputs.profile){
+                        alert('Have to select a profile.');
+                        return false;
+                    }else if(!this.inputs.password){
+                        alert('Have to input a password.');
+                        return false;
+                    }else if(!this.inputs.confirmation_password){
+                        alert('Have to input password confirmation field.');
+                        return false;
+                    }else if(this.inputs.confirmation_password !== this.inputs.password){
+                        alert('Password is not correct');
+                        return false;
+                    }else{
+                        console.log("post to server and create a new Login");
+                        this.resetForm();
+                    }
+
+                }
+            }
+        });
+    </script>
+@stop
