@@ -30,7 +30,7 @@
             <div class="form-group">
                 <label for="login" class="sr-only">Login Name</label>
                 <div class="col-sm-offset-2 col-sm-8">
-                    <input type="text" class="form-control" id="login" placeholder="登入名稱 Login" autofocus>
+                    <input type="text" class="form-control" id="login" placeholder="登入名稱 Login Name" autofocus>
                 </div>
             </div>
             <div class="form-group">
@@ -44,7 +44,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-6">
-                    <button type="submit" class="btn btn-lg  btn-block">確定 Confirm</button>
+                    <button type="submit" class="btn btn-lg btn-purple btn-block">確定 Confirm</button>
                 </div>
             </div>
         </form>
