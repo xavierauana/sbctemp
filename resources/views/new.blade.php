@@ -9,7 +9,7 @@
             <side-bar-menu :current-view.sync="currentView"></side-bar-menu>
         </div>
         <div class="col-sm-9">
-            <components :is="currentView" keep-alive></components>
+            <components :is="currentView"></components>
         </div>
     </div>
 
