@@ -12,5 +12,8 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix.less('../../node_modules/bootstrap/less/bootstrap')
+        .browserify('admininfo.js')
+        .browserify('app.js')
+        .version('public/js/app.js');
 });

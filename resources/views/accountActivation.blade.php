@@ -63,7 +63,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-6">
-                    <button type="submit" class="btn btn-lg  btn-block">確定 Confirm</button>
+                    <button type="submit" class="btn btn-lg btn-block btn-purple">確定 Confirm</button>
                 </div>
             </div>
         </form>

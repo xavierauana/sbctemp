@@ -11,16 +11,16 @@
 div.empty {
   min-height: 42px; }
 
-form button {
+button.btn-purple {
   background-color: #4f3587;
   color: white; }
-form button:hover, form button:active, form button:focus {
+
+button.btn-purple:hover, button.btn-purple:active, button.btn-purple:focus {
   background-color: #edac23; }
 
 div.row.button-group {
   margin-bottom: 20px; }
   div.row.button-group button {
-    margin-left: 10px;
     margin-right: 15px;
     padding-left: 20px;
     padding-right: 20px;

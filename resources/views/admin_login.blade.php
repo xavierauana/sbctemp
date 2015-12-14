@@ -24,10 +24,10 @@
 
     <div class="col-sm-8 col-sm-offset-2 login-container">
         <div class="col-sm-11 hidden-xs title default">
-            駿業客戶文件中心 SBC Clients Document Center
+            駿業客戶文件中心管理人員登入
         </div>
         <div class="visible-xs title">
-            駿業客戶文件中心 SBC Clients Document Center
+            駿業客戶文件中心管理人員登入
         </div>
         <div class="row">
             <form class="form-horizontal">
@@ -49,9 +49,6 @@
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <button type="submit" class="btn btn-lg btn-block btn-purple">登入 Sign in</button>
-                        <div id="forgetPasswordLink">
-                            <a href="#" id="">忘記密碼 Forget Password</a>
-                        </div>
                     </div>
                 </div>
             </form>

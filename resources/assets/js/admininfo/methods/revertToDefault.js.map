@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "revertToDefault.js",
+  "sourceRoot": "",
+  "sources": [
+    "revertToDefault.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;EAAA,MAAM,CAAC,OAAP,GAAiB,SAAA;IACf,IAAI,CAAC,MAAM,CAAC,SAAZ,GAAwB,IAAI,CAAC,IAAI,CAAC;IAClC,IAAI,CAAC,MAAM,CAAC,UAAZ,GAAyB,IAAI,CAAC,IAAI,CAAC;WACnC,IAAI,CAAC,MAAM,CAAC,QAAZ,GAAuB,IAAI,CAAC,IAAI,CAAC;EAHlB;AAAjB"
+}

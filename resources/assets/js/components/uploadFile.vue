@@ -1,0 +1,257 @@
+<template>
+    <form class="form-horizontal" method="POST" encrtype="multipart/form-data">
+        <legend> Upload Files</legend>
+        <div class="form-group">
+            <label for="uploadDate" class="sr-only">Document Upload Date</label>
+            <div class="col-sm-8">
+                <input type="text" v-model="inputs.uploadDate" :value="uploadDate" name="uploadDate" class="form-control" id="uploadDate" placeholder="文件日期" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="cnumber" class="sr-only">C Number</label>
+            <div class="col-sm-8">
+                <input type="number" name="cnumber" v-model="inputs.cNumber" class="form-control" placeholder="C Number" @change="checkValidity" pattern="/[1-9]{10}/" title="This is an error message" required autofocus>
+                <span v-show="checking.cNumberValidity">{{customer.name}}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="docDate" class="sr-only">Document Date</label>
+            <div class="col-sm-8">
+                <input type="text" name="docDate"  v-model="inputs.docDate" class="form-control" id="docDate" placeholder="文件日期" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="docType" class="sr-only">Document Type</label>
+            <div class="col-sm-8">
+                <select name="docType" id="docType" v-model="inputs.docType" class="form-control" style="width:100%">
+                    <option value="" selected> -- Select Document Type -- </option>
+                    <option v-for="docType in documentTypes" :value="docType.id">{{docType.type}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="docName" class="sr-only">Document Name</label>
+            <div class="col-sm-8">
+                <input type="docName" name="docName" v-model="inputs.docName" class="form-control" id="docName" placeholder="文件名稱" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-8">
+                <button class="btn btn-default" @click.prevent="browseFile">Browser File</button>
+                <p class="help-block">File size should not bigger than 5Mb</p>
+                <input type="file" class="hidden" name="files" id="file" @change="checkFileInput" accept=".pdf, application/pdf" required>
+            </div>
+        </div>
+        <div class="panel panel-default" v-show="hasFile">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>File Size</th>
+                        <th>Preview</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{inputFile.name}}</td>
+                        <td>{{inputFile.size/(1000*1000)}} mb</td>
+                        <td>
+                            <button class="btn btn-default btn-sm" @click.prevent="previewPDF">{{previewButtonText}}</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" @click.prevent="removeFile">刪除</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-8">
+                <button type="submit" class="btn btn-block btn-purple" @click.prevent="uploadFile">上載文件</button>
+            </div>
+        </div>
+
+        <iframe v-show="showPreview" id="viewer" frameborder="0" scrolling="no" width="500" height="770"></iframe>
+    </form>
+</template>
+
+<script>
+    export default{
+        data: function(){
+            return {
+                maxFileSize: 5,
+                documentTypes:[],
+                inputs:{
+                    cNumber:"",
+                    docType:"",
+                    docDate:"",
+                    uploadDate:"",
+                    docName:""
+                },
+                checking:{
+                    cNumberValidity:false,
+                    fileValidity:false
+                },
+                inputFile:{
+                    name:"",
+                    size:"",
+                    data:"",
+                },
+                customer:{},
+                previewing:false
+            }
+        },
+        computed:{
+            uploadDate: function(){
+                var date = new Date();
+                return date.getFullYear()+"/"+ date.getMonth()+"/"+ date.getDate();
+            },
+            hasFile: function(){
+                return !!this.inputFile.name;
+            },
+            showPreview: function(){
+                return !!this.inputFile.name && this.previewing
+            },
+            previewButtonText:function(){
+                return this.previewing? "Close Window" : "Preview"
+            },
+
+        },
+        methods:{
+            checkValidity: function(){
+                if(!this.inputs.cNumber){
+                    alert('Have to input cnumber')
+                }else{
+                    var url = '/searchcustomer/'+this.inputs.cNumber;
+                    this.$http.get(url, function(response){
+                        if(!response){
+                            this.checking.cNumberValidity = false;
+                            alert('that is a incorrect C number! Please verify')
+                        }else{
+                            this.checking.cNumberValidity = true;
+                            this.customer = response;
+                        }
+                    })
+                }
+            },
+            removeFile: function(){
+                console.log('remove file');
+                for(var key in this.inputFile){
+                    this.inputFile[key] = "";
+                }
+                $("#viewer").attr('src', "");
+            },
+            validation:function(){
+                var check = true;
+                if(!this.inputs.cNumber){
+                    check = false;
+                    alert('have input cNumber');
+                }else{
+                    if(!this.checking.cNumberValidity){
+                        check = false;
+                        alert('You have input wrong C number! Please verify');
+                    }
+                }
+                if(!this.inputs.docDate){
+                    check = false;
+                    alert('You have to input Document Date');
+                }
+                if(!this.inputs.docName){
+                    check = false;
+                    alert('You have to input Document Name');
+                }
+                if(!this.inputs.docType){
+                    check = false;
+                    alert('You have to pick a document type');
+                }
+                if(!this.checking.fileValidity){
+                    check = false;
+                    alert('Something wrong with your file, please double check!');
+                }
+                return check;
+            },
+            mergeData: function(){
+                var data = new FormData();
+                for(var key in this.inputs){
+                    data.append(key, this.inputs[key])
+                }
+                data.append('file', this.inputFile.data);
+
+                return data;
+            },
+            uploadFile: function(){
+                if(this.validation()){
+                    var data = this.mergeData();
+                    this.$http.post('/uploadfile', data, function(response){
+                        console.log(response);
+                        this.reset();
+                    },{
+                        headers:{
+                            "X-CSRF-TOKEN" : $('meta[name="token"]').attr("content")
+                        }
+                    });
+                };
+                console.log('upload file')
+            },
+            checkFileInput: function(){
+                var file = document.querySelector("#file").files[0];
+                if(file && file.size > 0){
+                    if(file.size > (this.maxFileSize * 1000 * 1000)){
+                        alert('file size is too large!');
+                        this.checking.fileValidity = false;
+                    }else if(file.type !== "application/pdf"){
+                        alert('Only pdf allowed!');
+                        this.checking.fileValidity = false;
+                    }else{
+                        this.inputFile['name'] = file.name;
+                        this.inputFile['data'] = file;
+                        this.inputFile['size'] = file.size;
+                        this.checking.fileValidity = true;
+                    }
+                }
+            },
+            browseFile:function(){
+                console.log('browser file');
+                document.querySelector("#file").click();
+            },
+            previewPDF: function () {
+                console.log('preview pdf');
+                if(!this.previewing){
+                    var pdffile_url = URL.createObjectURL(this.inputFile.data);
+                    $("#viewer").attr('src', pdffile_url);
+                }else{
+                    $("#viewer").attr('src', "");
+                }
+                this.previewing = !this.previewing;
+            },
+            reset:function(){
+                for(var key in this.inputs){
+                    this.inputs[key] = ""
+                }
+                for(var key in this.checking){
+                    this.checking[key] = false
+                }
+                for(var key in this.inputFile){
+                    this.inputFile[key] = ""
+                }
+                this.customer = {};
+                this.previewing = false;
+
+                var date = new Date();
+                this.inputs.uploadDate = date.getFullYear()+"/"+ date.getMonth()+"/"+ date.getDate();
+
+            }
+        },
+        created: function(){
+            this.$http.get('/getdoctypes', function(response){
+                response.map(function(type){
+                    type['status'] = false;
+                });
+                this.$set("documentTypes", response);
+            })
+        }
+    }
+</script>
