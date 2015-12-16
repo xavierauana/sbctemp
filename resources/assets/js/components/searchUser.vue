@@ -43,6 +43,25 @@
                 <button class="btn btn-purple" @click.prevent="reset">重設</button>
             </div>
         </form>
+        <div v-show="user">
+            <button class="btn btn-default">Show User Documents</button>
+            <table class="table" v-show="hasDocuments">
+                <thead>
+                    <th>Upload Date</th>
+                    <th>Document Type</th>
+                    <th>Document Name</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                <td>today</td>
+                <td>BR</td>
+                <td>The document</td>
+                <td>
+                    <button class="btn btn-danger btn-sm">Remove</button>
+                </td>
+                </tbody>
+            </table>
+        </div>
     </div>
 </template>
 
@@ -52,7 +71,13 @@
             return {
                 cNumber:"",
                 user:"",
-                inputs:{}
+                inputs:{},
+                Documents:[]
+            }
+        },
+        computed:{
+            hasDocuments: function(){
+                return !!this.Documents.length
             }
         },
         methods:{

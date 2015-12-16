@@ -20,8 +20,9 @@
             },
             selectedPermissions:{
                 type: Array,
-                default:[],
-                twoWay: true
+                default: function () {
+                    return [];
+                }
             }
         },
         data: function(){

@@ -11093,8 +11093,9 @@ exports['default'] = {
         },
         selectedPermissions: {
             type: Array,
-            'default': [],
-            twoWay: true
+            'default': function _default() {
+                return [];
+            }
         }
     },
     data: function data() {
@@ -11146,8 +11147,14 @@ exports["default"] = {
         return {
             cNumber: "",
             user: "",
-            inputs: {}
+            inputs: {},
+            Documents: []
         };
+    },
+    computed: {
+        hasDocuments: function hasDocuments() {
+            return !!this.Documents.length;
+        }
     },
     methods: {
         toggleTooltip: function toggleTooltip(e) {
@@ -11192,7 +11199,7 @@ exports["default"] = {
     }
 };
 module.exports = exports["default"];
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <div class=\"well\">\n            <h3>Search User</h3>\n\n            <form action=\"\" method=\"POST\" @submit.prevent=\"searchUser\">\n                <div class=\"input-group\">\n                    <input type=\"number\" v-model=\"cNumber\" id=\"searchCNumber\" class=\"form-control\" placeholder=\"Search C Number\" autofocus=\"\">\n                  <span class=\"input-group-btn\">\n                    <button class=\"btn\" type=\"button\" @click.prevent=\"searchUser\">Go!</button>\n                  </span>\n                </div>\n            </form>\n        </div>\n\n        <form class=\"form-horizontal\" v-show=\"user\">\n            <div class=\"form-group\">\n                <label for=\"cNumber\" class=\"col-sm-2 control-label\">C Number</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"number\" class=\"form-control\" name=\"cNumber\" v-model=\"inputs.cNumber\" placeholder=\"C Number\" disabled=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"login\" class=\"col-sm-2 control-label\">Login Name</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"text\" class=\"form-control\" id=\"login\" v-model=\"inputs.login\" name=\"login\" placeholder=\"Login Name\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"password\" class=\"col-sm-2 control-label\">Password</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"text\" class=\"form-control\" id=\"password\" v-model=\"inputs.password\" name=\"password\" placeholder=\"Password\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"email\" class=\"col-sm-2 control-label\">Email</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"email\" class=\"form-control\" id=\"email\" v-model=\"inputs.email\" name=\"email\" placeholder=\"Email\">\n                </div>\n            </div>\n            <div class=\"row button-group pull-right clearfix\">\n                <button class=\"btn btn-purple\" @click.prevent=\"update\">更新</button>\n                <button class=\"btn btn-purple\" @click.prevent=\"reset\">重設</button>\n            </div>\n        </form>\n    </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <div class=\"well\">\n            <h3>Search User</h3>\n\n            <form action=\"\" method=\"POST\" @submit.prevent=\"searchUser\">\n                <div class=\"input-group\">\n                    <input type=\"number\" v-model=\"cNumber\" id=\"searchCNumber\" class=\"form-control\" placeholder=\"Search C Number\" autofocus=\"\">\n                  <span class=\"input-group-btn\">\n                    <button class=\"btn\" type=\"button\" @click.prevent=\"searchUser\">Go!</button>\n                  </span>\n                </div>\n            </form>\n        </div>\n\n        <form class=\"form-horizontal\" v-show=\"user\">\n            <div class=\"form-group\">\n                <label for=\"cNumber\" class=\"col-sm-2 control-label\">C Number</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"number\" class=\"form-control\" name=\"cNumber\" v-model=\"inputs.cNumber\" placeholder=\"C Number\" disabled=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"login\" class=\"col-sm-2 control-label\">Login Name</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"text\" class=\"form-control\" id=\"login\" v-model=\"inputs.login\" name=\"login\" placeholder=\"Login Name\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"password\" class=\"col-sm-2 control-label\">Password</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"text\" class=\"form-control\" id=\"password\" v-model=\"inputs.password\" name=\"password\" placeholder=\"Password\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"email\" class=\"col-sm-2 control-label\">Email</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"email\" class=\"form-control\" id=\"email\" v-model=\"inputs.email\" name=\"email\" placeholder=\"Email\">\n                </div>\n            </div>\n            <div class=\"row button-group pull-right clearfix\">\n                <button class=\"btn btn-purple\" @click.prevent=\"update\">更新</button>\n                <button class=\"btn btn-purple\" @click.prevent=\"reset\">重設</button>\n            </div>\n        </form>\n        <div v-show=\"user\">\n            <button class=\"btn btn-default\">Show User Documents</button>\n            <table class=\"table\" v-show=\"hasDocuments\">\n                <thead>\n                    <tr><th>Upload Date</th>\n                    <th>Document Type</th>\n                    <th>Document Name</th>\n                    <th></th>\n                </tr></thead>\n                <tbody>\n                <tr><td>today</td>\n                <td>BR</td>\n                <td>The document</td>\n                <td>\n                    <button class=\"btn btn-danger btn-sm\">Remove</button>\n                </td>\n                </tr></tbody>\n            </table>\n        </div>\n    </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
