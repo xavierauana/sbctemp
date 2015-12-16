@@ -32,6 +32,7 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                         <ul class="list-group">
+                            <li class="list-group-item text-center"><a @click.prevent="changeViewTo('CustomerDocuments')" href="/">用戶文件</a></li>
                             <li class="list-group-item text-center"><a @click.prevent="changeViewTo('CreateNewAdmin')" href="/">新增管理人員</a></li>
                             <li class="list-group-item text-center"><a @click.prevent="changeViewTo('AdminInfo')" href="/">管理人員資料</a></li>
                              <li class="list-group-item text-center"><a @click.prevent="changeViewTo('EditDocumentType')" href="/">文件類別設定</a></li>

@@ -15,6 +15,7 @@ import EditDocumentType from './components/editDocumentType.vue'
 import PermissionSetting from './components/permissionSetting.vue'
 import SearchUser from './components/searchUser.vue'
 import UploadFile from './components/uploadFile.vue'
+import CustomerDocuments from './components/customerDocuments.vue'
 
 
 new Vue({
@@ -37,6 +38,7 @@ new Vue({
         EditDocumentType,
         PermissionSetting,
         SearchUser,
-        UploadFile
+        UploadFile,
+        CustomerDocuments
     }
 })

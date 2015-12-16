@@ -10676,6 +10676,10 @@ var _componentsUploadFileVue = require('./components/uploadFile.vue');
 
 var _componentsUploadFileVue2 = _interopRequireDefault(_componentsUploadFileVue);
 
+var _componentsCustomerDocumentsVue = require('./components/customerDocuments.vue');
+
+var _componentsCustomerDocumentsVue2 = _interopRequireDefault(_componentsCustomerDocumentsVue);
+
 var Vue = require('vue');
 
 Vue.use(require('vue-resource'));
@@ -10702,11 +10706,12 @@ new Vue({
         EditDocumentType: _componentsEditDocumentTypeVue2['default'],
         PermissionSetting: _componentsPermissionSettingVue2['default'],
         SearchUser: _componentsSearchUserVue2['default'],
-        UploadFile: _componentsUploadFileVue2['default']
+        UploadFile: _componentsUploadFileVue2['default'],
+        CustomerDocuments: _componentsCustomerDocumentsVue2['default']
     }
 });
 
-},{"./components/adminInfo.vue":15,"./components/createNewAdmin.vue":16,"./components/editDocumentType.vue":18,"./components/entryView.vue":19,"./components/permissionSetting.vue":20,"./components/searchUser.vue":22,"./components/sideBarMenu.vue":23,"./components/uploadFile.vue":24,"vue":12,"vue-resource":5}],15:[function(require,module,exports){
+},{"./components/adminInfo.vue":15,"./components/createNewAdmin.vue":16,"./components/customerDocuments.vue":17,"./components/editDocumentType.vue":19,"./components/entryView.vue":20,"./components/permissionSetting.vue":21,"./components/searchUser.vue":23,"./components/sideBarMenu.vue":24,"./components/uploadFile.vue":25,"vue":12,"vue-resource":5}],15:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -10786,7 +10791,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./permissions.vue":21,"./sideBarMenu.vue":23,"./userTable.vue":25,"babel-runtime/helpers/interop-require-default":1,"vue":12,"vue-hot-reload-api":3}],16:[function(require,module,exports){
+},{"./permissions.vue":22,"./sideBarMenu.vue":24,"./userTable.vue":26,"babel-runtime/helpers/interop-require-default":1,"vue":12,"vue-hot-reload-api":3}],16:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("babel-runtime/helpers/interop-require-default")["default"];
@@ -10842,7 +10847,63 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./permissions.vue":21,"babel-runtime/helpers/interop-require-default":1,"vue":12,"vue-hot-reload-api":3}],17:[function(require,module,exports){
+},{"./permissions.vue":22,"babel-runtime/helpers/interop-require-default":1,"vue":12,"vue-hot-reload-api":3}],17:[function(require,module,exports){
+"use strict";
+
+exports.__esModule = true;
+exports["default"] = {
+    data: function data() {
+        return {
+            user: ""
+        };
+    },
+    methods: {
+        getUserDocuments: function getUserDocuments() {
+            console.log('get request to server to find the user documents');
+            if (this.cNumber) {
+                var url = "/getUserDocuments/" + this.cNumber;
+                this.$http.get(url, function (response) {
+                    console.log(response);
+                    if (response) {
+                        this.$set('user', response);
+                    } else {
+                        this.user = "";
+                        alert('no one match the c number! Please verify.');
+                    }
+                });
+            } else {
+                this.user = "";
+                alert('You have to input the C Number!');
+            }
+        },
+        keyPress: function keyPress(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                this.getUserDocuments();
+            }
+        },
+        deleteDocument: function deleteDocument(document) {
+            if (confirm('Are you sure you want to delete ' + document.docName + '?')) {
+                this.user.documents.$remove(document);
+                console.log('post to server to delete the doc');
+            }
+        }
+    }
+};
+module.exports = exports["default"];
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div class=\"well\">\n        <h3>Search User</h3>\n\n        <form action=\"\" method=\"POST\" @submit.prevent=\"searchUser\">\n            <div class=\"input-group\">\n                <input type=\"number\" v-model=\"cNumber\" id=\"searchCNumber\" class=\"form-control\" placeholder=\"Search C Number\" autofocus=\"\" @keypress=\"keyPress\">\n                  <span class=\"input-group-btn\">\n                    <button class=\"btn\" type=\"button\" @click.prevent=\"searchUser\">Go!</button>\n                  </span>\n            </div>\n        </form>\n    </div>\n    <div v-show=\"user\">\n        <table class=\"table\">\n            <thead>\n            <tr><th>Upload Date</th>\n            <th>Document Type</th>\n            <th>Document Name</th>\n            <th></th>\n            </tr></thead>\n            <tbody>\n            <tr v-for=\"document in user.documents\">\n                <td>{{document.uploadDate}}</td>\n                <td>{{document.docType}}</td>\n                <td>{{document.docName}}</td>\n                <td>\n                    <button class=\"btn btn-danger btn-sm\" @click.prevent=\"deleteDocument(document)\">Remove</button>\n                </td>\n            </tr>\n            </tbody>\n        </table>\n    </div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  var id = "/Users/adrianexavier/Code/SBCTemp/resources/assets/js/components/customerDocuments.vue"
+  if (!module.hot.data) {
+    hotAPI.createRecord(id, module.exports)
+  } else {
+    hotAPI.update(id, module.exports, module.exports.template)
+  }
+})()}
+},{"vue":12,"vue-hot-reload-api":3}],18:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -10905,7 +10966,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":12,"vue-hot-reload-api":3}],18:[function(require,module,exports){
+},{"vue":12,"vue-hot-reload-api":3}],19:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("babel-runtime/helpers/interop-require-default")["default"];
@@ -10967,7 +11028,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./documentTypeTable.vue":17,"babel-runtime/helpers/interop-require-default":1,"vue":12,"vue-hot-reload-api":3}],19:[function(require,module,exports){
+},{"./documentTypeTable.vue":18,"babel-runtime/helpers/interop-require-default":1,"vue":12,"vue-hot-reload-api":3}],20:[function(require,module,exports){
 var __vueify_style__ = require("vueify-insert-css").insert("\n    button.btn.btn-block{\n        margin-bottom: 15px;\n    }\n")
 'use strict';
 
@@ -10984,7 +11045,7 @@ exports['default'] = {
     }
 };
 module.exports = exports['default'];
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div class=\"row\">\n        <div class=\"col-md-offset-3 col-md-6\">\n            <button class=\"btn btn-block btn-purple btn-lg\" @click.prevent=\"changeViewTo('UploadFile')\">\n                上載文件\n            </button>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col-md-offset-3 col-md-6\">\n            <button class=\"btn btn-block btn-purple btn-lg\" @click.prevent=\"changeViewTo('SearchUser')\">\n                搜尋用戶\n            </button>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col-md-offset-3 col-md-6\">\n            <div class=\"panel-group\" id=\"accordion\" role=\"tablist\" aria-multiselectable=\"true\">\n                <div class=\"panel panel-default\">\n                    <div class=\"panel-heading\" role=\"tab\" id=\"headingOne\">\n                        <h4 class=\"panel-title text-center\">\n                            <a role=\"button\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapseOne\" aria-expanded=\"true\" aria-controls=\"collapseOne\">\n                                管理人員設定\n                            </a>\n                        </h4>\n                    </div>\n                    <div id=\"collapseOne\" class=\"panel-collapse collapse\" role=\"tabpanel\" aria-labelledby=\"headingOne\">\n                        <ul class=\"list-group\">\n                            <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('CreateNewAdmin')\" href=\"/\">新增管理人員</a></li>\n                            <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('AdminInfo')\" href=\"/\">管理人員資料</a></li>\n                             <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('EditDocumentType')\" href=\"/\">文件類別設定</a></li>\n                             <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('PermissionSetting')\" href=\"/\">權限類別設定</a></li>\n                        </ul>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div class=\"row\">\n        <div class=\"col-md-offset-3 col-md-6\">\n            <button class=\"btn btn-block btn-purple btn-lg\" @click.prevent=\"changeViewTo('UploadFile')\">\n                上載文件\n            </button>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col-md-offset-3 col-md-6\">\n            <button class=\"btn btn-block btn-purple btn-lg\" @click.prevent=\"changeViewTo('SearchUser')\">\n                搜尋用戶\n            </button>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col-md-offset-3 col-md-6\">\n            <div class=\"panel-group\" id=\"accordion\" role=\"tablist\" aria-multiselectable=\"true\">\n                <div class=\"panel panel-default\">\n                    <div class=\"panel-heading\" role=\"tab\" id=\"headingOne\">\n                        <h4 class=\"panel-title text-center\">\n                            <a role=\"button\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapseOne\" aria-expanded=\"true\" aria-controls=\"collapseOne\">\n                                管理人員設定\n                            </a>\n                        </h4>\n                    </div>\n                    <div id=\"collapseOne\" class=\"panel-collapse collapse\" role=\"tabpanel\" aria-labelledby=\"headingOne\">\n                        <ul class=\"list-group\">\n                            <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('CustomerDocuments')\" href=\"/\">用戶文件</a></li>\n                            <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('CreateNewAdmin')\" href=\"/\">新增管理人員</a></li>\n                            <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('AdminInfo')\" href=\"/\">管理人員資料</a></li>\n                             <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('EditDocumentType')\" href=\"/\">文件類別設定</a></li>\n                             <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('PermissionSetting')\" href=\"/\">權限類別設定</a></li>\n                        </ul>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11000,7 +11061,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":12,"vue-hot-reload-api":3,"vueify-insert-css":13}],20:[function(require,module,exports){
+},{"vue":12,"vue-hot-reload-api":3,"vueify-insert-css":13}],21:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("babel-runtime/helpers/interop-require-default")["default"];
@@ -11078,7 +11139,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./permissions.vue":21,"babel-runtime/helpers/interop-require-default":1,"vue":12,"vue-hot-reload-api":3}],21:[function(require,module,exports){
+},{"./permissions.vue":22,"babel-runtime/helpers/interop-require-default":1,"vue":12,"vue-hot-reload-api":3}],22:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -11138,7 +11199,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":12,"vue-hot-reload-api":3}],22:[function(require,module,exports){
+},{"vue":12,"vue-hot-reload-api":3}],23:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -11199,7 +11260,7 @@ exports["default"] = {
     }
 };
 module.exports = exports["default"];
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <div class=\"well\">\n            <h3>Search User</h3>\n\n            <form action=\"\" method=\"POST\" @submit.prevent=\"searchUser\">\n                <div class=\"input-group\">\n                    <input type=\"number\" v-model=\"cNumber\" id=\"searchCNumber\" class=\"form-control\" placeholder=\"Search C Number\" autofocus=\"\">\n                  <span class=\"input-group-btn\">\n                    <button class=\"btn\" type=\"button\" @click.prevent=\"searchUser\">Go!</button>\n                  </span>\n                </div>\n            </form>\n        </div>\n\n        <form class=\"form-horizontal\" v-show=\"user\">\n            <div class=\"form-group\">\n                <label for=\"cNumber\" class=\"col-sm-2 control-label\">C Number</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"number\" class=\"form-control\" name=\"cNumber\" v-model=\"inputs.cNumber\" placeholder=\"C Number\" disabled=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"login\" class=\"col-sm-2 control-label\">Login Name</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"text\" class=\"form-control\" id=\"login\" v-model=\"inputs.login\" name=\"login\" placeholder=\"Login Name\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"password\" class=\"col-sm-2 control-label\">Password</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"text\" class=\"form-control\" id=\"password\" v-model=\"inputs.password\" name=\"password\" placeholder=\"Password\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"email\" class=\"col-sm-2 control-label\">Email</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"email\" class=\"form-control\" id=\"email\" v-model=\"inputs.email\" name=\"email\" placeholder=\"Email\">\n                </div>\n            </div>\n            <div class=\"row button-group pull-right clearfix\">\n                <button class=\"btn btn-purple\" @click.prevent=\"update\">更新</button>\n                <button class=\"btn btn-purple\" @click.prevent=\"reset\">重設</button>\n            </div>\n        </form>\n        <div v-show=\"user\">\n            <button class=\"btn btn-default\">Show User Documents</button>\n            <table class=\"table\" v-show=\"hasDocuments\">\n                <thead>\n                    <tr><th>Upload Date</th>\n                    <th>Document Type</th>\n                    <th>Document Name</th>\n                    <th></th>\n                </tr></thead>\n                <tbody>\n                <tr><td>today</td>\n                <td>BR</td>\n                <td>The document</td>\n                <td>\n                    <button class=\"btn btn-danger btn-sm\">Remove</button>\n                </td>\n                </tr></tbody>\n            </table>\n        </div>\n    </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <div class=\"well\">\n            <h3>Search User</h3>\n\n            <form action=\"\" method=\"POST\" @submit.prevent=\"searchUser\">\n                <div class=\"input-group\">\n                    <input type=\"number\" v-model=\"cNumber\" id=\"searchCNumber\" class=\"form-control\" placeholder=\"Search C Number\" autofocus=\"\">\n                  <span class=\"input-group-btn\">\n                    <button class=\"btn\" type=\"button\" @click.prevent=\"searchUser\">Go!</button>\n                  </span>\n                </div>\n            </form>\n        </div>\n\n        <form class=\"form-horizontal\" v-show=\"user\">\n            <div class=\"form-group\">\n                <label for=\"cNumber\" class=\"col-sm-2 control-label\">C Number</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"number\" class=\"form-control\" name=\"cNumber\" v-model=\"inputs.cNumber\" placeholder=\"C Number\" disabled=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"login\" class=\"col-sm-2 control-label\">Login Name</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"text\" class=\"form-control\" id=\"login\" v-model=\"inputs.login\" name=\"login\" placeholder=\"Login Name\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"password\" class=\"col-sm-2 control-label\">Password</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"text\" class=\"form-control\" id=\"password\" v-model=\"inputs.password\" name=\"password\" placeholder=\"Password\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"email\" class=\"col-sm-2 control-label\">Email</label>\n                <div class=\"col-sm-10\">\n                    <input type=\"email\" class=\"form-control\" id=\"email\" v-model=\"inputs.email\" name=\"email\" placeholder=\"Email\">\n                </div>\n            </div>\n            <div class=\"row button-group pull-right clearfix\">\n                <button class=\"btn btn-purple\" @click.prevent=\"update\">更新</button>\n                <button class=\"btn btn-purple\" @click.prevent=\"reset\">重設</button>\n            </div>\n        </form>\n    </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11211,7 +11272,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":12,"vue-hot-reload-api":3}],23:[function(require,module,exports){
+},{"vue":12,"vue-hot-reload-api":3}],24:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -11227,7 +11288,7 @@ exports['default'] = {
     }
 };
 module.exports = exports['default'];
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div class=\"sidebar-nav\">\n        <div class=\"navbar\" role=\"navigation\">\n            <div class=\"navbar-header\">\n                <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".sidebar-navbar-collapse\">\n                    <span class=\"sr-only\">Toggle navigation</span>\n                    <span class=\"icon-bar\"></span>\n                    <span class=\"icon-bar\"></span>\n                    <span class=\"icon-bar\"></span>\n                </button>\n                <span class=\"visible-xs navbar-brand\">Administration menu</span>\n            </div>\n            <div class=\"navbar-collapse collapse sidebar-navbar-collapse\">\n                <ul class=\"nav navbar-nav\">\n                    <li><a @click.prevent=\"changeViewTo('UploadFile')\" :class=\"{'active': isCurrentView('UploadFile')}\" href=\"/\">上載文件</a></li>\n                    <li><a @click.prevent=\"changeViewTo('SearchUser')\" :class=\"{'active': isCurrentView('SearchUser')}\" href=\"/\">搜尋用戶</a></li>\n                    <li><a @click.prevent=\"changeViewTo('CreateNewAdmin')\" :class=\"{'active': isCurrentView('CreateNewAdmin')}\" href=\"/\">新增管理人員</a></li>\n                    <li><a @click.prevent=\"changeViewTo('AdminInfo')\" :class=\"{'active': isCurrentView('AdminInfo')}\" href=\"/\">管理人員資料</a></li>\n                    <li><a @click.prevent=\"changeViewTo('EditDocumentType')\" :class=\"{'active': isCurrentView('EditDocumentType')}\" href=\"/\">文件類別設定</a></li>\n                    <li><a @click.prevent=\"changeViewTo('PermissionSetting')\" :class=\"{'active': isCurrentView('PermissionSetting')}\" href=\"/\">權限類別設定</a></li>\n                </ul>\n            </div><!--/.nav-collapse -->\n        </div>\n    </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div class=\"sidebar-nav\">\n        <div class=\"navbar\" role=\"navigation\">\n            <div class=\"navbar-header\">\n                <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".sidebar-navbar-collapse\">\n                    <span class=\"sr-only\">Toggle navigation</span>\n                    <span class=\"icon-bar\"></span>\n                    <span class=\"icon-bar\"></span>\n                    <span class=\"icon-bar\"></span>\n                </button>\n                <span class=\"visible-xs navbar-brand\">Administration menu</span>\n            </div>\n            <div class=\"navbar-collapse collapse sidebar-navbar-collapse\">\n                <ul class=\"nav navbar-nav\">\n                    <li><a @click.prevent=\"changeViewTo('UploadFile')\" :class=\"{'active': isCurrentView('UploadFile')}\" href=\"/\">上載文件</a></li>\n                    <li><a @click.prevent=\"changeViewTo('SearchUser')\" :class=\"{'active': isCurrentView('SearchUser')}\" href=\"/\">搜尋用戶</a></li>\n                    <li><a @click.prevent=\"changeViewTo('CustomerDocuments')\" :class=\"{'active': isCurrentView('CustomerDocuments')}\" href=\"/\">用戶文件</a></li>\n                    <li><a @click.prevent=\"changeViewTo('CreateNewAdmin')\" :class=\"{'active': isCurrentView('CreateNewAdmin')}\" href=\"/\">新增管理人員</a></li>\n                    <li><a @click.prevent=\"changeViewTo('AdminInfo')\" :class=\"{'active': isCurrentView('AdminInfo')}\" href=\"/\">管理人員資料</a></li>\n                    <li><a @click.prevent=\"changeViewTo('EditDocumentType')\" :class=\"{'active': isCurrentView('EditDocumentType')}\" href=\"/\">文件類別設定</a></li>\n                    <li><a @click.prevent=\"changeViewTo('PermissionSetting')\" :class=\"{'active': isCurrentView('PermissionSetting')}\" href=\"/\">權限類別設定</a></li>\n                </ul>\n            </div><!--/.nav-collapse -->\n        </div>\n    </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11239,7 +11300,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":12,"vue-hot-reload-api":3}],24:[function(require,module,exports){
+},{"vue":12,"vue-hot-reload-api":3}],25:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -11430,7 +11491,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":12,"vue-hot-reload-api":3}],25:[function(require,module,exports){
+},{"vue":12,"vue-hot-reload-api":3}],26:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;

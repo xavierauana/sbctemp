@@ -14,6 +14,7 @@
                 <ul class="nav navbar-nav">
                     <li><a @click.prevent="changeViewTo('UploadFile')" :class="{'active': isCurrentView('UploadFile')}" href="/">上載文件</a></li>
                     <li><a @click.prevent="changeViewTo('SearchUser')" :class="{'active': isCurrentView('SearchUser')}" href="/">搜尋用戶</a></li>
+                    <li><a @click.prevent="changeViewTo('CustomerDocuments')" :class="{'active': isCurrentView('CustomerDocuments')}" href="/">用戶文件</a></li>
                     <li><a @click.prevent="changeViewTo('CreateNewAdmin')" :class="{'active': isCurrentView('CreateNewAdmin')}" href="/">新增管理人員</a></li>
                     <li><a @click.prevent="changeViewTo('AdminInfo')" :class="{'active': isCurrentView('AdminInfo')}" href="/">管理人員資料</a></li>
                     <li><a @click.prevent="changeViewTo('EditDocumentType')" :class="{'active': isCurrentView('EditDocumentType')}" href="/">文件類別設定</a></li>
