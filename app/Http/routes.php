@@ -111,70 +111,133 @@ Route::post("/uploadfile", function(\Illuminate\Http\Request $request){
 });
 
 Route::get('/getUserDocuments/{cnumber}', function($cnumber){
-    if($cnumber == 8888){
-        return ['cNumber'=>$cnumber, 'login'=>'testuser', 'password'=>'asd2asr5ou99', 'email'=>'user@test.com', 'name'=>'Test company', 'documents'=>[
-            [
-                "id"=>1,
-                "uploadDate"=>"2015/12/1",
-                "docType"=>"BR",
-                "docName"=>"BR-123-123-1",
-            ],
-            [
-                "id"=>2,
-                "uploadDate"=>"2015/12/2",
-                "docType"=>"BR",
-                "docName"=>"BR-123-123-2",
-            ],
-            [
-                "id"=>3,
-                "uploadDate"=>"2015/12/3",
-                "docType"=>"BR",
-                "docName"=>"BR-123-123-3",
-            ],
-            [
-                "id"=>4,
-                "uploadDate"=>"2015/12/4",
-                "docType"=>"CI",
-                "docName"=>"CI-123-123-1",
-            ],
-            [
-                "id"=>5,
-                "uploadDate"=>"2015/12/5",
-                "docType"=>"CI",
-                "docName"=>"CI-123-123-2",
-            ],
-            [
-                "id"=>6,
-                "uploadDate"=>"2015/12/6",
-                "docType"=>"CI",
-                "docName"=>"CI-123-123-3",
-            ],
-            [
-                "id"=>7,
-                "uploadDate"=>"2015/12/7",
-                "docType"=>"Annual Report",
-                "docName"=>"AR-123-123-1",
-            ],
-            [
-                "id"=>8,
-                "uploadDate"=>"2015/12/8",
-                "docType"=>"Annual Report",
-                "docName"=>"AR-123-123-2",
-            ],
-            [
-                "id"=>9,
-                "uploadDate"=>"2015/12/9",
-                "docType"=>"Annual Report",
-                "docName"=>"AR-123-123-3",
-            ],
-            [
-                "id"=>10,
-                "uploadDate"=>"2015/12/10",
-                "docType"=>"Annual Report",
-                "docName"=>"AR-123-123-4",
-            ]
-        ]];
-    }
+    return [
+        [
+            "id"=>1,
+            "uploadDate"=>"2015/12/1",
+            "docType"=>"BR",
+            "docName"=>"BR-123-123-1",
+        ],
+        [
+            "id"=>2,
+            "uploadDate"=>"2015/12/2",
+            "docType"=>"BR",
+            "docName"=>"BR-123-123-2",
+        ],
+        [
+            "id"=>3,
+            "uploadDate"=>"2015/12/3",
+            "docType"=>"BR",
+            "docName"=>"BR-123-123-3",
+        ],
+        [
+            "id"=>4,
+            "uploadDate"=>"2015/12/4",
+            "docType"=>"CI",
+            "docName"=>"CI-123-123-1",
+        ],
+        [
+            "id"=>5,
+            "uploadDate"=>"2015/12/5",
+            "docType"=>"CI",
+            "docName"=>"CI-123-123-2",
+        ],
+        [
+            "id"=>6,
+            "uploadDate"=>"2015/12/6",
+            "docType"=>"CI",
+            "docName"=>"CI-123-123-3",
+        ],
+        [
+            "id"=>7,
+            "uploadDate"=>"2015/12/7",
+            "docType"=>"Annual Report",
+            "docName"=>"AR-123-123-1",
+        ],
+        [
+            "id"=>8,
+            "uploadDate"=>"2015/12/8",
+            "docType"=>"Annual Report",
+            "docName"=>"AR-123-123-2",
+        ],
+        [
+            "id"=>9,
+            "uploadDate"=>"2015/12/9",
+            "docType"=>"Annual Report",
+            "docName"=>"AR-123-123-3",
+        ],
+        [
+            "id"=>10,
+            "uploadDate"=>"2015/12/10",
+            "docType"=>"Annual Report",
+            "docName"=>"AR-123-123-4",
+        ]
+    ];
+
+//    if($cnumber == 8888){
+//        return ['cNumber'=>$cnumber, 'login'=>'testuser', 'password'=>'asd2asr5ou99', 'email'=>'user@test.com', 'name'=>'Test company', 'documents'=>[
+//            [
+//                "id"=>1,
+//                "uploadDate"=>"2015/12/1",
+//                "docType"=>"BR",
+//                "docName"=>"BR-123-123-1",
+//            ],
+//            [
+//                "id"=>2,
+//                "uploadDate"=>"2015/12/2",
+//                "docType"=>"BR",
+//                "docName"=>"BR-123-123-2",
+//            ],
+//            [
+//                "id"=>3,
+//                "uploadDate"=>"2015/12/3",
+//                "docType"=>"BR",
+//                "docName"=>"BR-123-123-3",
+//            ],
+//            [
+//                "id"=>4,
+//                "uploadDate"=>"2015/12/4",
+//                "docType"=>"CI",
+//                "docName"=>"CI-123-123-1",
+//            ],
+//            [
+//                "id"=>5,
+//                "uploadDate"=>"2015/12/5",
+//                "docType"=>"CI",
+//                "docName"=>"CI-123-123-2",
+//            ],
+//            [
+//                "id"=>6,
+//                "uploadDate"=>"2015/12/6",
+//                "docType"=>"CI",
+//                "docName"=>"CI-123-123-3",
+//            ],
+//            [
+//                "id"=>7,
+//                "uploadDate"=>"2015/12/7",
+//                "docType"=>"Annual Report",
+//                "docName"=>"AR-123-123-1",
+//            ],
+//            [
+//                "id"=>8,
+//                "uploadDate"=>"2015/12/8",
+//                "docType"=>"Annual Report",
+//                "docName"=>"AR-123-123-2",
+//            ],
+//            [
+//                "id"=>9,
+//                "uploadDate"=>"2015/12/9",
+//                "docType"=>"Annual Report",
+//                "docName"=>"AR-123-123-3",
+//            ],
+//            [
+//                "id"=>10,
+//                "uploadDate"=>"2015/12/10",
+//                "docType"=>"Annual Report",
+//                "docName"=>"AR-123-123-4",
+//            ]
+//        ]];
+//    }
     return null;
 });
 

@@ -16,8 +16,14 @@
         </div>
         <div class="form-group">
             <label for="docDate" class="sr-only">Document Date</label>
+
             <div class="col-sm-8">
-                <input type="text" name="docDate"  v-model="inputs.docDate" class="form-control" id="docDate" placeholder="文件日期" required>
+                    <div class='input-group date' id='datetimepicker'>
+                        <input type='text' class="form-control" name="docDate"  v-model="inputs.docDate" id="docDate" placeholder="文件日期 (YYYY/MM/DD)" @keypress="showkeypress" pattern="/[0-9]\//" required/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    </div>
             </div>
         </div>
         <div class="form-group">
@@ -106,7 +112,8 @@
         },
         computed:{
             uploadDate: function(){
-                var date = new Date();
+                var date =moment().format('YYYY/MM/DD');
+                return date;
                 return date.getFullYear()+"/"+ date.getMonth()+"/"+ date.getDate();
             },
             hasFile: function(){
@@ -243,6 +250,10 @@
                 var date = new Date();
                 this.inputs.uploadDate = date.getFullYear()+"/"+ date.getMonth()+"/"+ date.getDate();
 
+            },
+            showkeypress: function(e){
+                console.log(e.keyCode);
+                if(e.keyCode < 47 || e.keyCode > 57 ) return false;
             }
         },
         created: function(){
@@ -252,6 +263,11 @@
                 });
                 this.$set("documentTypes", response);
             })
+        },
+        ready: function(){
+            $('#datetimepicker').datetimepicker({
+                format:"YYYY/MM/DD"
+            });
         }
     }
 </script>

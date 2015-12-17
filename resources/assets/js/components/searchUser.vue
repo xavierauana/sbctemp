@@ -5,7 +5,8 @@
 
             <form action="" method="POST" @submit.prevent="searchUser">
                 <div class="input-group">
-                    <input type="number" v-model="cNumber" id="searchCNumber" class="form-control" placeholder="Search C Number" autofocus>
+                    <input type="number" v-model="cNumber" id="searchCNumber" class="form-control"
+                           placeholder="Search C Number" autofocus>
                   <span class="input-group-btn">
                     <button class="btn" type="button" @click.prevent="searchUser">Go!</button>
                   </span>
@@ -16,26 +17,34 @@
         <form class="form-horizontal" v-show="user">
             <div class="form-group">
                 <label for="cNumber" class="col-sm-2 control-label">C Number</label>
+
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" name="cNumber" v-model="inputs.cNumber" placeholder="C Number" disabled>
+                    <input type="number" class="form-control" name="cNumber" v-model="inputs.cNumber"
+                           placeholder="C Number" disabled>
                 </div>
             </div>
             <div class="form-group">
                 <label for="login" class="col-sm-2 control-label">Login Name</label>
+
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="login" v-model="inputs.login" name="login" placeholder="Login Name">
+                    <input type="text" class="form-control" id="login" v-model="inputs.login" name="login"
+                           placeholder="Login Name">
                 </div>
             </div>
             <div class="form-group">
                 <label for="password" class="col-sm-2 control-label">Password</label>
+
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="password"  v-model="inputs.password" name="password" placeholder="Password">
+                    <input type="text" class="form-control" id="password" v-model="inputs.password" name="password"
+                           placeholder="Password">
                 </div>
             </div>
             <div class="form-group">
                 <label for="email" class="col-sm-2 control-label">Email</label>
+
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" id="email"  v-model="inputs.email" name="email" placeholder="Email">
+                    <input type="email" class="form-control" id="email" v-model="inputs.email" name="email"
+                           placeholder="Email">
                 </div>
             </div>
             <div class="row button-group pull-right clearfix">
@@ -43,63 +52,113 @@
                 <button class="btn btn-purple" @click.prevent="reset">重設</button>
             </div>
         </form>
+        <div v-show="hasDocuments">
+            <table class="table">
+                <thead>
+                <th>Upload Date</th>
+                <th>Document Type</th>
+                <th>Document Name</th>
+                <th></th>
+                </thead>
+                <tbody>
+                <tr v-for="document in documents">
+                    <td>{{document.uploadDate}}</td>
+                    <td>{{document.docType}}</td>
+                    <td>{{document.docName}}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" @click.prevent="deleteDocument(document)">Remove</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </template>
 
 <script>
     export default{
-        data: function(){
+        data: function () {
             return {
-                cNumber:"",
-                user:"",
-                inputs:{},
-                Documents:[]
+                cNumber: "",
+                user: "",
+                inputs: {},
+                documents: [],
+                table:""
             }
         },
-        computed:{
-            hasDocuments: function(){
-                return !!this.Documents.length
+        computed: {
+            hasDocuments: function () {
+                return !!this.documents.length
             }
         },
-        methods:{
-            toggleTooltip: function(e){
+        watch: {
+            user: function () {
+                if (!!this.user) {
+                    var url = '/getUserDocuments/' + this.user.cNumber;
+                    this.$http.get(url, function (response) {
+                        this.$set('documents', response);
+                    })
+                }
+            },
+            documents: function () {
+                if (!!this.documents.length) {
+                    var self = this;
+                    setTimeout(function(){
+                        $('table').DataTable();
+                    }.bind(this), 500);
+
+                }
+            }
+        },
+        methods: {
+            toggleTooltip: function (e) {
                 $('#searchCNumber').tooltip({
-                    trigger:'manual',
-                    title:"number only"
+                    trigger: 'manual',
+                    title: "number only"
                 });
-                if((e.keyCode <48 || e.keyCode > 57) &&  e.keyCode!== 13){
+                if ((e.keyCode < 48 || e.keyCode > 57) && e.keyCode !== 13) {
                     $('#searchCNumber').tooltip('show')
-                }else{
+                } else {
                     $('#searchCNumber').tooltip('hide')
                 }
             },
-            searchUser: function(){
-                console.log('get request to server to find the user')
-                if(this.cNumber){
-                    var url = "/searchcustomer/"+this.cNumber;
-                    this.$http.get(url, function(response){
-                        console.log(response)
-                        if(response){
+            searchUser: function () {
+                console.log('get request to server to find the user');
+                if (this.cNumber) {
+                    var url = "/searchcustomer/" + this.cNumber;
+                    this.$http.get(url, function (response) {
+                        console.log(response);
+                        if (response) {
                             this.$set('user', response);
                             this.$set('inputs', response);
-                        }else{
+                        } else {
                             alert('no one match the c number! Please verify.')
                         }
                     })
-                }else{
+                } else {
                     alert('You have to input the C Number!');
                 }
             },
-            reset: function(){
-                for(var key in this.inputs){
-                    if(key !== 'cNumber') this.inputs[key] = "";
+            reset: function () {
+                for (var key in this.inputs) {
+                    if (key !== 'cNumber') this.inputs[key] = "";
                 }
             },
-            update: function(){
+            update: function () {
                 console.log('print something');
+            },
+            deleteDocument: function (document) {
+                if (confirm('Are you sure you want to delete ' + document.docName + '?')) {
+                    this.documents.$remove(document);
+                    this.refreshDataTable();
+                    console.log('post to server to delete the doc');
+                }
+            },
+            refreshDataTable: function(){
+                $('table').DataTable().destroy();
             }
         },
-        ready: function(){
+        ready: function () {
             document.getElementById("searchCNumber").addEventListener("keypress", this.toggleTooltip);
         }
     }
