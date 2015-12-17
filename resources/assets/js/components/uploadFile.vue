@@ -30,7 +30,7 @@
             <label for="docType" class="sr-only">Document Type</label>
             <div class="col-sm-8">
                 <select name="docType" id="docType" v-model="inputs.docType" class="form-control" style="width:100%">
-                    <option value="" selected> -- Select Document Type -- </option>
+                    <option value="" selected> -- 文件類別 -- </option>
                     <option v-for="docType in documentTypes" :value="docType.id">{{docType.type}}</option>
                 </select>
             </div>
@@ -38,7 +38,7 @@
         <div class="form-group">
             <label for="docName" class="sr-only">Document Name</label>
             <div class="col-sm-8">
-                <input type="docName" name="docName" v-model="inputs.docName" class="form-control" id="docName" placeholder="文件名稱" required>
+                <input type="docName" name="docName" v-model="inputs.docName" class="form-control" id="docName" placeholder="文件描述" required>
             </div>
         </div>
         <div class="form-group">
