@@ -34,10 +34,10 @@
 
             <div class="form-group">
                 <div class="col-xs-12 col-sm-4 pull-right">
-                    <button type="submit" class="btn btn-block btn-purple" @click.prevent="resetForm">重設</button>
+                    <button type="submit" class="btn btn-block btn-purple" @click.prevent="resetForm">重設 Reset</button>
                 </div>
                 <div class="col-xs-12 col-sm-4 pull-right">
-                    <button type="submit" class="btn btn-block btn-purple">新增</button>
+                    <button type="submit" class="btn btn-block btn-purple">新增 Create</button>
                 </div>
             </div>
         </form>

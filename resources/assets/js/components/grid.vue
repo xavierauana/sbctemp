@@ -75,26 +75,29 @@
         padding-top: 7px;
         text-align: right;
     }
+    .pagination_button{
+        cursor: pointer;
+    }
 </style>
 
 <template>
     <div class="table-responsive">
-        <div class="col-xs-4">
-            Show
+        <div class="col-xs-5">
+            每頁顯示 Show
             <select v-model="itemPerPage" id="">
                 <option value="5" selected>5</option>
                 <option value="10" >10</option>
                 <option value="15" >15</option>
                 <option value="20" >20</option>
             </select>
-            Entries
+            檔案 Entries Per Page
         </div>
-        <div class="col-xs-8 col-sm-4 pull-right">
+        <div class="col-xs-7 col-sm-4 pull-right">
             <form action="" class="form-horizontal">
                 <div class="form-group">
-                    <label for="search" class="col-xs-4" id="search-label">Search: </label>
-                    <div class="col-xs-8">
-                        <input type="text" name="search" v-model="filterKey" class="form-control" placeholder="testing search">
+                    <label for="search" class="col-xs-5" id="search-label">搜尋 Search: </label>
+                    <div class="col-xs-7">
+                        <input type="text" name="search" v-model="filterKey" class="form-control" placeholder="search terms">
                     </div>
                 </div>
             </form>
@@ -129,18 +132,20 @@
             </tr>
             </tbody>
         </table>
-        <div v-show="needPaginated">
-            <tr>
-                <td colspan="{{countTableColumns()}}">
-                        <span class="pull-right">
-                            <span class="pagination_button">Previous</span>
-                            <div class="btn-group" role="group" aria-label="...">
-                                <button type="button" class="btn btn-xs btn-default" v-for="n in totalPages" @click="toPage(n+1)">{{n+1}}</button>
-                            </div>
-                            <span class="pagination_button">Next</span>
-                        </span>
-                </td>
-            </tr>
+        <div>
+            <div class="col-xs-6">
+                <span>There are total {{data.length}} records.</span>
+            </span>
+            </div>
+            <div class="col-xs-6" v-show="needPaginated">
+                <span class="pull-right">
+                    <span class="pagination_button" @click="previousPage"><</span>
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-xs btn-default" v-for="n in totalPages" @click="toPage(n+1)">{{n+1}}</button>
+                    </div>
+                    <span class="pagination_button" @click="nextPage">></span>
+                </span>
+            </div>
         </div>
     </div>
 </template>
@@ -160,7 +165,7 @@
             var sortOrders = {}
             this.columns.forEach(function (key) {
                 sortOrders[key.code] = 1
-            })
+            });
             return {
                 filterKey:'',
                 sortKey: '',
@@ -190,21 +195,21 @@
             paginate: function(itemIndex){
                 var max = this.currentPage * this.itemPerPage;
                 var min = this.currentPage * this.itemPerPage - this.itemPerPage;
-                console.log((min <= itemIndex) && (max > itemIndex));
 
                 return (min <= itemIndex) && (max > itemIndex);
             },
             toPage: function(pageNumber){
                 this.currentPage = pageNumber;
             },
-            display: function(itemIndex){
-                if(this.filterKey){
-                    return true;
+            previousPage: function () {
+                if(this.currentPage > 1){
+                    this.currentPage = this.currentPage-1
                 }
-                var max = this.currentPage * this.itemPerPage;
-                var min = this.currentPage * this.itemPerPage - this.itemPerPage;
-
-                return (min <= itemIndex) && (max > itemIndex);
+            },
+            nextPage: function () {
+                if(this.currentPage < this.totalPages){
+                    this.currentPage = this.currentPage+1
+                }
             },
             sortBy: function (key) {
                 this.sortKey = key.code;

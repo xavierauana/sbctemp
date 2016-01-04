@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="status" class="col-sm-3 control-label">Status</label>
+                <label for="status" class="col-sm-3 control-label">狀況 Status</label>
 
                 <div class="col-sm-9" data-toggle="buttons">
                     <label class="btn {{getStatusButtonClass}}" @click.prevent="toggleInputStatus">

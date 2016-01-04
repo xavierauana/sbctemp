@@ -8,14 +8,14 @@
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
             <button class="btn btn-block btn-purple btn-lg" @click.prevent="changeViewTo('UploadFile')">
-                上載文件
+                上載文件 Upload Files
             </button>
         </div>
     </div>
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
             <button class="btn btn-block btn-purple btn-lg" @click.prevent="changeViewTo('SearchUser')">
-                搜尋用戶
+                搜尋用戶 Search User
             </button>
         </div>
     </div>
@@ -26,7 +26,7 @@
                     <div class="panel-heading" role="tab" id="headingOne">
                         <h4 class="panel-title text-center">
                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                管理人員設定
+                                管理人員設定 Administrator Settings
                             </a>
                         </h4>
                     </div>

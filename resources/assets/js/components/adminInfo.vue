@@ -7,14 +7,14 @@
             <div class="form-group">
                 <label for="loginName" class="col-sm-3 control-label">管理人員登入名稱</label>
                 <div class="col-sm-9">
-                    <input type="text" v-model="inputs.loginName" :value="user.loginName" class="form-control" id="loginName" placeholder="" >
+                    <input type="text" v-model="inputs.loginName" :value="user.loginName" class="form-control" id="loginName" placeholder="Administrator Login Name" >
                 </div>
             </div>
             <div class="form-group">
                 <label for="profile" class="col-sm-3 control-label">管理人員權限類別</label>
                 <div class="col-sm-9">
                     <select name="profile" id="profile" class="form-control" v-model="inputs.profile" >
-                        <option  value="" > Can Select A Existing Profile </option>
+                        <option  value="" >-- Can Select A Existing Profile --</option>
                         <option v-for="profile in profiles" :value="profile" > {{profile.label}}</option>
                     </select>
                 </div>
@@ -22,21 +22,21 @@
             <div class="form-group">
                 <label for="password" class="col-sm-3 control-label">登入密碼</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="password" v-model="inputs.password" :value="user.password" placeholder="" >
+                    <input type="text" class="form-control" id="password" v-model="inputs.password" :value="user.password" placeholder="Administrator Password" >
                 </div>
             </div>
 
-            <h5><strong>設定權限</strong></h5>
+            <h5><strong>設定權限 Permissions Setting</strong></h5>
             <permissions :profile="inputs.profile"></permissions>
             <div class="form-group">
                 <div class="col-xs-12 col-sm-4 pull-right">
-                    <button class="btn btn-block btn-purple" @click.prevent="deleteAdmin">刪除</button>
+                    <button class="btn btn-block btn-purple" @click.prevent="deleteAdmin">刪除 Delete</button>
                 </div>
                 <div class="col-xs-12 col-sm-4 pull-right">
-                    <button class="btn btn-block btn-purple" @click.prevent="reset">重設</button>
+                    <button class="btn btn-block btn-purple" @click.prevent="reset">重設 Reset</button>
                 </div>
                 <div class="col-xs-12 col-sm-4 pull-right">
-                    <button class="btn btn-block btn-purple" @click.prevent="updateUser">更新</button>
+                    <button class="btn btn-block btn-purple" @click.prevent="updateUser">更新 Update</button>
                 </div>
             </div>
         </form>

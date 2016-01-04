@@ -11,21 +11,21 @@
                            class="form-control"
                            id="docTypeIndex"
                            v-model="inputs.index"
-                           placeholder="">
+                           placeholder="Index">
                 </div>
             </div>
             <div class="form-group">
                 <label for="docType" class="col-sm-3 control-label">文件類別名稱</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="docType" v-model="inputs.type" placeholder="">
+                    <input type="text" class="form-control" id="docType" v-model="inputs.type" placeholder="Document Type Name">
                 </div>
             </div>
             <div class="row button-group">
                 <div class="col-sm-3">
-                    <button class="btn btn-block btn-purple" @click.prevent="addNewDocumentType">新增</button>
+                    <button class="btn btn-block btn-purple" @click.prevent="addNewDocumentType">新增 Create</button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-block btn-purple" @click.prevent="reset">重設</button>
+                    <button class="btn btn-block btn-purple" @click.prevent="reset">重設 Reset</button>
                 </div>
             </div>
         </form>
@@ -58,11 +58,7 @@
                 console.log('post to server to add a new document type')
             },
             toggleTooltip: function(e){
-                if(e.keyCode <48 || e.keyCode > 57){
-                    $('#docTypeIndex').tooltip('show')
-                }else{
-                    $('#docTypeIndex').tooltip('hide')
-                }
+                e.keyCode <48 || e.keyCode > 57 ? $('#docTypeIndex').tooltip('show'):$('#docTypeIndex').tooltip('hide');
             }
         },
         ready:function(){

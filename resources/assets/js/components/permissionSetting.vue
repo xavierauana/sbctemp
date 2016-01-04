@@ -20,21 +20,21 @@
             <permissions v-show="showPermissionTable" :editable="true" :profile="existingProfile" :selected-permissions.sync="selectedPermissions"></permissions>
             <div class="row button-group">
                 <div class="col-sm-3" v-show="showCreate">
-                    <button class="btn btn-block btn-purple" @click.prevent="createNewProfile">新增</button>
+                    <button class="btn btn-block btn-purple" @click.prevent="createNewProfile">新增 Create</button>
                 </div>
                 <div class="col-sm-3" v-show="existingProfile">
-                    <button class="btn btn-block btn-purple" @click.prevent="updateProfile">更新</button>
+                    <button class="btn btn-block btn-purple" @click.prevent="updateProfile">更新 Update</button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-block btn-purple" @click.prevent="reset">重設</button>
+                    <button class="btn btn-block btn-purple" @click.prevent="reset">重設 Reset</button>
                 </div>
             </div>
             <div class="row button-group">
                 <div class="col-sm-3" v-show="existingProfile">
-                    <button class="btn btn-block btn-purple"  @click.prevent="deleteProfile">刪除</button>
+                    <button class="btn btn-block btn-purple"  @click.prevent="deleteProfile">刪除 Delete</button>
                 </div>
                 <div class="col-sm-3" v-show="existingProfile">
-                    <button class="btn btn-block btn-purple"  @click.prevent="revertToDefault">返回原有設定</button>
+                    <button class="btn btn-block btn-purple"  @click.prevent="revertToDefault">返回原有設定 Revert to Default</button>
                 </div>
             </div>
         </form>
