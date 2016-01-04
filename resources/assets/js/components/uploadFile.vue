@@ -10,8 +10,13 @@
         <div class="form-group">
             <label for="cnumber" class="sr-only">C Number</label>
             <div class="col-sm-8">
-                <input type="number" name="cnumber" v-model="inputs.cNumber" class="form-control" placeholder="C Number" @change="checkValidity" pattern="/[1-9]{10}/" title="This is an error message" required autofocus>
-                <span v-show="checking.cNumberValidity">{{customer.name}}</span>
+                <input type="number" name="cnumber" v-model="inputs.cNumber" class="form-control" placeholder="客戶公司序號 C Number" @change="checkValidity" pattern="/[1-9]{10}/" title="This is an error message" required autofocus>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="cnumber" class="sr-only">Company Name</label>
+            <div class="col-sm-8">
+                <input type="number" name="cnumber" v-model="customer.name" class="form-control" placeholder="客戶公司名稱 Company Name "  title="This is an error message" required>
             </div>
         </div>
         <div class="form-group">
@@ -19,7 +24,7 @@
 
             <div class="col-sm-8">
                     <div class='input-group date' id='datetimepicker'>
-                        <input type='text' class="form-control" name="docDate"  v-model="inputs.docDate" id="docDate" placeholder="文件日期 (YYYY/MM/DD)" @keypress="showkeypress" pattern="/[0-9]\//" required/>
+                        <input type='text' class="form-control" name="docDate"  v-model="inputs.docDate" id="docDate" placeholder="文件日期 Document Date (YYYY/MM/DD)" @keypress="showkeypress" pattern="/[0-9]\//" required/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -30,7 +35,7 @@
             <label for="docType" class="sr-only">Document Type</label>
             <div class="col-sm-8">
                 <select name="docType" id="docType" v-model="inputs.docType" class="form-control" style="width:100%">
-                    <option value="" selected> -- 文件類別 -- </option>
+                    <option value="" selected> -- 文件類別 Document Type -- </option>
                     <option v-for="docType in documentTypes" :value="docType.id">{{docType.type}}</option>
                 </select>
             </div>
@@ -38,13 +43,13 @@
         <div class="form-group">
             <label for="docName" class="sr-only">Document Name</label>
             <div class="col-sm-8">
-                <input type="docName" name="docName" v-model="inputs.docName" class="form-control" id="docName" placeholder="文件描述" required>
+                <input type="docName" name="docName" v-model="inputs.docName" class="form-control" id="docName" placeholder="文件描述 Document Description" required>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-8">
-                <button class="btn btn-default" @click.prevent="browseFile">Browser File</button>
-                <p class="help-block">File size should not bigger than 5Mb</p>
+                <button class="btn btn-default" @click.prevent="browseFile">Browser File 瀏覽檔案</button>
+                <p class="help-block">File size should not bigger than 5MB. 文件容量不可超過5MB。</p>
                 <input type="file" class="hidden" name="files" id="file" @change="checkFileInput" accept=".pdf, application/pdf" required>
             </div>
         </div>
@@ -76,11 +81,11 @@
         </div>
         <div class="form-group">
             <div class="col-sm-8">
-                <button type="submit" class="btn btn-block btn-purple" @click.prevent="uploadFile">上載文件</button>
+                <button type="submit" class="btn btn-block btn-purple" @click.prevent="uploadFile">Upload File 上載文件</button>
             </div>
         </div>
 
-        <iframe v-show="showPreview" id="viewer" frameborder="0" scrolling="no" width="500" height="770"></iframe>
+        <iframe v-show="showPreview" :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="500" height="770"></iframe>
     </form>
 </template>
 
@@ -107,7 +112,8 @@
                     data:"",
                 },
                 customer:{},
-                previewing:false
+                previewing:false,
+                previewSrc:""
             }
         },
         computed:{
@@ -226,12 +232,7 @@
             },
             previewPDF: function () {
                 console.log('preview pdf');
-                if(!this.previewing){
-                    var pdffile_url = URL.createObjectURL(this.inputFile.data);
-                    $("#viewer").attr('src', pdffile_url);
-                }else{
-                    $("#viewer").attr('src', "");
-                }
+                this.previewSrc = this.previewing? "" : URL.createObjectURL(this.inputFile.data);
                 this.previewing = !this.previewing;
             },
             reset:function(){

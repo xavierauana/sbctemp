@@ -1,4 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+module.exports = { "default": require("core-js/library/fn/object/keys"), __esModule: true };
+},{"core-js/library/fn/object/keys":3}],2:[function(require,module,exports){
 "use strict";
 
 exports.default = function (obj) {
@@ -8,7 +10,131 @@ exports.default = function (obj) {
 };
 
 exports.__esModule = true;
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
+require('../../modules/es6.object.keys');
+module.exports = require('../../modules/$.core').Object.keys;
+},{"../../modules/$.core":5,"../../modules/es6.object.keys":13}],4:[function(require,module,exports){
+module.exports = function(it){
+  if(typeof it != 'function')throw TypeError(it + ' is not a function!');
+  return it;
+};
+},{}],5:[function(require,module,exports){
+var core = module.exports = {version: '1.2.6'};
+if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+},{}],6:[function(require,module,exports){
+// optional / simple context binding
+var aFunction = require('./$.a-function');
+module.exports = function(fn, that, length){
+  aFunction(fn);
+  if(that === undefined)return fn;
+  switch(length){
+    case 1: return function(a){
+      return fn.call(that, a);
+    };
+    case 2: return function(a, b){
+      return fn.call(that, a, b);
+    };
+    case 3: return function(a, b, c){
+      return fn.call(that, a, b, c);
+    };
+  }
+  return function(/* ...args */){
+    return fn.apply(that, arguments);
+  };
+};
+},{"./$.a-function":4}],7:[function(require,module,exports){
+// 7.2.1 RequireObjectCoercible(argument)
+module.exports = function(it){
+  if(it == undefined)throw TypeError("Can't call method on  " + it);
+  return it;
+};
+},{}],8:[function(require,module,exports){
+var global    = require('./$.global')
+  , core      = require('./$.core')
+  , ctx       = require('./$.ctx')
+  , PROTOTYPE = 'prototype';
+
+var $export = function(type, name, source){
+  var IS_FORCED = type & $export.F
+    , IS_GLOBAL = type & $export.G
+    , IS_STATIC = type & $export.S
+    , IS_PROTO  = type & $export.P
+    , IS_BIND   = type & $export.B
+    , IS_WRAP   = type & $export.W
+    , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
+    , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
+    , key, own, out;
+  if(IS_GLOBAL)source = name;
+  for(key in source){
+    // contains in native
+    own = !IS_FORCED && target && key in target;
+    if(own && key in exports)continue;
+    // export native or passed
+    out = own ? target[key] : source[key];
+    // prevent global pollution for namespaces
+    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+    // bind timers to global for call from export context
+    : IS_BIND && own ? ctx(out, global)
+    // wrap global constructors for prevent change them in library
+    : IS_WRAP && target[key] == out ? (function(C){
+      var F = function(param){
+        return this instanceof C ? new C(param) : C(param);
+      };
+      F[PROTOTYPE] = C[PROTOTYPE];
+      return F;
+    // make static versions for prototype methods
+    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+    if(IS_PROTO)(exports[PROTOTYPE] || (exports[PROTOTYPE] = {}))[key] = out;
+  }
+};
+// type bitmap
+$export.F = 1;  // forced
+$export.G = 2;  // global
+$export.S = 4;  // static
+$export.P = 8;  // proto
+$export.B = 16; // bind
+$export.W = 32; // wrap
+module.exports = $export;
+},{"./$.core":5,"./$.ctx":6,"./$.global":10}],9:[function(require,module,exports){
+module.exports = function(exec){
+  try {
+    return !!exec();
+  } catch(e){
+    return true;
+  }
+};
+},{}],10:[function(require,module,exports){
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
+if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
+},{}],11:[function(require,module,exports){
+// most Object methods by ES6 should accept primitives
+var $export = require('./$.export')
+  , core    = require('./$.core')
+  , fails   = require('./$.fails');
+module.exports = function(KEY, exec){
+  var fn  = (core.Object || {})[KEY] || Object[KEY]
+    , exp = {};
+  exp[KEY] = exec(fn);
+  $export($export.S + $export.F * fails(function(){ fn(1); }), 'Object', exp);
+};
+},{"./$.core":5,"./$.export":8,"./$.fails":9}],12:[function(require,module,exports){
+// 7.1.13 ToObject(argument)
+var defined = require('./$.defined');
+module.exports = function(it){
+  return Object(defined(it));
+};
+},{"./$.defined":7}],13:[function(require,module,exports){
+// 19.1.2.14 Object.keys(O)
+var toObject = require('./$.to-object');
+
+require('./$.object-sap')('keys', function($keys){
+  return function keys(it){
+    return $keys(toObject(it));
+  };
+});
+},{"./$.object-sap":11,"./$.to-object":12}],14:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -101,7 +227,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],3:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 var Vue // late bind
 var map = Object.create(null)
 var shimmed = false
@@ -342,7 +468,7 @@ function format (id) {
   return id.match(/[^\/]+\.vue$/)[0]
 }
 
-},{}],4:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /**
  * Service for sending network requests.
  */
@@ -504,7 +630,7 @@ module.exports = function (_) {
     return _.http = Http;
 };
 
-},{"./lib/jsonp":6,"./lib/promise":7,"./lib/xhr":9}],5:[function(require,module,exports){
+},{"./lib/jsonp":18,"./lib/promise":19,"./lib/xhr":21}],17:[function(require,module,exports){
 /**
  * Install plugin.
  */
@@ -545,7 +671,7 @@ if (window.Vue) {
 }
 
 module.exports = install;
-},{"./http":4,"./lib/util":8,"./resource":10,"./url":11}],6:[function(require,module,exports){
+},{"./http":16,"./lib/util":20,"./resource":22,"./url":23}],18:[function(require,module,exports){
 /**
  * JSONP request.
  */
@@ -597,7 +723,7 @@ module.exports = function (_, options) {
 
 };
 
-},{"./promise":7}],7:[function(require,module,exports){
+},{"./promise":19}],19:[function(require,module,exports){
 /**
  * Promises/A+ polyfill v1.1.0 (https://github.com/bramstein/promis)
  */
@@ -809,7 +935,7 @@ if (window.MutationObserver) {
 
 module.exports = window.Promise || Promise;
 
-},{}],8:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /**
  * Utility functions.
  */
@@ -891,7 +1017,7 @@ module.exports = function (Vue) {
     return _;
 };
 
-},{}],9:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /**
  * XMLHttp request.
  */
@@ -944,7 +1070,7 @@ module.exports = function (_, options) {
     return promise;
 };
 
-},{"./promise":7}],10:[function(require,module,exports){
+},{"./promise":19}],22:[function(require,module,exports){
 /**
  * Service for interacting with RESTful services.
  */
@@ -1057,7 +1183,7 @@ module.exports = function (_) {
     return _.resource = Resource;
 };
 
-},{}],11:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /**
  * Service for URL templating.
  */
@@ -1216,7 +1342,7 @@ module.exports = function (_) {
     return _.url = Url;
 };
 
-},{}],12:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 (function (process){
 /*!
  * Vue.js v1.0.11
@@ -10616,7 +10742,7 @@ if (process.env.NODE_ENV !== 'production' && inBrowser) {
 
 module.exports = Vue;
 }).call(this,require('_process'))
-},{"_process":2}],13:[function(require,module,exports){
+},{"_process":14}],25:[function(require,module,exports){
 var inserted = exports.cache = {}
 
 exports.insert = function (css) {
@@ -10636,7 +10762,7 @@ exports.insert = function (css) {
   return elem
 }
 
-},{}],14:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /**
  * Created by Xavier on 10/12/15.
  */
@@ -10680,6 +10806,14 @@ var _componentsCustomerDocumentsVue = require('./components/customerDocuments.vu
 
 var _componentsCustomerDocumentsVue2 = _interopRequireDefault(_componentsCustomerDocumentsVue);
 
+var _componentsExportDataVue = require('./components/exportData.vue');
+
+var _componentsExportDataVue2 = _interopRequireDefault(_componentsExportDataVue);
+
+var _componentsCreateLinkageVue = require('./components/createLinkage.vue');
+
+var _componentsCreateLinkageVue2 = _interopRequireDefault(_componentsCreateLinkageVue);
+
 var Vue = require('vue');
 
 Vue.use(require('vue-resource'));
@@ -10707,11 +10841,13 @@ new Vue({
         PermissionSetting: _componentsPermissionSettingVue2['default'],
         SearchUser: _componentsSearchUserVue2['default'],
         UploadFile: _componentsUploadFileVue2['default'],
-        CustomerDocuments: _componentsCustomerDocumentsVue2['default']
+        CustomerDocuments: _componentsCustomerDocumentsVue2['default'],
+        ExportData: _componentsExportDataVue2['default'],
+        CreateLinkage: _componentsCreateLinkageVue2['default']
     }
 });
 
-},{"./components/adminInfo.vue":15,"./components/createNewAdmin.vue":16,"./components/customerDocuments.vue":17,"./components/editDocumentType.vue":19,"./components/entryView.vue":20,"./components/permissionSetting.vue":21,"./components/searchUser.vue":23,"./components/sideBarMenu.vue":24,"./components/uploadFile.vue":25,"vue":12,"vue-resource":5}],15:[function(require,module,exports){
+},{"./components/adminInfo.vue":27,"./components/createLinkage.vue":28,"./components/createNewAdmin.vue":29,"./components/customerDocuments.vue":30,"./components/editDocumentType.vue":32,"./components/entryView.vue":33,"./components/exportData.vue":34,"./components/permissionSetting.vue":36,"./components/searchUser.vue":38,"./components/sideBarMenu.vue":39,"./components/uploadFile.vue":40,"vue":24,"vue-resource":17}],27:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -10739,7 +10875,7 @@ exports['default'] = {
     data: function data() {
         return {
             inputs: {
-                profile: {},
+                profile: "",
                 password: "",
                 loginName: ""
             },
@@ -10769,17 +10905,26 @@ exports['default'] = {
         reset: function reset() {
             if (this.user) {
                 this.inputs.loginName = this.user.loginName;
-                this.inputs.profile = {};
+                this.inputs.profile = "";
                 this.inputs.password = "";
             }
         },
         updateUser: function updateUser() {
             console.log('update user');
+        },
+        deleteAdmin: function deleteAdmin() {
+            if (confirm('Are you sure you will delete the admin user, ' + this.user.loginName)) {
+                console.log('post delete admin');
+                this.inputs.profile = "";
+                this.inputs.password = "";
+                this.inputs.loginName = "";
+                this.users.$remove(this.user);
+            }
         }
     }
 };
 module.exports = exports['default'];
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <div class=\"panel panel-default\">\n            <user-table :users=\"users\" :profiles=\"profiles\" :selected-user.sync=\"user\"></user-table>\n        </div>\n        <form class=\"form-horizontal\">\n            <div class=\"form-group\">\n                <label for=\"loginName\" class=\"col-sm-3 control-label\">管理人員登入名稱</label>\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" v-model=\"inputs.loginName\" :value=\"user.loginName\" class=\"form-control\" id=\"loginName\" placeholder=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"profile\" class=\"col-sm-3 control-label\">管理人員權限類別</label>\n                <div class=\"col-sm-9\">\n                    <select name=\"profile\" id=\"profile\" class=\"form-control\" v-model=\"inputs.profile\">\n                        <option value=\"\"> Can Select A Existing Profile </option>\n                        <option v-for=\"profile in profiles\" :value=\"profile\"> {{profile.label}}</option>\n                    </select>\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"password\" class=\"col-sm-3 control-label\">登入密碼</label>\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" class=\"form-control\" id=\"password\" v-model=\"inputs.password\" :value=\"user.password\" placeholder=\"\">\n                </div>\n            </div>\n\n            <h5><strong>設定權限</strong></h5>\n            <permissions :profile=\"inputs.profile\"></permissions>\n            <div class=\"form-group\">\n                <div class=\"col-xs-12 col-sm-4 pull-right\">\n                    <button type=\"submit\" class=\"btn btn-block btn-purple\" @click.prevent=\"reset\">重設</button>\n                </div>\n                <div class=\"col-xs-12 col-sm-4 pull-right\">\n                    <button type=\"submit\" class=\"btn btn-block btn-purple\" @click.prevent=\"updateUser\">更新</button>\n                </div>\n            </div>\n        </form>\n    </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <div class=\"panel panel-default\">\n            <user-table :users=\"users\" :profiles=\"profiles\" :selected-user.sync=\"user\"></user-table>\n        </div>\n        <form class=\"form-horizontal\">\n            <div class=\"form-group\">\n                <label for=\"loginName\" class=\"col-sm-3 control-label\">管理人員登入名稱</label>\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" v-model=\"inputs.loginName\" :value=\"user.loginName\" class=\"form-control\" id=\"loginName\" placeholder=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"profile\" class=\"col-sm-3 control-label\">管理人員權限類別</label>\n                <div class=\"col-sm-9\">\n                    <select name=\"profile\" id=\"profile\" class=\"form-control\" v-model=\"inputs.profile\">\n                        <option value=\"\"> Can Select A Existing Profile </option>\n                        <option v-for=\"profile in profiles\" :value=\"profile\"> {{profile.label}}</option>\n                    </select>\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"password\" class=\"col-sm-3 control-label\">登入密碼</label>\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" class=\"form-control\" id=\"password\" v-model=\"inputs.password\" :value=\"user.password\" placeholder=\"\">\n                </div>\n            </div>\n\n            <h5><strong>設定權限</strong></h5>\n            <permissions :profile=\"inputs.profile\"></permissions>\n            <div class=\"form-group\">\n                <div class=\"col-xs-12 col-sm-4 pull-right\">\n                    <button class=\"btn btn-block btn-purple\" @click.prevent=\"deleteAdmin\">刪除</button>\n                </div>\n                <div class=\"col-xs-12 col-sm-4 pull-right\">\n                    <button class=\"btn btn-block btn-purple\" @click.prevent=\"reset\">重設</button>\n                </div>\n                <div class=\"col-xs-12 col-sm-4 pull-right\">\n                    <button class=\"btn btn-block btn-purple\" @click.prevent=\"updateUser\">更新</button>\n                </div>\n            </div>\n        </form>\n    </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -10791,7 +10936,76 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./permissions.vue":22,"./sideBarMenu.vue":24,"./userTable.vue":26,"babel-runtime/helpers/interop-require-default":1,"vue":12,"vue-hot-reload-api":3}],16:[function(require,module,exports){
+},{"./permissions.vue":37,"./sideBarMenu.vue":39,"./userTable.vue":41,"babel-runtime/helpers/interop-require-default":2,"vue":24,"vue-hot-reload-api":15}],28:[function(require,module,exports){
+'use strict';
+
+exports.__esModule = true;
+exports['default'] = {
+    data: function data() {
+        return {
+            pnumber: '',
+            cnumber: '',
+            presult: 'Chan Ta Man',
+            cresult: 'abc company',
+            pnumberIsValid: false,
+            cnumberIsValid: false
+        };
+    },
+    computed: {
+        //            pnumberIsValid: function(){
+        //                if(this.pnumber){
+        //                    if(this.pnumber == 'aaaa')return true;
+        //                    console.log('P number incorrect');
+        //                }
+        //                return false;
+        //            },
+        //            cnumberIsValid: function(){
+        //                if(this.cnumber){
+        //                    if (this.cnumber == '9999') return true;
+        //                    if (this.cnumber == '8888'){
+        //                        console.log('This company already link with other p number.');
+        //                        return false;
+        //                    }
+        //                    console.log('C number incorrect');
+        //                }
+        //                return false;
+        //            }
+    },
+    methods: {
+        cunmberChange: function cunmberChange() {
+            if (this.cnumber == '8888') {
+                this.cnumberIsValid = true;
+            } else if (this.cnumber == '9999') {
+                alert('This company already link with other p number.');
+                this.cnumberIsValid = false;
+            } else {
+                this.cnumberIsValid = false;
+            }
+        },
+        punmberChange: function punmberChange() {
+            this.pnumberIsValid = this.pnumber == 'aaaa' ? true : false;
+        },
+        formSubmit: function formSubmit(e) {
+            e.preventDefault();
+            this.cunmberChange();
+            this.punmberChange();
+        }
+    }
+};
+module.exports = exports['default'];
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <form class=\"form\" @submit=\"formSubmit\">\n\n        <div class=\"form-group\">\n            <input type=\"text\" class=\"form-control\" v-model=\"pnumber\" @blur=\"punmberChange\" placeholder=\"P Number\">\n        </div>\n        <div class=\"form-group\" v-show=\"pnumberIsValid\">\n            <input class=\"form-control\" v-model=\"presult\" type=\"text\" disabled=\"\">\n        </div>\n        <div class=\"form-group\">\n            <input type=\"number\" class=\"form-control\" v-model=\"cnumber\" @blur=\"cunmberChange\" placeholder=\"C Number\">\n        </div>\n        <div class=\"form-group\" v-show=\"cnumberIsValid\">\n            <input class=\"form-control\" v-model=\"cresult\" type=\"text\" disabled=\"\">\n        </div>\n        <button class=\"btn btn-purple\">Create Linkage</button>\n    </form>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  var id = "/Users/adrianexavier/Code/SBCTemp/resources/assets/js/components/createLinkage.vue"
+  if (!module.hot.data) {
+    hotAPI.createRecord(id, module.exports)
+  } else {
+    hotAPI.update(id, module.exports, module.exports.template)
+  }
+})()}
+},{"vue":24,"vue-hot-reload-api":15}],29:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("babel-runtime/helpers/interop-require-default")["default"];
@@ -10847,7 +11061,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./permissions.vue":22,"babel-runtime/helpers/interop-require-default":1,"vue":12,"vue-hot-reload-api":3}],17:[function(require,module,exports){
+},{"./permissions.vue":37,"babel-runtime/helpers/interop-require-default":2,"vue":24,"vue-hot-reload-api":15}],30:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -10903,7 +11117,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":12,"vue-hot-reload-api":3}],18:[function(require,module,exports){
+},{"vue":24,"vue-hot-reload-api":15}],31:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -10921,7 +11135,7 @@ exports["default"] = {
     },
     methods: {
         editInputValue: function editInputValue(docType) {
-            return docType.status ? "更新" : "編輯";
+            return docType.status ? "編號" : "編輯";
         },
         edit: function edit(e, docType) {
             if (!docType.status) {
@@ -10966,7 +11180,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":12,"vue-hot-reload-api":3}],19:[function(require,module,exports){
+},{"vue":24,"vue-hot-reload-api":15}],32:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("babel-runtime/helpers/interop-require-default")["default"];
@@ -11028,7 +11242,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./documentTypeTable.vue":18,"babel-runtime/helpers/interop-require-default":1,"vue":12,"vue-hot-reload-api":3}],20:[function(require,module,exports){
+},{"./documentTypeTable.vue":31,"babel-runtime/helpers/interop-require-default":2,"vue":24,"vue-hot-reload-api":15}],33:[function(require,module,exports){
 var __vueify_style__ = require("vueify-insert-css").insert("\n    button.btn.btn-block{\n        margin-bottom: 15px;\n    }\n")
 'use strict';
 
@@ -11045,7 +11259,7 @@ exports['default'] = {
     }
 };
 module.exports = exports['default'];
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div class=\"row\">\n        <div class=\"col-md-offset-3 col-md-6\">\n            <button class=\"btn btn-block btn-purple btn-lg\" @click.prevent=\"changeViewTo('UploadFile')\">\n                上載文件\n            </button>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col-md-offset-3 col-md-6\">\n            <button class=\"btn btn-block btn-purple btn-lg\" @click.prevent=\"changeViewTo('SearchUser')\">\n                搜尋用戶\n            </button>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col-md-offset-3 col-md-6\">\n            <div class=\"panel-group\" id=\"accordion\" role=\"tablist\" aria-multiselectable=\"true\">\n                <div class=\"panel panel-default\">\n                    <div class=\"panel-heading\" role=\"tab\" id=\"headingOne\">\n                        <h4 class=\"panel-title text-center\">\n                            <a role=\"button\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapseOne\" aria-expanded=\"true\" aria-controls=\"collapseOne\">\n                                管理人員設定\n                            </a>\n                        </h4>\n                    </div>\n                    <div id=\"collapseOne\" class=\"panel-collapse collapse\" role=\"tabpanel\" aria-labelledby=\"headingOne\">\n                        <ul class=\"list-group\">\n                            <!--<li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('CustomerDocuments')\" href=\"/\">用戶文件</a></li>-->\n                            <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('CreateNewAdmin')\" href=\"/\">新增管理人員</a></li>\n                            <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('AdminInfo')\" href=\"/\">管理人員資料</a></li>\n                             <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('EditDocumentType')\" href=\"/\">文件類別設定</a></li>\n                             <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('PermissionSetting')\" href=\"/\">權限類別設定</a></li>\n                        </ul>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div class=\"row\">\n        <div class=\"col-md-offset-3 col-md-6\">\n            <button class=\"btn btn-block btn-purple btn-lg\" @click.prevent=\"changeViewTo('UploadFile')\">\n                上載文件\n            </button>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col-md-offset-3 col-md-6\">\n            <button class=\"btn btn-block btn-purple btn-lg\" @click.prevent=\"changeViewTo('SearchUser')\">\n                搜尋用戶\n            </button>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col-md-offset-3 col-md-6\">\n            <div class=\"panel-group\" id=\"accordion\" role=\"tablist\" aria-multiselectable=\"true\">\n                <div class=\"panel panel-default\">\n                    <div class=\"panel-heading\" role=\"tab\" id=\"headingOne\">\n                        <h4 class=\"panel-title text-center\">\n                            <a role=\"button\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapseOne\" aria-expanded=\"true\" aria-controls=\"collapseOne\">\n                                管理人員設定\n                            </a>\n                        </h4>\n                    </div>\n                    <div id=\"collapseOne\" class=\"panel-collapse collapse\" role=\"tabpanel\" aria-labelledby=\"headingOne\">\n                        <ul class=\"list-group\">\n                            <!--<li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('CustomerDocuments')\" href=\"/\">用戶文件</a></li>-->\n                            <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('CreateNewAdmin')\" href=\"/\">新增管理人員 Add New Admin</a></li>\n                            <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('AdminInfo')\" href=\"/\">管理人員資料 Admin Info</a></li>\n                             <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('EditDocumentType')\" href=\"/\">文件類別設定 Doc Type Setting</a></li>\n                             <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('PermissionSetting')\" href=\"/\">權限類別設定 Permissions Setting</a></li>\n                             <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('ExportData')\" href=\"/\">賬戶資料總匯表 Export User Info</a></li>\n                             <li class=\"list-group-item text-center\"><a @click.prevent=\"changeViewTo('CreateLinkage')\" href=\"/\">Create Linkage</a></li>\n                        </ul>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11061,7 +11275,126 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":12,"vue-hot-reload-api":3,"vueify-insert-css":13}],21:[function(require,module,exports){
+},{"vue":24,"vue-hot-reload-api":15,"vueify-insert-css":25}],34:[function(require,module,exports){
+"use strict";
+
+exports.__esModule = true;
+exports["default"] = {};
+module.exports = exports["default"];
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <a class=\"btn btn-purple btn-lg\" href=\"/exportData\">下載用戶資料 Export User Data</a>\n    </div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  var id = "/Users/adrianexavier/Code/SBCTemp/resources/assets/js/components/exportData.vue"
+  if (!module.hot.data) {
+    hotAPI.createRecord(id, module.exports)
+  } else {
+    hotAPI.update(id, module.exports, module.exports.template)
+  }
+})()}
+},{"vue":24,"vue-hot-reload-api":15}],35:[function(require,module,exports){
+var __vueify_style__ = require("vueify-insert-css").insert("\n    body {\n        font-family: Helvetica Neue, Arial, sans-serif;\n        font-size: 14px;\n        color: #444;\n    }\n\n    table {\n        border: 2px solid #42b983;\n        border-radius: 3px;\n        background-color: #fff;\n    }\n\n    th {\n        background-color: #42b983;\n        color: rgba(255,255,255,0.66);\n        cursor: pointer;\n        -webkit-user-select: none;\n        -moz-user-select: none;\n        -user-select: none;\n    }\n\n    td {\n        background-color: #f9f9f9;\n    }\n\n    th, td {\n        min-width: 120px;\n        padding: 10px 20px;\n    }\n\n    .table>thead>tr>th.active {\n        color: #fff;\n        background-color: #00007b;\n    }\n\n    th:active {\n        background-color: #00007b;\n    }\n\n    th.active .arrow {\n        opacity: 1;\n    }\n\n    .arrow {\n        display: inline-block;\n        vertical-align: middle;\n        width: 0;\n        height: 0;\n        margin-left: 5px;\n        opacity: 0.66;\n    }\n\n    .arrow.asc {\n        border-left: 4px solid transparent;\n        border-right: 4px solid transparent;\n        border-bottom: 4px solid #fff;\n    }\n\n    .arrow.dsc {\n        border-left: 4px solid transparent;\n        border-right: 4px solid transparent;\n        border-top: 4px solid #fff;\n    }\n\n    #search {\n        margin-bottom: 10px;\n    }\n\n    .table-responsive{\n        width:100%;\n    }\n\n    #search-label{\n        padding-top: 7px;\n        text-align: right;\n    }\n")
+'use strict';
+
+var _Object$keys = require('babel-runtime/core-js/object/keys')['default'];
+
+exports.__esModule = true;
+exports['default'] = {
+    props: {
+        data: {
+            type: Array,
+            'default': function _default() {
+                return [];
+            }
+        },
+        columns: Array
+    },
+    data: function data() {
+        var sortOrders = {};
+        this.columns.forEach(function (key) {
+            sortOrders[key.code] = 1;
+        });
+        return {
+            filterKey: '',
+            sortKey: '',
+            currentPage: 1,
+            sortOrders: sortOrders,
+            itemPerPage: "",
+            totalPages: 1
+        };
+    },
+    computed: {
+        needPaginated: function needPaginated() {
+            if (this.filterKey) return false;
+            return this.data.length > this.itemPerPage;
+        },
+        countTableColumns: function countTableColumns() {
+            return _Object$keys(this.columns).length + 1;
+        }
+    },
+    watch: {
+        data: function data() {
+            if (this.data) {
+                return this.totalPages = Math.ceil(this.data.length / this.itemPerPage);
+            }
+        }
+    },
+    methods: {
+        paginate: function paginate(itemIndex) {
+            var max = this.currentPage * this.itemPerPage;
+            var min = this.currentPage * this.itemPerPage - this.itemPerPage;
+            console.log(min <= itemIndex && max > itemIndex);
+
+            return min <= itemIndex && max > itemIndex;
+        },
+        toPage: function toPage(pageNumber) {
+            this.currentPage = pageNumber;
+        },
+        display: function display(itemIndex) {
+            if (this.filterKey) {
+                return true;
+            }
+            var max = this.currentPage * this.itemPerPage;
+            var min = this.currentPage * this.itemPerPage - this.itemPerPage;
+
+            return min <= itemIndex && max > itemIndex;
+        },
+        sortBy: function sortBy(key) {
+            this.sortKey = key.code;
+            this.sortOrders[key.code] = this.sortOrders[key.code] * -1;
+        },
+        previewPDF: function previewPDF(document) {
+            console.log('preview pdf');
+            this.previewSrc = this.previewing ? "" : "some url to document link";
+            this.previewing = !this.previewing;
+        },
+        deleteDocument: function deleteDocument(document) {
+            if (confirm('Are you sure you want to delete ' + document.docName + '?')) {
+                this.data.$remove(document);
+                console.log('post to server to delete the doc');
+            }
+        }
+    }
+};
+module.exports = exports['default'];
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div class=\"table-responsive\">\n        <div class=\"col-xs-4\">\n            Show\n            <select v-model=\"itemPerPage\" id=\"\">\n                <option value=\"5\" selected=\"\">5</option>\n                <option value=\"10\">10</option>\n                <option value=\"15\">15</option>\n                <option value=\"20\">20</option>\n            </select>\n            Entries\n        </div>\n        <div class=\"col-xs-8 col-sm-4 pull-right\">\n            <form action=\"\" class=\"form-horizontal\">\n                <div class=\"form-group\">\n                    <label for=\"search\" class=\"col-xs-4\" id=\"search-label\">Search: </label>\n                    <div class=\"col-xs-8\">\n                        <input type=\"text\" name=\"search\" v-model=\"filterKey\" class=\"form-control\" placeholder=\"testing search\">\n                    </div>\n                </div>\n            </form>\n        </div>\n        <table class=\"table\">\n            <thead>\n            <tr>\n                <th v-for=\"key in columns\" @click=\"sortBy(key)\" :class=\"{active: sortKey == key.code}\">\n                    {{key.label}}\n          <span class=\"arrow\" :class=\"sortOrders[key.code] > 0 ? 'asc' : 'dsc'\">\n          </span>\n                </th>\n                <th></th>\n            </tr>\n            </thead>\n            <tbody>\n            <tr v-for=\"\n                entry in data\n                | filterBy filterKey\n                | orderBy sortKey sortOrders[sortKey]\" v-show=\"paginate($index)\" track-by=\"id\">\n                <td v-for=\"key in columns\">\n                    {{entry[key.code]}}\n                </td>\n                <td>\n                    <button class=\"btn btn-default btn-xs\" @click.prevent=\"previewPDF(entry)\">Preview 預覽</button>\n                    <button class=\"btn btn-danger btn-xs\" @click.prevent=\"deleteDocument(entry)\">Remove 刪除\n                    </button>\n                </td>\n            </tr>\n            </tbody>\n        </table>\n        <div v-show=\"needPaginated\">\n            \n                \n                        <span class=\"pull-right\">\n                            <span class=\"pagination_button\">Previous</span>\n                            <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\n                                <button type=\"button\" class=\"btn btn-xs btn-default\" v-for=\"n in totalPages\" @click=\"toPage(n+1)\">{{n+1}}</button>\n                            </div>\n                            <span class=\"pagination_button\">Next</span>\n                        </span>\n                \n            \n        </div>\n    </div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  var id = "/Users/adrianexavier/Code/SBCTemp/resources/assets/js/components/grid.vue"
+  module.hot.dispose(function () {
+    require("vueify-insert-css").cache["\n    body {\n        font-family: Helvetica Neue, Arial, sans-serif;\n        font-size: 14px;\n        color: #444;\n    }\n\n    table {\n        border: 2px solid #42b983;\n        border-radius: 3px;\n        background-color: #fff;\n    }\n\n    th {\n        background-color: #42b983;\n        color: rgba(255,255,255,0.66);\n        cursor: pointer;\n        -webkit-user-select: none;\n        -moz-user-select: none;\n        -user-select: none;\n    }\n\n    td {\n        background-color: #f9f9f9;\n    }\n\n    th, td {\n        min-width: 120px;\n        padding: 10px 20px;\n    }\n\n    .table>thead>tr>th.active {\n        color: #fff;\n        background-color: #00007b;\n    }\n\n    th:active {\n        background-color: #00007b;\n    }\n\n    th.active .arrow {\n        opacity: 1;\n    }\n\n    .arrow {\n        display: inline-block;\n        vertical-align: middle;\n        width: 0;\n        height: 0;\n        margin-left: 5px;\n        opacity: 0.66;\n    }\n\n    .arrow.asc {\n        border-left: 4px solid transparent;\n        border-right: 4px solid transparent;\n        border-bottom: 4px solid #fff;\n    }\n\n    .arrow.dsc {\n        border-left: 4px solid transparent;\n        border-right: 4px solid transparent;\n        border-top: 4px solid #fff;\n    }\n\n    #search {\n        margin-bottom: 10px;\n    }\n\n    .table-responsive{\n        width:100%;\n    }\n\n    #search-label{\n        padding-top: 7px;\n        text-align: right;\n    }\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord(id, module.exports)
+  } else {
+    hotAPI.update(id, module.exports, module.exports.template)
+  }
+})()}
+},{"babel-runtime/core-js/object/keys":1,"vue":24,"vue-hot-reload-api":15,"vueify-insert-css":25}],36:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("babel-runtime/helpers/interop-require-default")["default"];
@@ -11117,6 +11450,9 @@ exports["default"] = {
                 this.profiles.$remove(this.existingProfile);
                 this.existingProfile = "";
             }
+        },
+        revertToDefault: function revertToDefault() {
+            console.log('revert to default setting.');
         }
     },
     created: function created() {
@@ -11127,7 +11463,7 @@ exports["default"] = {
 
 };
 module.exports = exports["default"];
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <form class=\"form-horizontal\">\n            <div class=\"form-group\">\n                <label for=\"profile\" class=\"col-sm-3 control-label\">現有權限類別名稱</label>\n                <div class=\"col-sm-9\">\n                    <select name=\"profile\" id=\"profile\" class=\"form-control\" v-model=\"existingProfile\" @change=\"selectExistingProfile\" autofocus=\"\">\n                        <option value=\"\" selected=\"\"> Can Select A Existing Profile </option>\n                        <option v-for=\"profile in profiles\" :value=\"profile\"> {{profile.label}}</option>\n                    </select>\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"newProfile\" class=\"col-sm-3 control-label\">新增權限名稱</label>\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" v-model=\"newProfile\" @keyup=\"enterNewProfile\" class=\"form-control\" id=\"newProfile\" placeholder=\"Create New Permission Profile\">\n                </div>\n            </div>\n            <h5><strong>設定權限</strong></h5>\n            <permissions v-show=\"showPermissionTable\" :editable=\"true\" :profile=\"existingProfile\" :selected-permissions.sync=\"selectedPermissions\"></permissions>\n            <div class=\"row button-group\">\n                <div class=\"col-sm-3\" v-show=\"showCreate\">\n                    <button class=\"btn btn-block btn-purple\" @click.prevent=\"createNewProfile\">新增</button>\n                </div>\n                <div class=\"col-sm-3\" v-show=\"existingProfile\">\n                    <button class=\"btn btn-block btn-purple\" @click.prevent=\"updateProfile\">更新</button>\n                </div>\n                <div class=\"col-sm-3\">\n                    <button class=\"btn btn-block btn-purple\" @click.prevent=\"reset\">重設</button>\n                </div>\n            </div>\n            <div class=\"row button-group\">\n                <div class=\"col-sm-3\" v-show=\"existingProfile\">\n                    <button class=\"btn btn-block btn-purple\" @click.prevent=\"deleteProfile\">刪除</button>\n                </div>\n            </div>\n        </form>\n    </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <form class=\"form-horizontal\">\n            <div class=\"form-group\">\n                <label for=\"profile\" class=\"col-sm-3 control-label\">現有權限類別名稱</label>\n                <div class=\"col-sm-9\">\n                    <select name=\"profile\" id=\"profile\" class=\"form-control\" v-model=\"existingProfile\" @change=\"selectExistingProfile\" autofocus=\"\">\n                        <option value=\"\" selected=\"\"> Can Select A Existing Profile </option>\n                        <option v-for=\"profile in profiles\" :value=\"profile\"> {{profile.label}}</option>\n                    </select>\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"newProfile\" class=\"col-sm-3 control-label\">新增權限名稱</label>\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" v-model=\"newProfile\" @keyup=\"enterNewProfile\" class=\"form-control\" id=\"newProfile\" placeholder=\"Create New Permission Profile\">\n                </div>\n            </div>\n            <h5><strong>設定權限</strong></h5>\n            <permissions v-show=\"showPermissionTable\" :editable=\"true\" :profile=\"existingProfile\" :selected-permissions.sync=\"selectedPermissions\"></permissions>\n            <div class=\"row button-group\">\n                <div class=\"col-sm-3\" v-show=\"showCreate\">\n                    <button class=\"btn btn-block btn-purple\" @click.prevent=\"createNewProfile\">新增</button>\n                </div>\n                <div class=\"col-sm-3\" v-show=\"existingProfile\">\n                    <button class=\"btn btn-block btn-purple\" @click.prevent=\"updateProfile\">更新</button>\n                </div>\n                <div class=\"col-sm-3\">\n                    <button class=\"btn btn-block btn-purple\" @click.prevent=\"reset\">重設</button>\n                </div>\n            </div>\n            <div class=\"row button-group\">\n                <div class=\"col-sm-3\" v-show=\"existingProfile\">\n                    <button class=\"btn btn-block btn-purple\" @click.prevent=\"deleteProfile\">刪除</button>\n                </div>\n                <div class=\"col-sm-3\" v-show=\"existingProfile\">\n                    <button class=\"btn btn-block btn-purple\" @click.prevent=\"revertToDefault\">返回原有設定</button>\n                </div>\n            </div>\n        </form>\n    </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11139,7 +11475,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./permissions.vue":22,"babel-runtime/helpers/interop-require-default":1,"vue":12,"vue-hot-reload-api":3}],22:[function(require,module,exports){
+},{"./permissions.vue":37,"babel-runtime/helpers/interop-require-default":2,"vue":24,"vue-hot-reload-api":15}],37:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -11199,23 +11535,51 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":12,"vue-hot-reload-api":3}],23:[function(require,module,exports){
-"use strict";
+},{"vue":24,"vue-hot-reload-api":15}],38:[function(require,module,exports){
+'use strict';
+
+var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
 
 exports.__esModule = true;
-exports["default"] = {
+
+var _gridVue = require('./grid.vue');
+
+var _gridVue2 = _interopRequireDefault(_gridVue);
+
+exports['default'] = {
+    components: {
+        Grid: _gridVue2['default']
+    },
     data: function data() {
         return {
+            searchQuery: '',
+            columns: [{
+                label: '上載日期 Upload Date',
+                code: 'uploadDate'
+            }, {
+                label: '文件類別 Document Type',
+                code: 'docType'
+            }, {
+                label: '文件名稱 Document Name',
+                code: 'docName'
+            }],
             cNumber: "",
             user: "",
             inputs: {},
             documents: [],
-            table: ""
+            table: "",
+            previewing: false
         };
     },
     computed: {
         hasDocuments: function hasDocuments() {
             return !!this.documents.length;
+        },
+        showStatusButton: function showStatusButton() {
+            return this.inputs.status ? "Active" : "Not Active";
+        },
+        getStatusButtonClass: function getStatusButtonClass() {
+            return this.inputs.status ? 'btn-success' : 'btn-danger';
         }
     },
     watch: {
@@ -11223,30 +11587,25 @@ exports["default"] = {
             if (!!this.user) {
                 var url = '/getUserDocuments/' + this.user.cNumber;
                 this.$http.get(url, function (response) {
-                    this.$set('documents', response);
+                    Array.isArray(response) ? this.$set('documents', response) : this.$set('documents', []);
                 });
-            }
-        },
-        documents: function documents() {
-            if (!!this.documents.length) {
-                var self = this;
-                setTimeout((function () {
-                    $('table').DataTable();
-                }).bind(this), 500);
             }
         }
     },
     methods: {
+        sortBy: function sortBy(key) {
+            this.sortKey = key;
+            this.sortOrders[key] = this.sortOrders[key] * -1;
+        },
+        toggleInputStatus: function toggleInputStatus() {
+            this.inputs.status = !this.inputs.status;
+        },
         toggleTooltip: function toggleTooltip(e) {
             $('#searchCNumber').tooltip({
                 trigger: 'manual',
-                title: "number only"
+                title: "只可輸入數字 number only"
             });
-            if ((e.keyCode < 48 || e.keyCode > 57) && e.keyCode !== 13) {
-                $('#searchCNumber').tooltip('show');
-            } else {
-                $('#searchCNumber').tooltip('hide');
-            }
+            (e.keyCode < 48 || e.keyCode > 57) && e.keyCode !== 13 ? $('#searchCNumber').tooltip('show') : $('#searchCNumber').tooltip('hide');
         },
         searchUser: function searchUser() {
             console.log('get request to server to find the user');
@@ -11271,25 +11630,15 @@ exports["default"] = {
             }
         },
         update: function update() {
-            console.log('print something');
-        },
-        deleteDocument: function deleteDocument(document) {
-            if (confirm('Are you sure you want to delete ' + document.docName + '?')) {
-                this.documents.$remove(document);
-                this.refreshDataTable();
-                console.log('post to server to delete the doc');
-            }
-        },
-        refreshDataTable: function refreshDataTable() {
-            $('table').DataTable().destroy();
+            console.log('put to server. and update info!');
         }
     },
     ready: function ready() {
         document.getElementById("searchCNumber").addEventListener("keypress", this.toggleTooltip);
     }
 };
-module.exports = exports["default"];
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <div class=\"well\">\n            <h3>Search User</h3>\n\n            <form action=\"\" method=\"POST\" @submit.prevent=\"searchUser\">\n                <div class=\"input-group\">\n                    <input type=\"number\" v-model=\"cNumber\" id=\"searchCNumber\" class=\"form-control\" placeholder=\"Search C Number\" autofocus=\"\">\n                  <span class=\"input-group-btn\">\n                    <button class=\"btn\" type=\"button\" @click.prevent=\"searchUser\">Go!</button>\n                  </span>\n                </div>\n            </form>\n        </div>\n\n        <form class=\"form-horizontal\" v-show=\"user\">\n            <div class=\"form-group\">\n                <label for=\"cNumber\" class=\"col-sm-2 control-label\">C Number</label>\n\n                <div class=\"col-sm-10\">\n                    <input type=\"number\" class=\"form-control\" name=\"cNumber\" v-model=\"inputs.cNumber\" placeholder=\"C Number\" disabled=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"login\" class=\"col-sm-2 control-label\">Login Name</label>\n\n                <div class=\"col-sm-10\">\n                    <input type=\"text\" class=\"form-control\" id=\"login\" v-model=\"inputs.login\" name=\"login\" placeholder=\"Login Name\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"password\" class=\"col-sm-2 control-label\">Password</label>\n\n                <div class=\"col-sm-10\">\n                    <input type=\"text\" class=\"form-control\" id=\"password\" v-model=\"inputs.password\" name=\"password\" placeholder=\"Password\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"email\" class=\"col-sm-2 control-label\">Email</label>\n\n                <div class=\"col-sm-10\">\n                    <input type=\"email\" class=\"form-control\" id=\"email\" v-model=\"inputs.email\" name=\"email\" placeholder=\"Email\">\n                </div>\n            </div>\n            <div class=\"row button-group pull-right clearfix\">\n                <button class=\"btn btn-purple\" @click.prevent=\"update\">更新</button>\n                <button class=\"btn btn-purple\" @click.prevent=\"reset\">重設</button>\n            </div>\n        </form>\n        <div v-show=\"hasDocuments\">\n            <table class=\"table\">\n                <thead>\n                <tr><th>Upload Date</th>\n                <th>Document Type</th>\n                <th>Document Name</th>\n                <th></th>\n                </tr></thead>\n                <tbody>\n                <tr v-for=\"document in documents\">\n                    <td>{{document.uploadDate}}</td>\n                    <td>{{document.docType}}</td>\n                    <td>{{document.docName}}</td>\n                    <td>\n                        <button class=\"btn btn-danger btn-sm\" @click.prevent=\"deleteDocument(document)\">Remove</button>\n                    </td>\n                </tr>\n                </tbody>\n            </table>\n        </div>\n    </div>\n"
+module.exports = exports['default'];
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <div class=\"well\">\n            <h3>搜尋用戶 Search User</h3>\n\n            <form action=\"\" method=\"POST\" @submit.prevent=\"searchUser\">\n                <div class=\"input-group\">\n                    <input type=\"number\" v-model=\"cNumber\" id=\"searchCNumber\" class=\"form-control\" placeholder=\"客戶公司序號 C Number\" autofocus=\"\">\n                  <span class=\"input-group-btn\">\n                    <button class=\"btn\" type=\"button\" @click.prevent=\"searchUser\">Go!</button>\n                  </span>\n                </div>\n            </form>\n        </div>\n\n        <form class=\"form-horizontal\" v-show=\"user\">\n            <div class=\"form-group\">\n                <label for=\"cNumber\" class=\"col-sm-3 control-label\">客戶公司序號 C Number</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"number\" class=\"form-control\" name=\"cNumber\" v-model=\"inputs.cNumber\" placeholder=\"C Number\" disabled=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"cNumber\" class=\"col-sm-3 control-label\">公司中文名稱 Chinese Company Name</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" class=\"form-control\" v-model=\"inputs.chinese_name\" placeholder=\"Chinese Company Name\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"cNumber\" class=\"col-sm-3 control-label\">公司英文名稱 English Company Name</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" class=\"form-control\" name=\"cNumber\" v-model=\"inputs.english_name\" placeholder=\"English Company Name\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"login\" class=\"col-sm-3 control-label\">登入名稱 Login Name</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" class=\"form-control\" id=\"login\" v-model=\"inputs.login\" name=\"login\" placeholder=\"Login Name\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"password\" class=\"col-sm-3 control-label\">登入密碼 Password</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" class=\"form-control\" id=\"password\" v-model=\"inputs.password\" name=\"password\" placeholder=\"Password\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"email\" class=\"col-sm-3 control-label\">電郵 Email</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"email\" class=\"form-control\" id=\"email\" v-model=\"inputs.email\" name=\"email\" placeholder=\"Email\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"status\" class=\"col-sm-3 control-label\">Status</label>\n\n                <div class=\"col-sm-9\" data-toggle=\"buttons\">\n                    <label class=\"btn {{getStatusButtonClass}}\" @click.prevent=\"toggleInputStatus\">\n                        <input type=\"checkbox\" autocomplete=\"off\" v-model=\"inputs.status\"> {{showStatusButton}}\n                    </label>\n                </div>\n            </div>\n            <div class=\"row button-group pull-right clearfix\">\n                <button class=\"btn btn-purple\" @click.prevent=\"update\">更新 Update</button>\n                <button class=\"btn btn-purple\" @click.prevent=\"reset\">重設 Reset</button>\n            </div>\n        </form>\n        <br>\n        <br>\n        <div v-show=\"hasDocuments\">\n            <grid :data.sync=\"documents\" :columns=\"columns\" :filter-key=\"searchQuery\">\n            </grid>\n            <iframe v-show=\"showPreview\" id=\"viewer\" :src=\"\" frameborder=\"0\" scrolling=\"no\" width=\"500\" height=\"770\"></iframe>\n        </div>\n    </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11301,7 +11650,8 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":12,"vue-hot-reload-api":3}],24:[function(require,module,exports){
+},{"./grid.vue":35,"babel-runtime/helpers/interop-require-default":2,"vue":24,"vue-hot-reload-api":15}],39:[function(require,module,exports){
+var __vueify_style__ = require("vueify-insert-css").insert("\n    span.nav-item-span{\n        display:inline-block;\n        width: 50%;\n    }\n")
 'use strict';
 
 exports.__esModule = true;
@@ -11317,19 +11667,23 @@ exports['default'] = {
     }
 };
 module.exports = exports['default'];
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div class=\"sidebar-nav\">\n        <div class=\"navbar\" role=\"navigation\">\n            <div class=\"navbar-header\">\n                <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".sidebar-navbar-collapse\">\n                    <span class=\"sr-only\">Toggle navigation</span>\n                    <span class=\"icon-bar\"></span>\n                    <span class=\"icon-bar\"></span>\n                    <span class=\"icon-bar\"></span>\n                </button>\n                <span class=\"visible-xs navbar-brand\">Administration menu</span>\n            </div>\n            <div class=\"navbar-collapse collapse sidebar-navbar-collapse\">\n                <ul class=\"nav navbar-nav\">\n                    <li><a @click.prevent=\"changeViewTo('UploadFile')\" :class=\"{'active': isCurrentView('UploadFile')}\" href=\"/\">上載文件</a></li>\n                    <li><a @click.prevent=\"changeViewTo('SearchUser')\" :class=\"{'active': isCurrentView('SearchUser')}\" href=\"/\">搜尋用戶</a></li>\n                    <!--<li><a @click.prevent=\"changeViewTo('CustomerDocuments')\" :class=\"{'active': isCurrentView('CustomerDocuments')}\" href=\"/\">用戶文件</a></li>-->\n                    <li><a @click.prevent=\"changeViewTo('CreateNewAdmin')\" :class=\"{'active': isCurrentView('CreateNewAdmin')}\" href=\"/\">新增管理人員</a></li>\n                    <li><a @click.prevent=\"changeViewTo('AdminInfo')\" :class=\"{'active': isCurrentView('AdminInfo')}\" href=\"/\">管理人員資料</a></li>\n                    <li><a @click.prevent=\"changeViewTo('EditDocumentType')\" :class=\"{'active': isCurrentView('EditDocumentType')}\" href=\"/\">文件類別設定</a></li>\n                    <li><a @click.prevent=\"changeViewTo('PermissionSetting')\" :class=\"{'active': isCurrentView('PermissionSetting')}\" href=\"/\">權限類別設定</a></li>\n                </ul>\n            </div><!--/.nav-collapse -->\n        </div>\n    </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div class=\"sidebar-nav\">\n        <div class=\"navbar\" role=\"navigation\">\n            <div class=\"navbar-header\">\n                <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".sidebar-navbar-collapse\">\n                    <span class=\"sr-only\">Toggle navigation</span>\n                    <span class=\"icon-bar\"></span>\n                    <span class=\"icon-bar\"></span>\n                    <span class=\"icon-bar\"></span>\n                </button>\n                <span class=\"visible-xs navbar-brand\">Administration menu</span>\n            </div>\n            <div class=\"navbar-collapse collapse sidebar-navbar-collapse\">\n                <ul class=\"nav navbar-nav\">\n                    <li><a @click.prevent=\"changeViewTo('UploadFile')\" :class=\"{'active': isCurrentView('UploadFile')}\" href=\"/\">\n                        <span class=\"nav-item-span\">上載文件</span><span class=\"nav-item-span\">Upload File</span>\n                    </a></li>\n                    <li><a @click.prevent=\"changeViewTo('SearchUser')\" :class=\"{'active': isCurrentView('SearchUser')}\" href=\"/\">\n                        <span class=\"nav-item-span\">搜尋用戶</span><span class=\"nav-item-span\">Search User</span>\n                    </a></li>\n                    <!--<li><a @click.prevent=\"changeViewTo('CustomerDocuments')\" :class=\"{'active': isCurrentView('CustomerDocuments')}\" href=\"/\">用戶文件</a></li>-->\n                    <li><a @click.prevent=\"changeViewTo('CreateNewAdmin')\" :class=\"{'active': isCurrentView('CreateNewAdmin')}\" href=\"/\">\n                        <span class=\"nav-item-span\">新增管理人員</span><span class=\"nav-item-span\">Add New Admin</span>\n                    </a></li>\n                    <li><a @click.prevent=\"changeViewTo('AdminInfo')\" :class=\"{'active': isCurrentView('AdminInfo')}\" href=\"/\">\n                        <span class=\"nav-item-span\">管理人員資料</span><span class=\"nav-item-span\">Admin Info</span>\n                     </a></li>\n                    <li><a @click.prevent=\"changeViewTo('EditDocumentType')\" :class=\"{'active': isCurrentView('EditDocumentType')}\" href=\"/\">\n                        <span class=\"nav-item-span\">文件類別設定</span><span class=\"nav-item-span\">Doc Type Setting</span>\n                     </a></li>\n                    <li><a @click.prevent=\"changeViewTo('PermissionSetting')\" :class=\"{'active': isCurrentView('PermissionSetting')}\" href=\"/\">\n                        <span class=\"nav-item-span\">權限類別設定</span><span class=\"nav-item-span\">Permissions Setting</span>\n                     </a></li>\n                    <li><a @click.prevent=\"changeViewTo('ExportData')\" :class=\"{'active': isCurrentView('ExportData')}\" href=\"/\">\n                        <span class=\"nav-item-span\">賬戶資料總匯表</span><span class=\"nav-item-span\">Export Users Info</span>\n                     </a></li>\n                    <li><a @click.prevent=\"changeViewTo('CreateLinkage')\" :class=\"{'active': isCurrentView('CreateLinkage')}\" href=\"/\">\n                        <span class=\"nav-item-span\">Create Linkage</span><span class=\"nav-item-span\"></span>\n                     </a></li>\n                </ul>\n            </div><!--/.nav-collapse -->\n        </div>\n    </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   var id = "/Users/adrianexavier/Code/SBCTemp/resources/assets/js/components/sideBarMenu.vue"
+  module.hot.dispose(function () {
+    require("vueify-insert-css").cache["\n    span.nav-item-span{\n        display:inline-block;\n        width: 50%;\n    }\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
   if (!module.hot.data) {
     hotAPI.createRecord(id, module.exports)
   } else {
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":12,"vue-hot-reload-api":3}],25:[function(require,module,exports){
+},{"vue":24,"vue-hot-reload-api":15,"vueify-insert-css":25}],40:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -11355,7 +11709,8 @@ exports["default"] = {
                 data: ""
             },
             customer: {},
-            previewing: false
+            previewing: false,
+            previewSrc: ""
         };
     },
     computed: {
@@ -11474,12 +11829,7 @@ exports["default"] = {
         },
         previewPDF: function previewPDF() {
             console.log('preview pdf');
-            if (!this.previewing) {
-                var pdffile_url = URL.createObjectURL(this.inputFile.data);
-                $("#viewer").attr('src', pdffile_url);
-            } else {
-                $("#viewer").attr('src', "");
-            }
+            this.previewSrc = this.previewing ? "" : URL.createObjectURL(this.inputFile.data);
             this.previewing = !this.previewing;
         },
         reset: function reset() {
@@ -11518,7 +11868,7 @@ exports["default"] = {
     }
 };
 module.exports = exports["default"];
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <form class=\"form-horizontal\" method=\"POST\" encrtype=\"multipart/form-data\">\n        <legend> Upload Files</legend>\n        <div class=\"form-group\">\n            <label for=\"uploadDate\" class=\"sr-only\">Document Upload Date</label>\n            <div class=\"col-sm-8\">\n                <input type=\"text\" v-model=\"inputs.uploadDate\" :value=\"uploadDate\" name=\"uploadDate\" class=\"form-control\" id=\"uploadDate\" placeholder=\"文件日期\" readonly=\"\">\n            </div>\n        </div>\n        <div class=\"form-group\">\n            <label for=\"cnumber\" class=\"sr-only\">C Number</label>\n            <div class=\"col-sm-8\">\n                <input type=\"number\" name=\"cnumber\" v-model=\"inputs.cNumber\" class=\"form-control\" placeholder=\"C Number\" @change=\"checkValidity\" pattern=\"/[1-9]{10}/\" title=\"This is an error message\" required=\"\" autofocus=\"\">\n                <span v-show=\"checking.cNumberValidity\">{{customer.name}}</span>\n            </div>\n        </div>\n        <div class=\"form-group\">\n            <label for=\"docDate\" class=\"sr-only\">Document Date</label>\n\n            <div class=\"col-sm-8\">\n                    <div class=\"input-group date\" id=\"datetimepicker\">\n                        <input type=\"text\" class=\"form-control\" name=\"docDate\" v-model=\"inputs.docDate\" id=\"docDate\" placeholder=\"文件日期 (YYYY/MM/DD)\" @keypress=\"showkeypress\" pattern=\"/[0-9]\\//\" required=\"\">\n                    <span class=\"input-group-addon\">\n                        <span class=\"glyphicon glyphicon-calendar\"></span>\n                    </span>\n                    </div>\n            </div>\n        </div>\n        <div class=\"form-group\">\n            <label for=\"docType\" class=\"sr-only\">Document Type</label>\n            <div class=\"col-sm-8\">\n                <select name=\"docType\" id=\"docType\" v-model=\"inputs.docType\" class=\"form-control\" style=\"width:100%\">\n                    <option value=\"\" selected=\"\"> -- 文件類別 -- </option>\n                    <option v-for=\"docType in documentTypes\" :value=\"docType.id\">{{docType.type}}</option>\n                </select>\n            </div>\n        </div>\n        <div class=\"form-group\">\n            <label for=\"docName\" class=\"sr-only\">Document Name</label>\n            <div class=\"col-sm-8\">\n                <input type=\"docName\" name=\"docName\" v-model=\"inputs.docName\" class=\"form-control\" id=\"docName\" placeholder=\"文件描述\" required=\"\">\n            </div>\n        </div>\n        <div class=\"form-group\">\n            <div class=\"col-sm-8\">\n                <button class=\"btn btn-default\" @click.prevent=\"browseFile\">Browser File</button>\n                <p class=\"help-block\">File size should not bigger than 5Mb</p>\n                <input type=\"file\" class=\"hidden\" name=\"files\" id=\"file\" @change=\"checkFileInput\" accept=\".pdf, application/pdf\" required=\"\">\n            </div>\n        </div>\n        <div class=\"panel panel-default\" v-show=\"hasFile\">\n            <div class=\"table-responsive\">\n                <table class=\"table table-hover\">\n                    <thead>\n                    <tr>\n                        <th>File Name</th>\n                        <th>File Size</th>\n                        <th>Preview</th>\n                        <th>Remove</th>\n                    </tr>\n                    </thead>\n                    <tbody>\n                    <tr>\n                        <td>{{inputFile.name}}</td>\n                        <td>{{inputFile.size/(1000*1000)}} mb</td>\n                        <td>\n                            <button class=\"btn btn-default btn-sm\" @click.prevent=\"previewPDF\">{{previewButtonText}}</button>\n                        </td>\n                        <td>\n                            <button class=\"btn btn-sm btn-danger\" @click.prevent=\"removeFile\">刪除</button>\n                        </td>\n                    </tr>\n                    </tbody>\n                </table>\n            </div>\n        </div>\n        <div class=\"form-group\">\n            <div class=\"col-sm-8\">\n                <button type=\"submit\" class=\"btn btn-block btn-purple\" @click.prevent=\"uploadFile\">上載文件</button>\n            </div>\n        </div>\n\n        <iframe v-show=\"showPreview\" id=\"viewer\" frameborder=\"0\" scrolling=\"no\" width=\"500\" height=\"770\"></iframe>\n    </form>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <form class=\"form-horizontal\" method=\"POST\" encrtype=\"multipart/form-data\">\n        <legend> Upload Files</legend>\n        <div class=\"form-group\">\n            <label for=\"uploadDate\" class=\"sr-only\">Document Upload Date</label>\n            <div class=\"col-sm-8\">\n                <input type=\"text\" v-model=\"inputs.uploadDate\" :value=\"uploadDate\" name=\"uploadDate\" class=\"form-control\" id=\"uploadDate\" placeholder=\"文件日期\" readonly=\"\">\n            </div>\n        </div>\n        <div class=\"form-group\">\n            <label for=\"cnumber\" class=\"sr-only\">C Number</label>\n            <div class=\"col-sm-8\">\n                <input type=\"number\" name=\"cnumber\" v-model=\"inputs.cNumber\" class=\"form-control\" placeholder=\"客戶公司序號 C Number\" @change=\"checkValidity\" pattern=\"/[1-9]{10}/\" title=\"This is an error message\" required=\"\" autofocus=\"\">\n            </div>\n        </div>\n        <div class=\"form-group\">\n            <label for=\"cnumber\" class=\"sr-only\">Company Name</label>\n            <div class=\"col-sm-8\">\n                <input type=\"number\" name=\"cnumber\" v-model=\"customer.name\" class=\"form-control\" placeholder=\"客戶公司名稱 Company Name \" title=\"This is an error message\" required=\"\">\n            </div>\n        </div>\n        <div class=\"form-group\">\n            <label for=\"docDate\" class=\"sr-only\">Document Date</label>\n\n            <div class=\"col-sm-8\">\n                    <div class=\"input-group date\" id=\"datetimepicker\">\n                        <input type=\"text\" class=\"form-control\" name=\"docDate\" v-model=\"inputs.docDate\" id=\"docDate\" placeholder=\"文件日期 Document Date (YYYY/MM/DD)\" @keypress=\"showkeypress\" pattern=\"/[0-9]\\//\" required=\"\">\n                    <span class=\"input-group-addon\">\n                        <span class=\"glyphicon glyphicon-calendar\"></span>\n                    </span>\n                    </div>\n            </div>\n        </div>\n        <div class=\"form-group\">\n            <label for=\"docType\" class=\"sr-only\">Document Type</label>\n            <div class=\"col-sm-8\">\n                <select name=\"docType\" id=\"docType\" v-model=\"inputs.docType\" class=\"form-control\" style=\"width:100%\">\n                    <option value=\"\" selected=\"\"> -- 文件類別 Document Type -- </option>\n                    <option v-for=\"docType in documentTypes\" :value=\"docType.id\">{{docType.type}}</option>\n                </select>\n            </div>\n        </div>\n        <div class=\"form-group\">\n            <label for=\"docName\" class=\"sr-only\">Document Name</label>\n            <div class=\"col-sm-8\">\n                <input type=\"docName\" name=\"docName\" v-model=\"inputs.docName\" class=\"form-control\" id=\"docName\" placeholder=\"文件描述 Document Description\" required=\"\">\n            </div>\n        </div>\n        <div class=\"form-group\">\n            <div class=\"col-sm-8\">\n                <button class=\"btn btn-default\" @click.prevent=\"browseFile\">Browser File 瀏覽檔案</button>\n                <p class=\"help-block\">File size should not bigger than 5MB. 文件容量不可超過5MB。</p>\n                <input type=\"file\" class=\"hidden\" name=\"files\" id=\"file\" @change=\"checkFileInput\" accept=\".pdf, application/pdf\" required=\"\">\n            </div>\n        </div>\n        <div class=\"panel panel-default\" v-show=\"hasFile\">\n            <div class=\"table-responsive\">\n                <table class=\"table table-hover\">\n                    <thead>\n                    <tr>\n                        <th>File Name</th>\n                        <th>File Size</th>\n                        <th>Preview</th>\n                        <th>Remove</th>\n                    </tr>\n                    </thead>\n                    <tbody>\n                    <tr>\n                        <td>{{inputFile.name}}</td>\n                        <td>{{inputFile.size/(1000*1000)}} mb</td>\n                        <td>\n                            <button class=\"btn btn-default btn-sm\" @click.prevent=\"previewPDF\">{{previewButtonText}}</button>\n                        </td>\n                        <td>\n                            <button class=\"btn btn-sm btn-danger\" @click.prevent=\"removeFile\">刪除</button>\n                        </td>\n                    </tr>\n                    </tbody>\n                </table>\n            </div>\n        </div>\n        <div class=\"form-group\">\n            <div class=\"col-sm-8\">\n                <button type=\"submit\" class=\"btn btn-block btn-purple\" @click.prevent=\"uploadFile\">Upload File 上載文件</button>\n            </div>\n        </div>\n\n        <iframe v-show=\"showPreview\" :src=\"previewSrc\" id=\"viewer\" frameborder=\"0\" scrolling=\"no\" width=\"500\" height=\"770\"></iframe>\n    </form>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11530,7 +11880,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":12,"vue-hot-reload-api":3}],26:[function(require,module,exports){
+},{"vue":24,"vue-hot-reload-api":15}],41:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -11564,6 +11914,6 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":12,"vue-hot-reload-api":3}]},{},[14]);
+},{"vue":24,"vue-hot-reload-api":15}]},{},[26]);
 
 //# sourceMappingURL=app.js.map

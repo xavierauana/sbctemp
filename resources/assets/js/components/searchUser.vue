@@ -1,12 +1,12 @@
 <template>
     <div>
         <div class="well">
-            <h3>Search User</h3>
+            <h3>搜尋用戶 Search User</h3>
 
             <form action="" method="POST" @submit.prevent="searchUser">
                 <div class="input-group">
                     <input type="number" v-model="cNumber" id="searchCNumber" class="form-control"
-                           placeholder="Search C Number" autofocus>
+                           placeholder="客戶公司序號 C Number" autofocus>
                   <span class="input-group-btn">
                     <button class="btn" type="button" @click.prevent="searchUser">Go!</button>
                   </span>
@@ -16,79 +16,117 @@
 
         <form class="form-horizontal" v-show="user">
             <div class="form-group">
-                <label for="cNumber" class="col-sm-2 control-label">C Number</label>
+                <label for="cNumber" class="col-sm-3 control-label">客戶公司序號 C Number</label>
 
-                <div class="col-sm-10">
+                <div class="col-sm-9">
                     <input type="number" class="form-control" name="cNumber" v-model="inputs.cNumber"
                            placeholder="C Number" disabled>
                 </div>
             </div>
             <div class="form-group">
-                <label for="login" class="col-sm-2 control-label">Login Name</label>
+                <label for="cNumber" class="col-sm-3 control-label">公司中文名稱 Chinese Company Name</label>
 
-                <div class="col-sm-10">
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" v-model="inputs.chinese_name"
+                           placeholder="Chinese Company Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cNumber" class="col-sm-3 control-label">公司英文名稱 English Company Name</label>
+
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="cNumber" v-model="inputs.english_name"
+                           placeholder="English Company Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="login" class="col-sm-3 control-label">登入名稱 Login Name</label>
+
+                <div class="col-sm-9">
                     <input type="text" class="form-control" id="login" v-model="inputs.login" name="login"
                            placeholder="Login Name">
                 </div>
             </div>
             <div class="form-group">
-                <label for="password" class="col-sm-2 control-label">Password</label>
+                <label for="password" class="col-sm-3 control-label">登入密碼 Password</label>
 
-                <div class="col-sm-10">
+                <div class="col-sm-9">
                     <input type="text" class="form-control" id="password" v-model="inputs.password" name="password"
                            placeholder="Password">
                 </div>
             </div>
             <div class="form-group">
-                <label for="email" class="col-sm-2 control-label">Email</label>
+                <label for="email" class="col-sm-3 control-label">電郵 Email</label>
 
-                <div class="col-sm-10">
+                <div class="col-sm-9">
                     <input type="email" class="form-control" id="email" v-model="inputs.email" name="email"
                            placeholder="Email">
                 </div>
             </div>
+            <div class="form-group">
+                <label for="status" class="col-sm-3 control-label">Status</label>
+
+                <div class="col-sm-9" data-toggle="buttons">
+                    <label class="btn {{getStatusButtonClass}}" @click.prevent="toggleInputStatus">
+                        <input type="checkbox" autocomplete="off" v-model="inputs.status"> {{showStatusButton}}
+                    </label>
+                </div>
+            </div>
             <div class="row button-group pull-right clearfix">
-                <button class="btn btn-purple" @click.prevent="update">更新</button>
-                <button class="btn btn-purple" @click.prevent="reset">重設</button>
+                <button class="btn btn-purple" @click.prevent="update">更新 Update</button>
+                <button class="btn btn-purple" @click.prevent="reset">重設 Reset</button>
             </div>
         </form>
+        <br>
+        <br>
         <div v-show="hasDocuments">
-            <table class="table">
-                <thead>
-                <th>Upload Date</th>
-                <th>Document Type</th>
-                <th>Document Name</th>
-                <th></th>
-                </thead>
-                <tbody>
-                <tr v-for="document in documents">
-                    <td>{{document.uploadDate}}</td>
-                    <td>{{document.docType}}</td>
-                    <td>{{document.docName}}</td>
-                    <td>
-                        <button class="btn btn-danger btn-sm" @click.prevent="deleteDocument(document)">Remove</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <grid
+                    :data.sync="documents"
+                    :columns="columns"
+                    :filter-key="searchQuery">
+            </grid>
+            <iframe v-show="showPreview" id="viewer" :src="" frameborder="0" scrolling="no" width="500"
+                    height="770"></iframe>
         </div>
     </div>
 </template>
 
 <script>
+    import Grid from './grid.vue'
     export default{
+        components:{
+          Grid
+        },
         data: function () {
             return {
+                searchQuery: '',
+                columns: [{
+                    label:'上載日期 Upload Date',
+                    code:'uploadDate'
+                },{
+                    label:'文件類別 Document Type',
+                    code:'docType'
+                },{
+                    label:'文件名稱 Document Name',
+                    code:'docName'
+                }],
                 cNumber: "",
                 user: "",
                 inputs: {},
                 documents: [],
-                table:""
+                table: "",
+                previewing: false
             }
         },
         computed: {
             hasDocuments: function () {
                 return !!this.documents.length
+            },
+            showStatusButton: function () {
+                return this.inputs.status ? "Active" : "Not Active";
+            },
+            getStatusButtonClass: function () {
+                return this.inputs.status ? 'btn-success' : 'btn-danger';
             }
         },
         watch: {
@@ -96,31 +134,25 @@
                 if (!!this.user) {
                     var url = '/getUserDocuments/' + this.user.cNumber;
                     this.$http.get(url, function (response) {
-                        this.$set('documents', response);
+                        Array.isArray(response)? this.$set('documents', response):this.$set('documents', [])
                     })
-                }
-            },
-            documents: function () {
-                if (!!this.documents.length) {
-                    var self = this;
-                    setTimeout(function(){
-                        $('table').DataTable();
-                    }.bind(this), 500);
-
                 }
             }
         },
         methods: {
+            sortBy: function (key) {
+                this.sortKey = key;
+                this.sortOrders[key] = this.sortOrders[key] * -1
+            },
+            toggleInputStatus: function () {
+                this.inputs.status = !this.inputs.status;
+            },
             toggleTooltip: function (e) {
                 $('#searchCNumber').tooltip({
                     trigger: 'manual',
-                    title: "number only"
+                    title: "只可輸入數字 number only"
                 });
-                if ((e.keyCode < 48 || e.keyCode > 57) && e.keyCode !== 13) {
-                    $('#searchCNumber').tooltip('show')
-                } else {
-                    $('#searchCNumber').tooltip('hide')
-                }
+                (e.keyCode < 48 || e.keyCode > 57) && e.keyCode !== 13 ? $('#searchCNumber').tooltip('show') : $('#searchCNumber').tooltip('hide');
             },
             searchUser: function () {
                 console.log('get request to server to find the user');
@@ -145,17 +177,7 @@
                 }
             },
             update: function () {
-                console.log('print something');
-            },
-            deleteDocument: function (document) {
-                if (confirm('Are you sure you want to delete ' + document.docName + '?')) {
-                    this.documents.$remove(document);
-                    this.refreshDataTable();
-                    console.log('post to server to delete the doc');
-                }
-            },
-            refreshDataTable: function(){
-                $('table').DataTable().destroy();
+                console.log('put to server. and update info!');
             }
         },
         ready: function () {

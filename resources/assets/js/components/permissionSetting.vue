@@ -33,6 +33,9 @@
                 <div class="col-sm-3" v-show="existingProfile">
                     <button class="btn btn-block btn-purple"  @click.prevent="deleteProfile">刪除</button>
                 </div>
+                <div class="col-sm-3" v-show="existingProfile">
+                    <button class="btn btn-block btn-purple"  @click.prevent="revertToDefault">返回原有設定</button>
+                </div>
             </div>
         </form>
     </div>
@@ -85,6 +88,9 @@
                     this.profiles.$remove(this.existingProfile);
                     this.existingProfile = "";
                 }
+            },
+            revertToDefault: function(){
+                console.log('revert to default setting.');
             }
         },
         created: function(){

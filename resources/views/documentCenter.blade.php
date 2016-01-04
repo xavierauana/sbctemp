@@ -63,6 +63,10 @@
     </div>
 
     <div class="container">
+        <div>
+            <h4>中文公司名</h4>
+            <h4>English Company Name</h4>
+        </div>
         <div class="panel panel-default">
         	  <table class="table table-hover">
         	  	<thead>

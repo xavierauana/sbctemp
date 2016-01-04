@@ -30,10 +30,13 @@
             <permissions :profile="inputs.profile"></permissions>
             <div class="form-group">
                 <div class="col-xs-12 col-sm-4 pull-right">
-                    <button type="submit" class="btn btn-block btn-purple" @click.prevent="reset">重設</button>
+                    <button class="btn btn-block btn-purple" @click.prevent="deleteAdmin">刪除</button>
                 </div>
                 <div class="col-xs-12 col-sm-4 pull-right">
-                    <button type="submit" class="btn btn-block btn-purple" @click.prevent="updateUser">更新</button>
+                    <button class="btn btn-block btn-purple" @click.prevent="reset">重設</button>
+                </div>
+                <div class="col-xs-12 col-sm-4 pull-right">
+                    <button class="btn btn-block btn-purple" @click.prevent="updateUser">更新</button>
                 </div>
             </div>
         </form>
@@ -55,7 +58,7 @@
         data:function(){
             return {
                 inputs:{
-                    profile:{},
+                    profile:"",
                     password:"",
                     loginName:""
                 },
@@ -86,12 +89,21 @@
             reset: function(){
                 if(this.user){
                     this.inputs.loginName = this.user.loginName;
-                    this.inputs.profile = {};
+                    this.inputs.profile = "";
                     this.inputs.password = "";
                 }
             },
             updateUser: function(){
                 console.log('update user')
+            },
+            deleteAdmin: function(){
+                if(confirm('Are you sure you will delete the admin user, '+this.user.loginName)){
+                    console.log('post delete admin');
+                    this.inputs.profile = "";
+                    this.inputs.password = "";
+                    this.inputs.loginName = "";
+                    this.users.$remove(this.user);
+                }
             }
         }
     }

@@ -48,7 +48,7 @@
         },
         methods:{
             editInputValue: function(docType){
-                return docType.status ? "更新":"編輯";
+                return docType.status ? "編號":"編輯";
             },
             edit: function(e, docType){
                 if(!docType.status){

@@ -16,6 +16,8 @@ import PermissionSetting from './components/permissionSetting.vue'
 import SearchUser from './components/searchUser.vue'
 import UploadFile from './components/uploadFile.vue'
 import CustomerDocuments from './components/customerDocuments.vue'
+import ExportData from './components/exportData.vue'
+import CreateLinkage from './components/createLinkage.vue'
 
 
 new Vue({
@@ -39,6 +41,8 @@ new Vue({
         PermissionSetting,
         SearchUser,
         UploadFile,
-        CustomerDocuments
+        CustomerDocuments,
+        ExportData,
+        CreateLinkage
     }
 })
