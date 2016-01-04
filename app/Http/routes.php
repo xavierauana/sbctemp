@@ -11,7 +11,7 @@
 |
 */
 
-CONST USER1 = [
+Cache::forever('user1', [
     'cNumber'      => '8888',
     'login'        => 'testuser1',
     'password'     => 'asd2asr5ou99',
@@ -19,8 +19,8 @@ CONST USER1 = [
     'chinese_name' => '',
     'english_name' => '',
     'status'       => true
-];
-CONST USER2 = [
+]);
+Cache::forever('user2', [
     'cNumber'      => '9999',
     'login'        => 'testuser2',
     'password'     => "abacdec98",
@@ -28,8 +28,8 @@ CONST USER2 = [
     'chinese_name' => '測試公司',
     'english_name' => 'Testing company',
     'status'       => true
-];
-CONST DOCUMENTS = [
+]);
+Cache::forever('documents', [
     [
         "id"         => 1,
         "uploadDate" => "2015/12/1",
@@ -90,7 +90,8 @@ CONST DOCUMENTS = [
         "docType"    => "Annual Report",
         "docName"    => "AR-123-123-4",
     ]
-];
+]);
+
 
 Route::get('/new', function () {
     return view('new');
@@ -208,10 +209,10 @@ Route::get('/getdoctypes', function () {
 
 Route::get('/searchcustomer/{cnumber}', function ($cnumber) {
     if ($cnumber == 8888) {
-        return USER1;
+        return Cache::get('user1');
     }
     if ($cnumber == 9999) {
-        return USER2;
+        return Cache::get('user2');
     }
 
     return null;
@@ -223,7 +224,7 @@ Route::post("/uploadfile", function (\Illuminate\Http\Request $request) {
 
 Route::get('/getUserDocuments/{cnumber}', function ($cnumber) {
     if($cnumber == 8888){
-        return DOCUMENTS;
+        return Cache::get('documents');
     }
 });
 Route::get('/exportData', function(){
