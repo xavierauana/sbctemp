@@ -93,9 +93,6 @@ Cache::forever('documents', [
     ]
 ]);
 
-
-factory(\App\Customer::class)->create();
-
 Route::get('/new', function () {
     return view('new');
 });
