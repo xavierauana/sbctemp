@@ -230,11 +230,11 @@ Route::get('/exportData', function () {
         'Content-disposition' => 'attachment'
     ]);
 });
-Route::get('/generate/dummy/customers', function () {
-    for($i=0; $i<50000; $i++){
-        factory(\App\Customer::class)->create();
-    }
-});
+//Route::get('/generate/dummy/customers', function () {
+//    for($i=0; $i<50000; $i++){
+//        factory(\App\Customer::class)->create();
+//    }
+//});
 
 
 
