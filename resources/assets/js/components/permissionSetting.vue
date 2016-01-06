@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h3>權限類別設定 Permissions Setting</h3>
         <form class="form-horizontal">
             <div class="form-group">
                 <label for="profile" class="col-sm-3 control-label">現有權限類別名稱</label>

@@ -1,5 +1,7 @@
 <template>
-    <form id="createNewAdmin" class="form-horizontal" @submit.prevent="submitForm">
+    <div>
+        <h3>新增管理人員 Add New Admin</h3>
+        <form id="createNewAdmin" class="form-horizontal" @submit.prevent="submitForm">
             <div class="form-group">
                 <label for="loginName" class="col-sm-3 control-label">管理人員登入名稱</label>
                 <div class="col-sm-9">
@@ -41,6 +43,7 @@
                 </div>
             </div>
         </form>
+    </div>
 </template>
 
 <script>

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h3>管理人員資料 Admin Info</h3>
         <div class="panel panel-default">
             <user-table :users="users" :profiles="profiles" :selected-user.sync="user"></user-table>
         </div>

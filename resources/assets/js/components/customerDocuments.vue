@@ -1,6 +1,6 @@
 <template>
     <div class="well">
-        <h3>Search User</h3>
+        <h3>Search User 搜尋用戶</h3>
 
         <form action="" method="POST" @submit.prevent="searchUser">
             <div class="input-group">

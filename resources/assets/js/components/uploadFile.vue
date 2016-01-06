@@ -1,6 +1,6 @@
 <template>
     <form class="form-horizontal" method="POST" encrtype="multipart/form-data">
-        <legend> Upload Files</legend>
+        <legend>上載文件 Upload Files</legend>
         <div class="form-group">
             <label for="uploadDate" class="sr-only">Document Upload Date</label>
             <div class="col-sm-8">
