@@ -12,6 +12,9 @@
 */
 
 
+use App\Customer;
+use App\User;
+
 Cache::forever('user1', [
     'cNumber'      => '8888',
     'login'        => 'testuser1',
@@ -92,6 +95,10 @@ Cache::forever('documents', [
         "docName"    => "AR-123-123-4",
     ]
 ]);
+//
+//for($i=0; $i<10; $i++){
+//    factory(\App\User::class)->create();
+//}
 
 Route::get('/new', function () {
     return view('new');
@@ -205,6 +212,8 @@ Route::get('/getdoctypes', function () {
 });
 
 Route::get('/searchcustomer/{cnumber}', function ($cnumber) {
+    $customer = Customer::whereId($cnumber)->first();
+    return $customer;
     if ($cnumber == 8888) {
         return Cache::get('user1');
     }
@@ -224,8 +233,51 @@ Route::get('/getUserDocuments/{cnumber}', function ($cnumber) {
         return Cache::get('documents');
     }
 });
-Route::get('/exportData', function () {
-    return response()->download(public_path('/files/allUsersCSV.csv'), "abc.csv", [
+Route::post('/exportData', function (\Illuminate\Http\Request $request) {
+    if ($request->get('status') == 'all') {
+        $records = \App\Customer::where('id', '>=', $request->get('start'))->where('id', '<=',
+            $request->get('end'))->get([
+            'id',
+            'chinese_name',
+            'english_name',
+            'loginname',
+            'password',
+            'status'
+        ])->toArray();
+    } elseif ($request->get('status') == 'not') {
+        $records = \App\Customer::where('id', '>=', $request->get('start'))->where('id', '<=',
+            $request->get('end'))->whereStatus(0)->get([
+            'id',
+            'chinese_name',
+            'english_name',
+            'loginname',
+            'password',
+            'status'
+        ])->toArray();
+    } elseif ($request->get('status') == 'active') {
+        $records = \App\Customer::where('id', '>=', $request->get('start'))->where('id', '<=',
+            $request->get('end'))->whereStatus(1)->get([
+            'id',
+            'chinese_name',
+            'english_name',
+            'loginname',
+            'password',
+            'status'
+        ])->toArray();
+    }
+
+    $headers = ['cnumber', 'chinese name', 'english name', 'login name', 'password', 'status'];
+    $records = array_map(function($row){
+        return array_values($row);
+    }, $records);
+    array_unshift($records, $headers);
+    $path = storage_path().'/temp.csv';
+    $csv = fopen($path, 'w');
+    foreach ($records as $row) {
+        fputcsv($csv, $row); // here you can change delimiter/enclosure
+    }
+    fclose($csv);
+    return response()->download($path, "user_info.csv", [
         'Content-type'        => 'text/csv',
         'Content-disposition' => 'attachment'
     ]);
@@ -235,6 +287,29 @@ Route::get('/exportData', function () {
 //        factory(\App\Customer::class)->create();
 //    }
 //});
+
+Route::get('/fetchUser/{userId}', function($userId){
+    $user = User::whereId($userId)->first(['name']);
+    return $user?['code'=>200,'data'=>$user]:['code'=>404,'data'=>$user];
+});
+
+Route::get('/fetchCompany/{companyId}/user/{userId}', function($companyId, $userId){
+   $company = Customer::whereId($companyId)->first();
+    if($company){
+        if($company->pnumber == $userId) return ['code'=>201,'data'=>['english_name'=>$company->english_name]];
+        if($company->pnumber > 0 && $company->pnumber !=$userId ) return ['code'=>202,'data'=>['english_name'=>$company->english_name]];
+        if($company->pnumber == 0) return ['code'=>200,'data'=>['english_name'=>$company->english_name]];
+    }
+
+    return ['code'=>404,'data'=>$company];
+});
+
+Route::get('/createLinkage/user/{userId}/company/{companyId}', function($userId, $companyId){
+    $company = Customer::whereId($companyId)->first();
+    $company->pnumber = $userId;
+    $company->save();
+    return ['code'=>200];
+});
 
 
 

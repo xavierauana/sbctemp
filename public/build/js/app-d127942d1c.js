@@ -10847,7 +10847,7 @@ new Vue({
     }
 });
 
-},{"./components/adminInfo.vue":27,"./components/createLinkage.vue":28,"./components/createNewAdmin.vue":29,"./components/customerDocuments.vue":30,"./components/editDocumentType.vue":32,"./components/entryView.vue":33,"./components/exportData.vue":34,"./components/permissionSetting.vue":36,"./components/searchUser.vue":38,"./components/sideBarMenu.vue":39,"./components/uploadFile.vue":40,"vue":24,"vue-resource":17}],27:[function(require,module,exports){
+},{"./components/adminInfo.vue":27,"./components/createLinkage.vue":28,"./components/createNewAdmin.vue":29,"./components/customerDocuments.vue":30,"./components/editDocumentType.vue":32,"./components/entryView.vue":33,"./components/exportData.vue":34,"./components/permissionSetting.vue":37,"./components/searchUser.vue":39,"./components/sideBarMenu.vue":40,"./components/uploadFile.vue":41,"vue":24,"vue-resource":17}],27:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -10936,64 +10936,107 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./permissions.vue":37,"./sideBarMenu.vue":39,"./userTable.vue":41,"babel-runtime/helpers/interop-require-default":2,"vue":24,"vue-hot-reload-api":15}],28:[function(require,module,exports){
+},{"./permissions.vue":38,"./sideBarMenu.vue":40,"./userTable.vue":42,"babel-runtime/helpers/interop-require-default":2,"vue":24,"vue-hot-reload-api":15}],28:[function(require,module,exports){
 'use strict';
 
+var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+
 exports.__esModule = true;
+
+var _modalVue = require('./modal.vue');
+
+var _modalVue2 = _interopRequireDefault(_modalVue);
+
 exports['default'] = {
+    components: {
+        Modal: _modalVue2['default']
+    },
     data: function data() {
         return {
             pnumber: '',
+            userName: '',
             cnumber: '',
+            companyName: '',
             presult: 'Chan Ta Man',
             cresult: 'abc company',
             pnumberIsValid: false,
-            cnumberIsValid: false
+            cnumberIsValid: false,
+            showModal: false,
+            modalHeader: "",
+            modalBody: "",
+            modalFooter: ""
         };
-    },
-    computed: {
-        //            pnumberIsValid: function(){
-        //                if(this.pnumber){
-        //                    if(this.pnumber == 'aaaa')return true;
-        //                    console.log('P number incorrect');
-        //                }
-        //                return false;
-        //            },
-        //            cnumberIsValid: function(){
-        //                if(this.cnumber){
-        //                    if (this.cnumber == '9999') return true;
-        //                    if (this.cnumber == '8888'){
-        //                        console.log('This company already link with other p number.');
-        //                        return false;
-        //                    }
-        //                    console.log('C number incorrect');
-        //                }
-        //                return false;
-        //            }
     },
     methods: {
         cunmberChange: function cunmberChange() {
-            if (this.cnumber == '8888') {
-                this.cnumberIsValid = true;
-            } else if (this.cnumber == '9999') {
-                alert('This company already link with other p number.');
-                this.cnumberIsValid = false;
-            } else {
-                this.cnumberIsValid = false;
+            if (this.cnumber) {
+                this.$http.get('/fetchCompany/' + this.cnumber + '/user/' + this.pnumber, function (response) {
+                    if (response.code == 200) {
+                        this.companyName = response.data.english_name;
+                        this.cnumberIsValid = true;
+                    } else {
+                        this.cnumber = "";
+                        this.companyName = "";
+                        this.cnumberIsValid = false;
+                        this.modalHeader = "Warning!";
+                        this.showModal = true;
+                        console.log(response.code);
+                        if (response.code == 404) {
+                            this.modalBody = 'No company for the c number.';
+                        } else if (response.code == 201) {
+                            this.modalBody = 'Your already linked this c number.';
+                        } else if (response.code == 202) {
+                            this.modalBody = 'The company already link with other account.';
+                        }
+                    }
+                });
             }
+            //                if(this.cnumber == '8888'){
+            //                    this.cnumberIsValid = true
+            //                }else if(this.cnumber == '9999'){
+            //                    alert('This company already link with other p number.');
+            //                    this.cnumberIsValid = false
+            //                }else{
+            //                    this.cnumberIsValid = false
+            //                }
         },
         punmberChange: function punmberChange() {
-            this.pnumberIsValid = this.pnumber == 'aaaa' ? true : false;
+            console.log(this.pnumber);
+            if (this.pnumber) {
+                this.$http.get('/fetchUser/' + this.pnumber, function (response) {
+                    if (response.code == 404) {
+                        this.pnumber = "";
+                        this.userName = "";
+                        this.cnumberIsValid = false;
+                    } else {
+                        this.userName = response.data.name;
+                        this.pnumberIsValid = true;
+                    }
+                });
+            }
         },
         formSubmit: function formSubmit(e) {
             e.preventDefault();
-            this.cunmberChange();
-            this.punmberChange();
+            if (this.pnumberIsValid && this.cnumberIsValid) {
+                console.log('ajax fired');
+                this.$http.get('/createLinkage/user/' + this.pnumber + '/company/' + this.cnumber, function (response) {
+                    if (response.code == 200) {
+                        this.cnumber = "";
+                        this.userName = "";
+                        this.pnumber = "";
+                        this.companyName = "";
+                        this.modalHeader = "Success!";
+                        this.modalBody = "You have successfully link the company to the user!";
+                        this.showModal = true;
+                    }
+                    console.log(response);
+                });
+            }
         }
     }
 };
 module.exports = exports['default'];
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <form class=\"form\" @submit=\"formSubmit\">\n\n        <div class=\"form-group\">\n            <input type=\"text\" class=\"form-control\" v-model=\"pnumber\" @blur=\"punmberChange\" placeholder=\"P Number\">\n        </div>\n        <div class=\"form-group\" v-show=\"pnumberIsValid\">\n            <input class=\"form-control\" v-model=\"presult\" type=\"text\" disabled=\"\">\n        </div>\n        <div class=\"form-group\">\n            <input type=\"number\" class=\"form-control\" v-model=\"cnumber\" @blur=\"cunmberChange\" placeholder=\"C Number\">\n        </div>\n        <div class=\"form-group\" v-show=\"cnumberIsValid\">\n            <input class=\"form-control\" v-model=\"cresult\" type=\"text\" disabled=\"\">\n        </div>\n        <button class=\"btn btn-purple\">Create Linkage</button>\n    </form>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <form class=\"form\" @submit=\"formSubmit\">\n\n            <div class=\"form-group\">\n                <input type=\"text\" class=\"form-control\" v-model=\"pnumber\" @change=\"punmberChange\" placeholder=\"P Number\">\n            </div>\n            <div class=\"form-group\" v-show=\"userName\">\n                <input class=\"form-control\" v-model=\"userName\" type=\"text\" disabled=\"\">\n            </div>\n            <div class=\"form-group\">\n                <input type=\"number\" class=\"form-control\" v-model=\"cnumber\" @change=\"cunmberChange\" placeholder=\"C Number\" :disabled=\"!pnumber\">\n            </div>\n            <div class=\"form-group\" v-show=\"companyName\">\n                <input class=\"form-control\" v-model=\"companyName\" type=\"text\" disabled=\"\">\n            </div>\n            <button class=\"btn btn-purple\">Create Linkage</button>\n        </form>\n        <modal :show.sync=\"showModal\">\n            <p slot=\"body\">{{modalBody}}</p>\n            <h3 slot=\"header\">{{modalHeader}}</h3>\n        </modal>\n    </div>\n\n\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11005,7 +11048,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":24,"vue-hot-reload-api":15}],29:[function(require,module,exports){
+},{"./modal.vue":36,"babel-runtime/helpers/interop-require-default":2,"vue":24,"vue-hot-reload-api":15}],29:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("babel-runtime/helpers/interop-require-default")["default"];
@@ -11061,7 +11104,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./permissions.vue":37,"babel-runtime/helpers/interop-require-default":2,"vue":24,"vue-hot-reload-api":15}],30:[function(require,module,exports){
+},{"./permissions.vue":38,"babel-runtime/helpers/interop-require-default":2,"vue":24,"vue-hot-reload-api":15}],30:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -11272,12 +11315,25 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"vue":24,"vue-hot-reload-api":15,"vueify-insert-css":25}],34:[function(require,module,exports){
-"use strict";
+'use strict';
 
 exports.__esModule = true;
-exports["default"] = {};
-module.exports = exports["default"];
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <a class=\"btn btn-purple btn-lg\" href=\"/exportData\">下載用戶資料 Export User Data</a>\n    </div>\n"
+exports['default'] = {
+    data: function data() {
+        return {
+            token: document.getElementById('csrf_token').getAttribute('content'),
+            start: 0,
+            end: 1000
+        };
+    },
+    methods: {
+        checkInputs: function checkInputs(e) {
+            this.start > this.end ? alert('Incorrect input for c number start and end!') : e.target.submit();
+        }
+    }
+};
+module.exports = exports['default'];
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <form class=\"form\" action=\"/exportData\" @submit.prevent=\"checkInputs\" method=\"post\">\n        <input type=\"hidden\" name=\"_token\" v-model=\"token\">\n        <div class=\"form-group\">\n            <label for=\"type\">Select Customer Status: </label>\n            <select name=\"status\" class=\"form-control\">\n                <option value=\"not\" selected=\"\">Not Active</option>\n                <option value=\"active\">Active</option>\n                <option value=\"all\">All</option>\n            </select>\n        </div>\n        <fieldset>\n            <legend>Select C Number Range: </legend>\n            <div class=\"form-group\">\n                <label>Start:</label>\n                <input type=\"number\" name=\"start\" min=\"0\" max=\"999999999\" v-model=\"start\" class=\"form-control\">\n            </div>\n            <div class=\"form-group\">\n                <label>End:</label>\n                <input type=\"number\" name=\"end\" min=\"0\" max=\"999999999\" v-model=\"end\" class=\"form-control\">\n            </div>\n        </fieldset>\n        <button class=\"btn btn-purple btn-lg\">下載用戶資料 Export User Data</button>\n    </form>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11391,6 +11447,37 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"babel-runtime/core-js/object/keys":1,"vue":24,"vue-hot-reload-api":15,"vueify-insert-css":25}],36:[function(require,module,exports){
+var __vueify_style__ = require("vueify-insert-css").insert("\n    .modal-mask {\n        position: fixed;\n        z-index: 9998;\n        top: 0;\n        left: 0;\n        width: 100%;\n        height: 100%;\n        background-color: rgba(0, 0, 0, .5);\n        display: table;\n        -webkit-transition: opacity .3s ease;\n        transition: opacity .3s ease;\n    }\n\n    .modal-wrapper {\n        display: table-cell;\n        vertical-align: middle;\n    }\n\n    .modal-container {\n        width: 300px;\n        margin: 0px auto;\n        padding: 20px 30px;\n        background-color: #fff;\n        border-radius: 2px;\n        box-shadow: 0 2px 8px rgba(0, 0, 0, .33);\n        -webkit-transition: all .3s ease;\n        transition: all .3s ease;\n        font-family: Helvetica, Arial, sans-serif;\n    }\n\n    .modal-header h3 {\n        margin-top: 0;\n        color: #42b983;\n    }\n\n    .modal-body {\n        margin: 20px 0;\n    }\n\n    .modal-default-button {\n        float: right;\n    }\n\n    /*\n     * the following styles are auto-applied to elements with\n     * v-transition=\"modal\" when their visiblity is toggled\n     * by Vue.js.\n     *\n     * You can easily play with the modal transition by editing\n     * these styles.\n     */\n\n    .modal-enter, .modal-leave {\n        opacity: 0;\n    }\n\n    .modal-enter .modal-container,\n    .modal-leave .modal-container {\n        -webkit-transform: scale(1.1);\n        -ms-transform: scale(1.1);\n            transform: scale(1.1);\n    }\n")
+"use strict";
+
+exports.__esModule = true;
+exports["default"] = {
+    props: {
+        show: {
+            type: Boolean,
+            required: true,
+            twoWay: true
+        }
+    }
+};
+module.exports = exports["default"];
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div class=\"modal-mask\" v-show=\"show\" transition=\"modal\">\n        <div class=\"modal-wrapper\">\n            <div class=\"modal-container\">\n\n                <div class=\"modal-header\">\n                    <slot name=\"header\">\n                        default header\n                    </slot>\n                </div>\n\n                <div class=\"modal-body\">\n                    <slot name=\"body\">\n                        default body\n                    </slot>\n                </div>\n\n                <div class=\"modal-footer\">\n                    <slot name=\"footer\">\n                        <button class=\"modal-default-button\" @click=\"show = false\">\n                            OK\n                        </button>\n                    </slot>\n                </div>\n            </div>\n        </div>\n    </div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  var id = "/Users/adrianexavier/Code/SBCTemp/resources/assets/js/components/modal.vue"
+  module.hot.dispose(function () {
+    require("vueify-insert-css").cache["\n    .modal-mask {\n        position: fixed;\n        z-index: 9998;\n        top: 0;\n        left: 0;\n        width: 100%;\n        height: 100%;\n        background-color: rgba(0, 0, 0, .5);\n        display: table;\n        -webkit-transition: opacity .3s ease;\n        transition: opacity .3s ease;\n    }\n\n    .modal-wrapper {\n        display: table-cell;\n        vertical-align: middle;\n    }\n\n    .modal-container {\n        width: 300px;\n        margin: 0px auto;\n        padding: 20px 30px;\n        background-color: #fff;\n        border-radius: 2px;\n        box-shadow: 0 2px 8px rgba(0, 0, 0, .33);\n        -webkit-transition: all .3s ease;\n        transition: all .3s ease;\n        font-family: Helvetica, Arial, sans-serif;\n    }\n\n    .modal-header h3 {\n        margin-top: 0;\n        color: #42b983;\n    }\n\n    .modal-body {\n        margin: 20px 0;\n    }\n\n    .modal-default-button {\n        float: right;\n    }\n\n    /*\n     * the following styles are auto-applied to elements with\n     * v-transition=\"modal\" when their visiblity is toggled\n     * by Vue.js.\n     *\n     * You can easily play with the modal transition by editing\n     * these styles.\n     */\n\n    .modal-enter, .modal-leave {\n        opacity: 0;\n    }\n\n    .modal-enter .modal-container,\n    .modal-leave .modal-container {\n        -webkit-transform: scale(1.1);\n        -ms-transform: scale(1.1);\n            transform: scale(1.1);\n    }\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord(id, module.exports)
+  } else {
+    hotAPI.update(id, module.exports, module.exports.template)
+  }
+})()}
+},{"vue":24,"vue-hot-reload-api":15,"vueify-insert-css":25}],37:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("babel-runtime/helpers/interop-require-default")["default"];
@@ -11471,7 +11558,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./permissions.vue":37,"babel-runtime/helpers/interop-require-default":2,"vue":24,"vue-hot-reload-api":15}],37:[function(require,module,exports){
+},{"./permissions.vue":38,"babel-runtime/helpers/interop-require-default":2,"vue":24,"vue-hot-reload-api":15}],38:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -11531,7 +11618,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":24,"vue-hot-reload-api":15}],38:[function(require,module,exports){
+},{"vue":24,"vue-hot-reload-api":15}],39:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -11581,7 +11668,7 @@ exports['default'] = {
     watch: {
         user: function user() {
             if (!!this.user) {
-                var url = '/getUserDocuments/' + this.user.cNumber;
+                var url = '/getUserDocuments/' + this.user.id;
                 this.$http.get(url, function (response) {
                     Array.isArray(response) ? this.$set('documents', response) : this.$set('documents', []);
                 });
@@ -11634,7 +11721,7 @@ exports['default'] = {
     }
 };
 module.exports = exports['default'];
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <div class=\"well\">\n            <h3>搜尋用戶 Search User</h3>\n\n            <form action=\"\" method=\"POST\" @submit.prevent=\"searchUser\">\n                <div class=\"input-group\">\n                    <input type=\"number\" v-model=\"cNumber\" id=\"searchCNumber\" class=\"form-control\" placeholder=\"客戶公司序號 C Number\" autofocus=\"\">\n                  <span class=\"input-group-btn\">\n                    <button class=\"btn\" type=\"button\" @click.prevent=\"searchUser\">Go!</button>\n                  </span>\n                </div>\n            </form>\n        </div>\n\n        <form class=\"form-horizontal\" v-show=\"user\">\n            <div class=\"form-group\">\n                <label for=\"cNumber\" class=\"col-sm-3 control-label\">客戶公司序號 C Number</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"number\" class=\"form-control\" name=\"cNumber\" v-model=\"inputs.cNumber\" placeholder=\"C Number\" disabled=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"cNumber\" class=\"col-sm-3 control-label\">公司中文名稱 Chinese Company Name</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" class=\"form-control\" v-model=\"inputs.chinese_name\" placeholder=\"Chinese Company Name\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"cNumber\" class=\"col-sm-3 control-label\">公司英文名稱 English Company Name</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" class=\"form-control\" name=\"cNumber\" v-model=\"inputs.english_name\" placeholder=\"English Company Name\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"login\" class=\"col-sm-3 control-label\">登入名稱 Login Name</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" class=\"form-control\" id=\"login\" v-model=\"inputs.login\" name=\"login\" placeholder=\"Login Name\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"password\" class=\"col-sm-3 control-label\">登入密碼 Password</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" class=\"form-control\" id=\"password\" v-model=\"inputs.password\" name=\"password\" placeholder=\"Password\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"email\" class=\"col-sm-3 control-label\">電郵 Email</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"email\" class=\"form-control\" id=\"email\" v-model=\"inputs.email\" name=\"email\" placeholder=\"Email\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"status\" class=\"col-sm-3 control-label\">狀況 Status</label>\n\n                <div class=\"col-sm-9\" data-toggle=\"buttons\">\n                    <label class=\"btn {{getStatusButtonClass}}\" @click.prevent=\"toggleInputStatus\">\n                        <input type=\"checkbox\" autocomplete=\"off\" v-model=\"inputs.status\"> {{showStatusButton}}\n                    </label>\n                </div>\n            </div>\n            <div class=\"row button-group pull-right clearfix\">\n                <button class=\"btn btn-purple\" @click.prevent=\"update\">更新 Update</button>\n                <button class=\"btn btn-purple\" @click.prevent=\"reset\">重設 Reset</button>\n            </div>\n        </form>\n        <br>\n        <br>\n        <div v-show=\"hasDocuments\">\n            <grid :data.sync=\"documents\" :columns=\"columns\" :filter-key=\"searchQuery\">\n            </grid>\n            <iframe v-show=\"showPreview\" id=\"viewer\" :src=\"\" frameborder=\"0\" scrolling=\"no\" width=\"500\" height=\"770\"></iframe>\n        </div>\n    </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <div class=\"well\">\n            <h3>搜尋用戶 Search User</h3>\n\n            <form action=\"\" method=\"POST\" @submit.prevent=\"searchUser\">\n                <div class=\"input-group\">\n                    <input type=\"number\" v-model=\"cNumber\" id=\"searchCNumber\" class=\"form-control\" placeholder=\"客戶公司序號 C Number\" autofocus=\"\">\n                  <span class=\"input-group-btn\">\n                    <button class=\"btn\" type=\"button\" @click.prevent=\"searchUser\">Go!</button>\n                  </span>\n                </div>\n            </form>\n        </div>\n\n        <form class=\"form-horizontal\" v-show=\"user\">\n            <div class=\"form-group\">\n                <label for=\"cNumber\" class=\"col-sm-3 control-label\">客戶公司序號 C Number</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"number\" class=\"form-control\" name=\"cNumber\" v-model=\"inputs.id\" placeholder=\"C Number\" disabled=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"cNumber\" class=\"col-sm-3 control-label\">公司中文名稱 Chinese Company Name</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" class=\"form-control\" v-model=\"inputs.chinese_name\" placeholder=\"Chinese Company Name\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"cNumber\" class=\"col-sm-3 control-label\">公司英文名稱 English Company Name</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" class=\"form-control\" name=\"cNumber\" v-model=\"inputs.english_name\" placeholder=\"English Company Name\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"login\" class=\"col-sm-3 control-label\">登入名稱 Login Name</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" class=\"form-control\" id=\"login\" v-model=\"inputs.loginname\" name=\"login\" placeholder=\"Login Name\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"password\" class=\"col-sm-3 control-label\">登入密碼 Password</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"text\" class=\"form-control\" id=\"password\" v-model=\"inputs.password\" name=\"password\" placeholder=\"Password\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"email\" class=\"col-sm-3 control-label\">電郵 Email</label>\n\n                <div class=\"col-sm-9\">\n                    <input type=\"email\" class=\"form-control\" id=\"email\" v-model=\"inputs.email\" name=\"email\" placeholder=\"Email\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"status\" class=\"col-sm-3 control-label\">狀況 Status</label>\n\n                <div class=\"col-sm-9\" data-toggle=\"buttons\">\n                    <label class=\"btn {{getStatusButtonClass}}\" @click.prevent=\"toggleInputStatus\">\n                        <input type=\"checkbox\" autocomplete=\"off\" v-model=\"inputs.status\"> {{showStatusButton}}\n                    </label>\n                </div>\n            </div>\n            <div class=\"row button-group pull-right clearfix\">\n                <button class=\"btn btn-purple\" @click.prevent=\"update\">更新 Update</button>\n                <button class=\"btn btn-purple\" @click.prevent=\"reset\">重設 Reset</button>\n            </div>\n        </form>\n        <br>\n        <br>\n        <div v-show=\"hasDocuments\">\n            <grid :data.sync=\"documents\" :columns=\"columns\" :filter-key=\"searchQuery\">\n            </grid>\n            <iframe v-show=\"showPreview\" id=\"viewer\" :src=\"\" frameborder=\"0\" scrolling=\"no\" width=\"500\" height=\"770\"></iframe>\n        </div>\n    </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11646,7 +11733,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./grid.vue":35,"babel-runtime/helpers/interop-require-default":2,"vue":24,"vue-hot-reload-api":15}],39:[function(require,module,exports){
+},{"./grid.vue":35,"babel-runtime/helpers/interop-require-default":2,"vue":24,"vue-hot-reload-api":15}],40:[function(require,module,exports){
 var __vueify_style__ = require("vueify-insert-css").insert("\n    span.nav-item-span{\n        display:inline-block;\n        width: 50%;\n    }\n")
 'use strict';
 
@@ -11679,7 +11766,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":24,"vue-hot-reload-api":15,"vueify-insert-css":25}],40:[function(require,module,exports){
+},{"vue":24,"vue-hot-reload-api":15,"vueify-insert-css":25}],41:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -11876,7 +11963,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":24,"vue-hot-reload-api":15}],41:[function(require,module,exports){
+},{"vue":24,"vue-hot-reload-api":15}],42:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;

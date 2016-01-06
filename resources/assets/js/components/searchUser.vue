@@ -19,7 +19,7 @@
                 <label for="cNumber" class="col-sm-3 control-label">客戶公司序號 C Number</label>
 
                 <div class="col-sm-9">
-                    <input type="number" class="form-control" name="cNumber" v-model="inputs.cNumber"
+                    <input type="number" class="form-control" name="cNumber" v-model="inputs.id"
                            placeholder="C Number" disabled>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <label for="login" class="col-sm-3 control-label">登入名稱 Login Name</label>
 
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="login" v-model="inputs.login" name="login"
+                    <input type="text" class="form-control" id="login" v-model="inputs.loginname" name="login"
                            placeholder="Login Name">
                 </div>
             </div>
@@ -132,7 +132,7 @@
         watch: {
             user: function () {
                 if (!!this.user) {
-                    var url = '/getUserDocuments/' + this.user.cNumber;
+                    var url = '/getUserDocuments/' + this.user.id;
                     this.$http.get(url, function (response) {
                         Array.isArray(response)? this.$set('documents', response):this.$set('documents', [])
                     })

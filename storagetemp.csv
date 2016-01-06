@@ -1,0 +1,404 @@
+cnumber,"chinese name","english name","login name",password,status
+1,野火樂集公司,"Veum, Lakin and Klein",SBC-auUB2g,SBCCFG65n,0
+2,豪客有限公司,"Stroman, Zieme and Schumm",SBC-ahuTRt,SBCPPHMow,0
+3,紅心辣椒有限公司,"Johns PLC",SBC-BmCTZw,SBCMiZRMO,0
+4,弘煜電子,Buckridge-Kuhic,SBC-RyDjmJ,SBCZx19N1,0
+5,美妙工業,"Schulist LLC",SBC-M8jNIM,SBCLSqS2u,0
+6,睛水有限公司,Heller-Aufderhar,SBC-gsfkk3,SBC3RrKNv,0
+7,弘煜公司,"Abshire Ltd",SBC-AOwWkx,SBC5iOXZK,0
+8,擎天集團公司,"Doyle Group",SBC-bfEL0r,SBCwY2W5L,0
+9,趨勢股份有限公司,Wilderman-Bogisich,SBC-E1Jkw2,SBCK5Hrxf,0
+10,新亞洲科技公司,"West PLC",SBC-p800Hk,SBCBZmfGh,0
+11,弘煜音樂,"Bins, Blanda and Fadel",SBC-N707dg,SBC7UeBcb,0
+12,野火樂集唱片,Muller-Zboncak,SBC-HtreWI,SBChL9ldS,0
+13,研華文化,Daniel-Schneider,SBC-xewmpa,SBCycqmbN,0
+14,當然股份有限公司,"Ankunding Ltd",SBC-QghEko,SBCqPkeO1,0
+17,喬山有限公司,"Johnson, Miller and Schowalter",SBC-U6Vy9y,SBCZZIRwH,0
+19,亞神有限公司,"Carter, Nitzsche and Hartmann",SBC-btHGeB,SBC3TSKYv,0
+20,英特衛有限公司,"Ryan Inc",SBC-aoAvVr,SBCdTICwo,0
+21,大宇集團股份有限公司,"Hills, Zboncak and Kertzmann",SBC-78f8Xt,SBC9qAIGY,0
+22,智冠文化,Swaniawski-Carter,SBC-WkxCTu,SBC5gR6O2,0
+25,睛水酒店股份有限公司,"King and Sons",SBC-Udb9Qd,SBCk0U3MU,0
+26,創見酒店,Jast-Friesen,SBC-D6iPub,SBC37pGgF,0
+28,華研股份有限公司,DuBuque-Von,SBC-s3NRUm,SBCClE1iP,0
+30,大宇汽車,"Kirlin PLC",SBC-kJFzxH,SBCnkRiTx,0
+31,遊戲橘子酒店,"Emard, Greenfelder and VonRueden",SBC-qxuxWe,SBCULVaEh,0
+32,美妙酒店,Senger-Lind,SBC-7DZIBF,SBChfA6ds,0
+33,擎天電子有限公司,"Kerluke, Gorczany and Kreiger",SBC-er7erH,SBCvNsiNA,0
+34,擎天音樂,"Walter, Rodriguez and Botsford",SBC-C4TZo9,SBCy1szZ7,0
+36,合勤企業公司,"Ritchie LLC",SBC-8O8Csg,SBC6xs68U,0
+40,彎的科技,"Fritsch, Stroman and Fadel",SBC-00hQaF,SBCxmSPrr,0
+41,英特衛公司,"Cassin PLC",SBC-djSqVV,SBCH3JjHf,0
+43,統一唱片,"Pagac and Sons",SBC-rEEpT0,SBCgHpdFL,0
+44,未來有限公司,"Barrows, Veum and Koss",SBC-AOmoZd,SBCSuIeAI,0
+46,光譜有限公司,Bednar-Kub,SBC-xVSG6y,SBC9grERj,0
+47,華研唱片股份有限公司,Murray-Hackett,SBC-nEClbB,SBC6sbrFW,0
+50,合勤有限公司,Ondricka-Becker,SBC-lolEKN,SBCBqC7HF,0
+51,延伸百貨,"Collins, Homenick and Emard",SBC-HKtVqB,SBCm850rY,0
+52,添翼創越有限公司,"Kulas LLC",SBC-3dd7wr,SBCdOnVwJ,0
+55,宏碁公司,"Rowe PLC",SBC-dbTkwD,SBCvqPrpC,0
+56,茂為企業,"Zemlak and Sons",SBC-titZ3r,SBCdDMbbY,0
+58,洧誠電腦,"Greenholt PLC",SBC-qC0f9H,SBC8EqLHo,0
+59,風雲公司,Wehner-Kautzer,SBC-skmIdK,SBCCKPsLp,0
+61,風和日麗娛樂,Klein-Altenwerth,SBC-jwoFw0,SBCM8399r,0
+63,豪記集團股份有限公司,"Rempel LLC",SBC-hVqbMK,SBCx6CJm1,0
+64,延伸有限公司,"Davis Group",SBC-JUeCEX,SBC1mZKXe,0
+65,洧誠數位,"Anderson, Hoppe and Lynch",SBC-wG9sC0,SBCrE1OPo,0
+67,光譜工業有限公司,Goodwin-Eichmann,SBC-7dUMSt,SBC7iUV9m,0
+68,王品有限公司,Bernhard-Schneider,SBC-scUs4Z,SBCN3gyxN,0
+69,趨勢集團,"Moen, Quitzon and Hirthe",SBC-BL9d0B,SBC7xzWtr,0
+71,美利達公司,"Cummerata and Sons",SBC-IvPWsv,SBCO0AYVp,0
+72,芮河集團,"Shanahan, Schowalter and Schneider",SBC-oz8UX1,SBCwTnOdt,0
+73,台達有限公司,"Larkin Group",SBC-tSy9UJ,SBC7zGKmA,0
+74,智冠公司,"Reilly LLC",SBC-SQQg7V,SBCbNF88g,0
+75,巨室數位,"Towne and Sons",SBC-qUW9WD,SBCJldFnT,0
+76,松崗有限公司,"Stoltenberg LLC",SBC-xoGRUK,SBCN9dww7,0
+77,訊連酒店股份有限公司,"Parker and Sons",SBC-3HPpcn,SBC93p2Ad,0
+78,銀魚百貨公司,"Klocko, Upton and Gulgowski",SBC-O5ogYX,SBCnYEg54,0
+79,王品數位,Jakubowski-Sauer,SBC-S3N0tZ,SBCdfYU9a,0
+80,正新電子有限公司,Rodriguez-Kessler,SBC-CTRs6N,SBCXPJniD,0
+81,凱基科技,"McClure Ltd",SBC-Oi2tGg,SBCv7X8xl,0
+82,滾石有限公司,"Hermiston Group",SBC-58ywpF,SBCAhljHM,0
+83,老鷹音樂公司,"Collins, Mann and McClure",SBC-fF2YGf,SBC09C4Oo,0
+84,福茂股份有限公司,"Pouros, Hansen and Ryan",SBC-2mUOVs,SBC5lppTS,0
+85,趨勢企業,"Strosin Inc",SBC-Ex8oBq,SBCa68bDj,0
+86,米樂士有限公司,Runte-Corwin,SBC-0daojQ,SBCbuuWhL,0
+87,彎的工業,"Ebert, Sporer and Lebsack",SBC-9Ow6p1,SBCKQ90mA,0
+88,貴族股份有限公司,"Runolfsdottir Inc",SBC-DZ1WdQ,SBCKEeYy4,0
+90,喜瑪拉雅國際股份有限公司,"Huels LLC",SBC-fHicDd,SBCHSflDM,0
+91,前衛花園公司,"Dare, Goldner and Yost",SBC-MddOrw,SBCaoS66J,0
+92,新亞洲唱片,"Wisozk, Friesen and Champlin",SBC-PYE8zl,SBCZ1wnTz,0
+93,喜瑪拉雅公司,"Frami and Sons",SBC-2x4dGz,SBCXgbVNi,0
+95,宏達數位有限公司,"Altenwerth, Bernhard and Hirthe",SBC-rAkBt8,SBCZpZrbP,0
+97,群石公司,"Blick, Stracke and Luettgen",SBC-7SuLzw,SBCyDmG4c,0
+98,芮河股份有限公司,"Hayes, Batz and Powlowski",SBC-TVldT7,SBCxaugop,0
+99,喜瑪拉雅機械股份有限公司,"Cruickshank, Tremblay and Upton",SBC-946TDq,SBCr7bymB,0
+100,豪客國際有限公司,"Dooley Ltd",SBC-38n5qY,SBC6Uf9Ok,0
+101,英特衛有限公司,"Muller Ltd",SBC-dhXWrX,SBCAcXkyQ,0
+102,銀魚集團,"Koch Group",SBC-bhLgYE,SBCsLLSDe,0
+103,華碩公司,"Jacobs Ltd",SBC-wOWqyp,SBCJXRc4U,0
+104,紅心辣椒百貨有限公司,"Emard, Anderson and Ondricka",SBC-tKAHSn,SBCmJQKWY,0
+105,彎的工業公司,"Trantow Group",SBC-nU7R46,SBCNqTULH,0
+106,華碩唱片有限公司,Cummerata-Smith,SBC-oAEWcS,SBCdPpiqt,0
+107,睛水股份有限公司,"McLaughlin, McKenzie and D'Amore",SBC-cxAESd,SBCYmtqga,0
+109,友訊音樂有限公司,"Schinner, Mayert and Ledner",SBC-tCbOXM,SBC4kxvyc,0
+110,典選企業公司,"Durgan Inc",SBC-lvV38y,SBCVFKy4F,0
+111,銀魚百貨,Turcotte-Toy,SBC-KHm9Vd,SBCGFFbMN,0
+112,擎天股份有限公司,"Nikolaus, Bode and Wisozk",SBC-IzBa5R,SBCz2wHgi,0
+113,紅心辣椒工業股份有限公司,"Jacobi and Sons",SBC-mg3cJE,SBCbHTsNt,0
+114,遊戲橘子有限公司,Wisozk-Orn,SBC-uiZIgU,SBCt8GpwG,0
+115,典選有限公司,"Mueller, Bartell and Kautzer",SBC-1baQht,SBCXwvz0R,0
+116,擎天公司,"Kessler PLC",SBC-gw1kn2,SBCHdY2jL,0
+117,巨室機械,"Mann Inc",SBC-XmreM0,SBCp2S4Bn,0
+118,正新娛樂公司,"Bogan and Sons",SBC-9i4BRP,SBCiZnqAs,0
+120,乾坤數位股份有限公司,"Boehm PLC",SBC-DtWe5j,SBCbvTI7h,0
+121,趨勢有限公司,"Von, Leffler and Kessler",SBC-wEd6TW,SBCVh3YHF,0
+124,華研電腦公司,"Wintheiser, Keebler and Kuhlman",SBC-fMIpFV,SBC10apgc,0
+125,豪記公司,"Gibson PLC",SBC-JCK8l1,SBCqKAYup,0
+126,小白兔股份有限公司,Gottlieb-Kris,SBC-qIC4tI,SBCb6O4Mb,0
+127,台達音樂公司,"Emard, Emard and Kessler",SBC-0LLp6K,SBCUdHBKj,0
+128,大國國際,"Wunsch, Rogahn and Spencer",SBC-AonoE7,SBC3bnSQa,0
+129,宏達企業公司,"Greenholt, West and Bogisich",SBC-fcAvj9,SBCgX0Cic,0
+130,美妙唱片股份有限公司,"Ortiz PLC",SBC-bmj8ya,SBCE22NCG,0
+131,巨大工業,Fay-Lowe,SBC-LFIYJu,SBCdnse33,0
+132,銀魚有限公司,"Cartwright, Schaden and Lueilwitz",SBC-RpeUPD,SBCGaXvrC,0
+133,典選機械,"Brekke, Cummings and Oberbrunner",SBC-ZGtU4B,SBCTShTVy,0
+134,台達電子有限公司,"Vandervort, Schaefer and Ward",SBC-DxJNmx,SBC3GJ4uM,0
+135,巨室音樂,Hayes-Raynor,SBC-goXP63,SBCXeSekw,0
+137,芮河數位公司,Marvin-Kovacek,SBC-wXdFB8,SBCumaZho,0
+140,英特衛娛樂,Marks-Roberts,SBC-9Sanow,SBCIo2gwQ,0
+142,群石股份有限公司,"Kihn, Morissette and Crist",SBC-0xxspK,SBCFxA7Op,0
+143,老鷹酒店,Olson-Kunde,SBC-ZLpkFQ,SBCzBNbB9,0
+144,友訊股份有限公司,"Casper LLC",SBC-umilfG,SBCy5m32v,0
+146,訊連公司,"Schmeler Inc",SBC-GytDnv,SBCDHoX3a,0
+148,小白兔公司,Hudson-Jast,SBC-XGEL3W,SBCVfnJZf,0
+149,華特工業,"Thiel Ltd",SBC-qKj08W,SBCZ4p32i,0
+151,茂為文化,"Sauer Group",SBC-JHEMT2,SBCtNHImX,0
+152,風雲電腦,Cassin-Hettinger,SBC-vWlfjb,SBCklQC66,0
+153,添翼創越有限公司,Hermiston-Pacocha,SBC-4KdszG,SBCklmEEY,0
+155,遊戲橘子公司,"Price, Terry and Torp",SBC-3bekCH,SBC8rv2BJ,0
+156,研華公司,"Murazik, Brakus and Breitenberg",SBC-cajLbQ,SBCaIrdYr,0
+157,風雲有限公司,"Lynch Group",SBC-AYqQru,SBCW59OTT,0
+160,豐華數位公司,"Runolfsdottir Group",SBC-resi80,SBCKgai6w,0
+161,當然公司,"Thiel Group",SBC-SbVESA,SBCJDcgKo,0
+162,紅元素酒店,"Greenfelder Inc",SBC-EQjwuX,SBC8topSf,0
+163,金革科技,"Hickle, Prosacco and Lueilwitz",SBC-CZXk9r,SBCNkT4GF,0
+164,金革股份有限公司,Pagac-Hermann,SBC-NXrmJL,SBCMVuv5V,0
+165,風潮唱片有限公司,"Considine, Bernhard and Schiller",SBC-EhCxGO,SBCX91JyC,0
+166,風和日麗科技有限公司,"Pfeffer, Eichmann and Cummerata",SBC-yJC0wA,SBCX3VwHn,0
+168,正新公司,Luettgen-Mante,SBC-QlsMpK,SBCgppRpO,0
+169,擎天唱片,"Medhurst, Weissnat and Luettgen",SBC-PvHjzm,SBCs5CrR0,0
+170,米樂士汽車公司,"Harris and Sons",SBC-hi84Ln,SBCXEpLEw,0
+171,睛水國際,"Kulas Inc",SBC-WAqb7O,SBCN1Wnzg,0
+172,典選機械有限公司,"Kerluke and Sons",SBC-u5hJNR,SBCOCQMr8,0
+173,紅心辣椒百貨公司,"Stanton, Farrell and Frami",SBC-4TSnte,SBCzkA9Gr,0
+174,大國證券,"Purdy LLC",SBC-tpLU6c,SBCehxo5f,0
+175,大國有限公司,"Dickinson, Gulgowski and Bednar",SBC-J7obO8,SBC0DCAf4,0
+176,小白兔國際股份有限公司,"Herzog LLC",SBC-P1Bvxm,SBCeR1WZe,0
+177,新亞洲百貨,"Hills, Wehner and Schneider",SBC-Bczwki,SBCX9xUe0,0
+178,美樂帝汽車有限公司,"Reichert LLC",SBC-Svh7iG,SBCfixyrv,0
+179,阿爾發工業,Weissnat-Blanda,SBC-IjEn7j,SBCEWufzs,0
+180,康師傅酒店股份有限公司,"Jones LLC",SBC-Q7E4EF,SBCZyE5di,0
+181,弘煜電腦,"Turner Inc",SBC-YQlyGt,SBCbNVpmw,0
+182,研華有限公司,"Wolff, West and Welch",SBC-PJrLMD,SBCSydu13,0
+183,王品股份有限公司,"Kuhlman and Sons",SBC-lQN0V9,SBCMD926q,0
+184,研華公司,"Larkin and Sons",SBC-BRIkPA,SBCTbb0te,0
+185,金革工業公司,"Mueller and Sons",SBC-yTYouO,SBCcpR01o,0
+186,芮河數位有限公司,"Kuvalis and Sons",SBC-DEHjpl,SBCPsVDWc,0
+189,巨室科技有限公司,"Heaney, Mosciski and Lakin",SBC-8xWb0f,SBCV7UWQF,0
+190,金革文化,Marquardt-Fisher,SBC-upXq2n,SBC7p3sFO,0
+191,群石證券,Treutel-Doyle,SBC-07uPNh,SBC6R32Kz,0
+192,福茂有限公司,"Schaden PLC",SBC-3sIbaw,SBCyfAxTJ,0
+194,老鷹電腦公司,"Ullrich LLC",SBC-e92yTH,SBCH9Bvcr,0
+195,睛水公司,"Willms and Sons",SBC-0oxEvq,SBCSgMpc4,0
+196,華義股份有限公司,"Kutch Group",SBC-r5x9s3,SBC6vcCUJ,0
+197,華研股份有限公司,Adams-Jacobson,SBC-Y85aVh,SBCdRE4Df,0
+198,豐華機械,"Tillman Ltd",SBC-xcm9ht,SBCt7kfUx,0
+199,新亞洲唱片公司,"Sauer LLC",SBC-V8F31w,SBCy3k5ab,0
+200,友訊百貨有限公司,Kassulke-Streich,SBC-Q452Fk,SBCt2zspe,0
+201,巨大集團公司,Kutch-Conn,SBC-dwAiDe,SBCh5Hbra,0
+202,宏達股份有限公司,Ledner-Hirthe,SBC-qAh1zw,SBCRRcD5k,0
+203,新亞洲公司,Marks-Green,SBC-9DgLtP,SBCeszP4f,0
+204,海蝶有限公司,Braun-Witting,SBC-CUat5w,SBCw4z3MG,0
+205,紅心辣椒企業,"Stiedemann, Heller and Gulgowski",SBC-1FEcXP,SBCnchgwH,0
+206,喜瑪拉雅公司,"Leannon, Bartell and Kihn",SBC-ME4Ub7,SBCF4knsq,0
+208,宏達股份有限公司,Ritchie-Marks,SBC-HrwHLT,SBCOHjaYx,0
+209,風潮國際,"Auer Group",SBC-fZgrsg,SBC1TKW38,0
+210,角頭科技有限公司,Herzog-Rowe,SBC-6ynmBT,SBCes4NGm,0
+211,康師傅公司,"Stokes, O'Hara and Muller",SBC-3Z5jzS,SBCQ81XhM,0
+212,弘煜工業,Barton-Williamson,SBC-IrlUka,SBCYMhkGp,0
+213,洧誠公司,Boyer-Corwin,SBC-pPh2NA,SBC8Xcpcf,0
+214,豐華有限公司,"Walsh LLC",SBC-52Qd5m,SBCXfOnQo,0
+215,統一百貨,"Emmerich, Heaney and Ortiz",SBC-kG0ksl,SBCWYNZ59,0
+217,康師傅數位有限公司,Steuber-Johnston,SBC-wo7k6S,SBCBaHM5l,0
+218,海蝶國際,"Kilback Ltd",SBC-vANnS8,SBC8AZwob,0
+220,太陽動力文化公司,Ebert-Boehm,SBC-wHW7F7,SBClyUd7l,0
+222,米樂士科技,"Hansen, Reichel and Smitham",SBC-h34Zjv,SBCNZf7Qa,0
+223,喬山股份有限公司,"Brakus and Sons",SBC-ZoJq6Q,SBC3Z3jCe,0
+224,台達數位公司,"Bechtelar Group",SBC-7yyAQ1,SBCt2XQNU,0
+225,添翼創越股份有限公司,Dicki-Hauck,SBC-8iBiXR,SBCKVqT8e,0
+226,延伸音樂公司,Larkin-Donnelly,SBC-O1PvAR,SBCXyrk5P,0
+227,英特衛集團公司,Pouros-McDermott,SBC-kYzNQ7,SBCTAlmvr,0
+228,豐華集團股份有限公司,Barton-Blick,SBC-uOYErn,SBCsqIkzW,0
+229,遊戲橘子股份有限公司,Hartmann-Davis,SBC-0FefG0,SBCOTJhsK,0
+230,美利達文化股份有限公司,"Lehner, Walsh and Kemmer",SBC-O9sBmz,SBCdAcB0k,0
+231,前衛花園國際有限公司,"Feil Inc",SBC-2Wm58a,SBCnKhZ88,0
+232,巨大股份有限公司,Smith-Ullrich,SBC-DfsTKk,SBCd5DjaE,0
+233,光譜股份有限公司,"Pfannerstill LLC",SBC-T6sHxg,SBCUmF3dz,0
+234,太陽動力電子股份有限公司,"Murray Group",SBC-wZxc7n,SBCm8Dn8i,0
+235,華研企業,"Greenholt Inc",SBC-Wv9zCy,SBCRursQ4,0
+236,豪記國際,Morissette-Reichert,SBC-EFSFkZ,SBCMKAuIR,0
+237,凱基汽車,"Zieme, Bahringer and Watsica",SBC-Aq5ZLr,SBCNo0KPr,0
+238,研華酒店有限公司,"Mosciski Inc",SBC-QpLdQX,SBCwGk5M2,0
+239,芮河電腦,"Hagenes Inc",SBC-j5Q2nr,SBCkdnzm3,0
+240,紅元素集團公司,"Brakus PLC",SBC-Uw55GW,SBCymqKul,0
+241,華義有限公司,"Veum LLC",SBC-Ih3UcT,SBCbU2B8B,0
+242,種子股份有限公司,"Daugherty LLC",SBC-c3QPth,SBCD257Lk,0
+243,台達有限公司,"Herman LLC",SBC-ukdQFw,SBCD3jBbP,0
+244,海蝶有限公司,"Ondricka, Balistreri and Deckow",SBC-yVCext,SBCPedwnj,0
+245,海蝶公司,"Considine Group",SBC-ahZJ5n,SBCXBfOMG,0
+246,正新唱片公司,Zulauf-Graham,SBC-Tky3Dl,SBCIzomnv,0
+247,喬山娛樂,"Kris, O'Hara and Gottlieb",SBC-YlDaWC,SBC0Upqeg,0
+248,福茂企業有限公司,Hirthe-O'Hara,SBC-UWflL0,SBCtLcnbg,0
+250,典選唱片,Roob-Douglas,SBC-6WlqTQ,SBCEnwSEu,0
+252,松崗證券,Hintz-Hills,SBC-hWllHH,SBCH5alvy,0
+253,大國公司,"Stroman Group",SBC-Hny1h1,SBC9rgATd,0
+254,貴族音樂,Wiegand-Hodkiewicz,SBC-Xj6wjt,SBCNWntW3,0
+255,未來電腦,Mohr-Harvey,SBC-jmuwE6,SBCql16vP,0
+256,正新公司,"Brown LLC",SBC-czVCER,SBCSDAdjG,0
+258,福茂唱片,Fritsch-Mohr,SBC-CCtvKn,SBC5QEPbP,0
+259,太陽動力有限公司,Botsford-Kuvalis,SBC-8AMbYr,SBC7n8uB9,0
+262,康師傅科技,"Boyle Inc",SBC-f3XqwD,SBCdJSVhr,0
+263,貴族企業股份有限公司,"Lowe and Sons",SBC-dQP7zD,SBCU10GXz,0
+264,華研科技股份有限公司,"Stark, Harber and Bayer",SBC-AQ9vCq,SBC1OIWTQ,0
+266,前衛花園百貨,"Kunze, Larson and Robel",SBC-GJHe3X,SBCbh6Kfj,0
+267,群石證券公司,Hudson-Schroeder,SBC-C8Fbem,SBCjdekGa,0
+269,洧誠有限公司,"Pollich, Koss and Gusikowski",SBC-AgV1O6,SBCghtMy6,0
+270,添翼創越企業,"Douglas Group",SBC-RqDIR8,SBC7Z64TY,0
+271,英特衛股份有限公司,"Jacobs, Spinka and D'Amore",SBC-PDefGb,SBCquhNJ1,0
+272,康師傅電腦有限公司,"Roob Ltd",SBC-Qee7Zx,SBCvZBjIn,0
+273,智冠電子有限公司,"Breitenberg, Wuckert and Walter",SBC-2sOgqp,SBCyP55vh,0
+274,訊連酒店,"Grant LLC",SBC-aaqTFK,SBCBU1k64,0
+275,彎的國際股份有限公司,"Sipes and Sons",SBC-hHKefX,SBCR1Jbkv,0
+276,巨室有限公司,Cremin-Kuphal,SBC-Jcsb7E,SBCMrAz0A,0
+278,美樂帝股份有限公司,Lind-Bogisich,SBC-mcyc9F,SBCg5Ma3N,0
+279,未來股份有限公司,Strosin-Stokes,SBC-flErtd,SBC4nAcfo,0
+280,福茂企業,Stracke-Nader,SBC-IjeFZC,SBCayq1vj,0
+281,典選企業公司,"Morar Group",SBC-STfA6o,SBCBxM91E,0
+282,紅元素娛樂,"Flatley and Sons",SBC-dlqB9D,SBCC8oZcN,0
+283,老鷹股份有限公司,Nicolas-Leffler,SBC-An8M1X,SBCUqlt7m,0
+284,英特衛股份有限公司,"Bauch LLC",SBC-90zK9x,SBCmJ5cJq,0
+285,風和日麗股份有限公司,"Klocko, Raynor and Leffler",SBC-qGHhl4,SBCHmk0W6,0
+287,華碩科技公司,"Gislason PLC",SBC-ZNrHT1,SBCtI3QoC,0
+288,凱基公司,Heidenreich-Luettgen,SBC-FZbomu,SBCghvTDt,0
+289,智冠文化公司,Marks-Kreiger,SBC-QnEDNX,SBCEQyZXn,0
+290,金革公司,"Gleason, Sporer and Reynolds",SBC-9kEmAT,SBCIeuCHJ,0
+291,太陽動力股份有限公司,Streich-Reinger,SBC-NU6NXd,SBC3UEzWV,0
+292,前衛花園公司,"Watsica Group",SBC-lA4PKq,SBCp4S6ct,0
+293,松崗股份有限公司,"Padberg, Lind and Eichmann",SBC-Ne350O,SBCrqMsRD,0
+294,茂為酒店股份有限公司,"Lakin, Steuber and Kunze",SBC-WhRKr3,SBC8R93Ij,0
+295,添翼創越工業,Gaylord-Russel,SBC-SGd04b,SBC3UB1KG,0
+296,華研有限公司,"Mayer Group",SBC-x5bVqp,SBCIh7LiN,0
+297,趨勢音樂,Tromp-Shields,SBC-2pNgt4,SBCg32inG,0
+300,友訊電腦公司,"Veum Inc",SBC-asP0RF,SBCIlO7ag,0
+301,風雲電子公司,"Dooley PLC",SBC-ppNn9g,SBCJxIRGy,0
+304,喜瑪拉雅國際公司,"Kessler, Bednar and Larkin",SBC-KAgdX8,SBCfoncZe,0
+305,豪記娛樂,Gleason-Schaden,SBC-uBrFRf,SBCD8kW3s,0
+307,宏碁股份有限公司,"Reynolds LLC",SBC-TIIRcq,SBCtYI7rO,0
+309,福茂電子,"Runolfsdottir, Simonis and Borer",SBC-RLtGDF,SBCoDYHhV,0
+310,亞神文化股份有限公司,Conroy-Kertzmann,SBC-kc2szZ,SBCZCWGpP,0
+311,英特衛百貨,Frami-Romaguera,SBC-u5r9qR,SBCc5cv3i,0
+312,野火樂集音樂,"Weissnat, Block and Heller",SBC-1N0UYy,SBC5DFR47,0
+313,華碩電子,Murphy-Lesch,SBC-owWw1X,SBCA9VXSp,0
+314,趨勢酒店公司,Wunsch-Herzog,SBC-r0fKTC,SBCJ0SfoI,0
+315,滾石汽車,Cremin-Zieme,SBC-qgm00C,SBC5lfbH7,0
+316,野火樂集集團,"Hilpert Ltd",SBC-tGXd9X,SBCYsNzi2,0
+317,洧誠證券,"Medhurst, Kassulke and Johnson",SBC-HmAS3f,SBCIGqXCu,0
+318,新亞洲音樂,"Roberts, Schumm and Ritchie",SBC-uLIeqP,SBCYD9Sfo,0
+319,新亞洲公司,Wintheiser-Prosacco,SBC-ZGwlEx,SBCG1lQpA,0
+321,正新企業,"Braun Inc",SBC-3oXJ4s,SBCT2Tcw4,0
+322,巨大股份有限公司,"Abshire and Sons",SBC-jG1CEx,SBCOAnCqi,0
+324,美樂帝電子,"Kuhn, Legros and Kassulke",SBC-gGEJZb,SBC5nq9aZ,0
+325,豐華公司,"Mayert Group",SBC-IqwMe8,SBCyEBDuS,0
+326,康師傅股份有限公司,Waelchi-Considine,SBC-qh9WbA,SBCMfyr9S,0
+327,英特衛證券公司,"Heaney, Schiller and Murazik",SBC-oZPBys,SBC29k3G1,0
+329,海蝶股份有限公司,Zulauf-Tillman,SBC-g6oRFn,SBCj36E25,0
+331,前衛花園工業有限公司,"Brakus LLC",SBC-NP7wHY,SBCtAWRHC,0
+332,銀魚公司,Stehr-Runolfsson,SBC-ngNtmK,SBCHU5PpV,0
+333,未來百貨,"Howe LLC",SBC-LgWkzF,SBCB1qaH7,0
+334,趨勢娛樂有限公司,"Jacobi, Raynor and McKenzie",SBC-gevTRS,SBCwyGP54,0
+335,海蝶唱片有限公司,Bins-Sporer,SBC-sc80Pv,SBCV5GI06,0
+337,相信證券,"Eichmann Inc",SBC-D1rVJv,SBCCwvg2m,0
+338,華研百貨有限公司,"Reilly Inc",SBC-EvoUBL,SBCJJoWu2,0
+339,太陽動力音樂,Mann-Schimmel,SBC-ERw0XM,SBCxoVG4M,0
+341,合勤股份有限公司,"Thompson, Wintheiser and Abbott",SBC-3BRq7H,SBCsegCkL,0
+342,大宇國際,Nienow-Rolfson,SBC-5y1k6J,SBCnsJrpp,0
+343,風雲電腦有限公司,"Breitenberg Group",SBC-rOgaRT,SBCUTiq4s,0
+344,太陽證券,"Mante Group",SBC-iWq3jW,SBC5sF5D3,0
+345,風潮電腦,"Bernier, Wiegand and Klein",SBC-NWhrgA,SBC9Lhu0Q,0
+346,滾石有限公司,"Moore, Nicolas and Romaguera",SBC-xmYwwm,SBCF1FDSV,0
+347,貴族國際,"Turner, Brown and Macejkovic",SBC-RG6jTL,SBC83BxoO,0
+349,添翼創越音樂,O'Kon-Crona,SBC-mOtjDO,SBCJ8SAfl,0
+350,滾石公司,"O'Reilly and Sons",SBC-xXPjXp,SBC4OVBF2,0
+351,風雲公司,"Mueller, Torphy and Heidenreich",SBC-VOB7oq,SBCrYtJyR,0
+352,金革酒店公司,"Bins Inc",SBC-1hVWJY,SBCEr3uWj,0
+353,大國有限公司,"Hagenes Group",SBC-UrURsK,SBCijqxKF,0
+354,華碩汽車有限公司,Fay-Carter,SBC-awTTTd,SBCBhNzBe,0
+355,美妙有限公司,"Kilback and Sons",SBC-iquPVA,SBC2Encrq,0
+357,趨勢酒店,Greenfelder-Waters,SBC-FVCwVp,SBCZRWeYf,0
+358,亞神娛樂有限公司,"Price, O'Hara and Boyle",SBC-nqeZIX,SBC1ojpYf,0
+359,大國股份有限公司,"Huel Group",SBC-XSEkSD,SBCkRnaWX,0
+360,喬山科技股份有限公司,Lemke-Lang,SBC-V1Z7MS,SBC4QTvgM,0
+361,美樂帝科技,"Kunze, Leannon and Schumm",SBC-nIMqIT,SBChHj18Y,0
+363,旺旺企業股份有限公司,Metz-Sanford,SBC-0KObvW,SBCJwaZ66,0
+364,阿爾發文化,"Jenkins, Runolfsdottir and Reichel",SBC-cNloDH,SBCEN3ZBr,0
+365,訊連國際,"Skiles, Ernser and Kessler",SBC-cAA7tY,SBCPQYtGW,0
+366,巨大科技股份有限公司,Bartoletti-Howell,SBC-PbBUFd,SBCnU7gDr,0
+367,大宇公司,Schuppe-Beahan,SBC-bo7ncw,SBCcV2oEz,0
+368,貴族股份有限公司,"Romaguera, Koch and McKenzie",SBC-CgyJ76,SBCQq5879,0
+370,洧誠股份有限公司,"Terry, Medhurst and Toy",SBC-EiZOeb,SBC5H06rS,0
+372,小白兔唱片公司,"Konopelski and Sons",SBC-68RLx8,SBCoTQJ1L,0
+373,福茂電子,Morar-Stark,SBC-MWtSff,SBCl4VFnJ,0
+374,海蝶集團,"Cummerata LLC",SBC-egvsBO,SBCINihQj,0
+376,當然酒店公司,Stanton-Armstrong,SBC-muwSOa,SBCTkdsq1,0
+377,福茂企業股份有限公司,"Mann, Frami and Macejkovic",SBC-6Db3y5,SBCQPHzhD,0
+378,美利達有限公司,"Lynch, Crooks and Johnson",SBC-30F53m,SBCiUekvb,0
+379,光譜電子股份有限公司,"Reichel, Robel and Reynolds",SBC-qO7M8Y,SBCZCRgSB,0
+381,紅元素音樂,"Balistreri, Ondricka and Will",SBC-Xq962J,SBCs5UUwK,0
+382,風和日麗汽車,"Glover and Sons",SBC-lvJFiH,SBCkGdKxM,0
+384,旺旺電子,"Torp Inc",SBC-1i8rXi,SBCesI6o3,0
+385,華研股份有限公司,Stiedemann-Strosin,SBC-Sh56lD,SBC7FCo3Q,0
+386,金革有限公司,"Bogan, Torphy and Romaguera",SBC-TDbmwb,SBC2n7ali,0
+387,彎的公司,Braun-Welch,SBC-rbDVU1,SBCIZGT4E,0
+388,美樂帝集團有限公司,Walsh-Monahan,SBC-nJmO9W,SBC6IvOXP,0
+389,旺旺公司,"Kuphal, Leffler and Ferry",SBC-9KjIre,SBCxFKraO,0
+390,小白兔音樂公司,"Kreiger LLC",SBC-dzy9Ha,SBC8lwBQn,0
+391,茂為百貨公司,"Crist, Reichert and Toy",SBC-cBZeQh,SBCzFhvXt,0
+392,訊連電子股份有限公司,Torp-Rodriguez,SBC-Y2yIgc,SBC2PmKKd,0
+393,典選汽車,"McCullough, Howe and Reichel",SBC-exSnzI,SBClmG61N,0
+394,華研數位公司,"Smith and Sons",SBC-8r9cTY,SBCRQ0lAU,0
+395,米樂士科技有限公司,Hansen-Stoltenberg,SBC-TijLK8,SBCMAyneJ,0
+399,群石數位股份有限公司,Denesik-Gulgowski,SBC-uvup95,SBCiKH0Sb,0
+401,創見電子有限公司,"Smitham, Turcotte and Torp",SBC-o0s3BU,SBC2P8Gyz,0
+402,旺旺公司,Kemmer-Torp,SBC-8wCU3P,SBCXxP0eg,0
+403,銀魚科技有限公司,"Sipes Group",SBC-lccoly,SBCzoTpDF,0
+404,美利達音樂,Reinger-Gulgowski,SBC-b0J9vM,SBCj3mOdO,0
+405,亞神音樂有限公司,"Cassin Group",SBC-ONteRG,SBC7lMrY0,0
+406,野火樂集汽車股份有限公司,"Feil LLC",SBC-ZCs5vH,SBCpU9XOA,0
+407,風和日麗集團股份有限公司,Cummerata-McKenzie,SBC-l06OxK,SBCkjzhdJ,0
+408,喬山有限公司,"Marks, Swift and Hane",SBC-xBshfA,SBC8ah4IY,0
+409,風和日麗科技股份有限公司,"Krajcik, Okuneva and Tremblay",SBC-P7lcvR,SBCj8YRK9,0
+410,群石有限公司,"VonRueden, Crist and Sipes",SBC-Pcf9Fz,SBCJTnJYN,0
+411,凱基集團有限公司,"Fritsch and Sons",SBC-LEFg1k,SBCrZvvnp,0
+412,智冠電子有限公司,Murazik-Powlowski,SBC-56vGCH,SBC0yAGC0,0
+414,遊戲橘子有限公司,"Wisozk Inc",SBC-Cnqg2l,SBC7TNkVd,0
+415,種子工業,"Aufderhar PLC",SBC-OICqaL,SBCiENE5e,0
+416,野火樂集企業有限公司,"Feil Ltd",SBC-tMQkIL,SBCdfWda7,0
+418,風潮公司,"Larson and Sons",SBC-fTmQRi,SBCFbakjO,0
+419,正新公司,"Reilly Group",SBC-t4f01s,SBCW7EF9L,0
+421,福茂唱片有限公司,"Tremblay, Batz and Rath",SBC-Xj8BoC,SBCKDsqvs,0
+422,大宇機械,Feest-Braun,SBC-fIrhau,SBCmclOII,0
+424,華義娛樂有限公司,"Luettgen, Sanford and Gislason",SBC-YnM0aL,SBCXIVDIu,0
+425,康師傅音樂,Bernier-Hayes,SBC-qxGrNl,SBCUKV9rI,0
+426,美樂帝證券有限公司,Hansen-Olson,SBC-Bd9g9S,SBCTm3Vuf,0
+427,松崗公司,Eichmann-Cronin,SBC-lwtEAA,SBCtwmFyt,0
+428,美樂帝音樂有限公司,Medhurst-Barrows,SBC-qcU10n,SBClbu3o6,0
+429,趨勢機械有限公司,"Hagenes, Bartoletti and Rutherford",SBC-VO0kP4,SBCpDeb40,0
+430,海蝶股份有限公司,"Abbott, Murazik and Grady",SBC-RgHUHt,SBCEHEHu5,0
+431,小白兔電腦公司,Dicki-Hintz,SBC-jTzurI,SBCfC7XhQ,0
+432,友訊音樂,"Lakin PLC",SBC-FUSTJF,SBCNmSTEN,0
+433,新亞洲證券公司,"Von Inc",SBC-Uu8YC5,SBCI9zwPP,0
+434,華特證券公司,"Maggio Group",SBC-L3siTV,SBCKikL0v,0
+435,訊連工業,Runte-Predovic,SBC-dmJnsw,SBCQIphGN,0
+436,智冠企業公司,"Harber LLC",SBC-xJse8t,SBCGFO6H8,0
+438,昱泉股份有限公司,"Turner LLC",SBC-OVhr8k,SBCYc3zdq,0
+441,訊連公司,"Friesen, West and Bernier",SBC-oqv0oU,SBCJrXGeD,0
+442,華特證券有限公司,Marquardt-Eichmann,SBC-nxxVlw,SBCh9EFoa,0
+443,阿爾發有限公司,"Kohler Ltd",SBC-2egGQk,SBC9EhywB,0
+444,添翼創越國際股份有限公司,"Deckow Inc",SBC-UPlo8k,SBCA0ipHP,0
+445,昱泉工業,Bogisich-Bahringer,SBC-ve33XQ,SBCyuPsYP,0
+446,美利達公司,"Crona, Renner and Waelchi",SBC-TPId1J,SBCusvclz,0
+447,茂為公司,"Maggio, Hyatt and Lynch",SBC-QVfsAQ,SBCA7fbx3,0
+448,未來電子有限公司,Cartwright-Keeling,SBC-iGk7dm,SBCjreTCA,0
+450,研華娛樂,Kutch-Will,SBC-iYmiUt,SBCL0LJvS,0
+452,華研集團,"Konopelski Ltd",SBC-zZ7MRd,SBCBM4km6,0
+453,乾坤公司,"Johnston, O'Hara and Kunde",SBC-9kvtcw,SBC2G5oWv,0
+454,太陽酒店股份有限公司,"Lang Group",SBC-e3nJew,SBCuFMWOc,0
+455,巨大公司,Bogan-Hermiston,SBC-TnzTi2,SBChNf2UE,0
+456,美樂帝汽車公司,"Kuhlman Ltd",SBC-SmRjvT,SBCfSDyzS,0
+457,金革音樂,"Upton, Bauch and Hand",SBC-yfdtyZ,SBC8heAil,0
+458,野火樂集有限公司,Towne-Lueilwitz,SBC-WhUFCx,SBC4LRSFw,0
+459,太陽有限公司,Bartell-Shanahan,SBC-cIWheL,SBCV6ImzY,0
+460,統一機械,Lind-Schulist,SBC-OoZsXR,SBCiGZHGR,0
+461,阿爾發集團,"Smith, Dickens and Romaguera",SBC-g5YMNi,SBCs9a96M,0
+462,華義公司,Osinski-Jaskolski,SBC-59c96L,SBC7hFqUX,0
+463,大宇股份有限公司,"Keebler Inc",SBC-Q2C6AP,SBC2VFKoe,0
+464,豐華酒店,Hessel-Kemmer,SBC-VU709N,SBCoPq4pz,0
+465,擎天電腦有限公司,"Stokes Group",SBC-9bjkSd,SBCMK3scZ,0
+466,延伸音樂公司,"Quitzon, Fay and Kemmer",SBC-0KzEqg,SBCpNBpdO,0
+467,彎的企業,"Ortiz LLC",SBC-G3WQC7,SBCJDrZRT,0
+468,創見電子,"Huel, Kling and McCullough",SBC-F6FACd,SBCaNp4Cc,0
+469,阿爾發集團有限公司,Dicki-Legros,SBC-qz5lA5,SBCuIn9KT,0
+471,風潮公司,"Abbott, Witting and Corwin",SBC-Q6uCvE,SBCm1dIwx,0
+472,洧誠百貨股份有限公司,"Rutherford PLC",SBC-5D5mCK,SBCrfQwiR,0
+473,正新企業,"Waters, Will and Cormier",SBC-XlGlAQ,SBCAq6Ach,0
+474,滾石數位有限公司,"Pfeffer Ltd",SBC-WBSsI0,SBCqvVNTr,0
+476,延伸百貨,Huel-Rempel,SBC-t78GWa,SBCTY04iR,0
+477,紅元素證券有限公司,"Armstrong and Sons",SBC-3Uoxt6,SBCyBnT2p,0
+479,海蝶股份有限公司,"Rice, Connelly and Kassulke",SBC-p2VbRO,SBCDuqAjV,0
+480,康師傅音樂,"Walter Ltd",SBC-a2juci,SBCNHySjq,0
+481,角頭公司,"Gleason LLC",SBC-ZNd8vQ,SBCAAWxQj,0
+482,貴族文化股份有限公司,"Hirthe Ltd",SBC-JcEaXd,SBCSqJzPa,0
+483,滾石股份有限公司,"Hoeger Ltd",SBC-7f4jJb,SBCBMKwaR,0
+485,巨室音樂股份有限公司,"Toy LLC",SBC-FgRVTm,SBC4wwPds,0
+486,凱基公司,"Bailey, Hodkiewicz and Hansen",SBC-joVdX5,SBC1u8MZG,0
+488,豐華公司,Goldner-Heidenreich,SBC-3gkjxO,SBC82pBRG,0
+489,野火樂集公司,"Herman, Farrell and Goldner",SBC-VwYEhQ,SBCY0fz6e,0
+490,新亞洲娛樂,Roob-Champlin,SBC-myOuMO,SBCySoBsb,0
+491,貴族有限公司,Wiegand-Hintz,SBC-rln8DK,SBCqPeeTh,0
+492,紅元素唱片有限公司,"Harvey Group",SBC-kxfS9f,SBC38v0go,0
+493,華研機械有限公司,"Schroeder, Jenkins and Champlin",SBC-xlaYmZ,SBCPqi1Ms,0
+494,華研企業有限公司,"Ondricka LLC",SBC-N94JNh,SBCR7dxDO,0
+495,洧誠電腦,Lindgren-Kuhn,SBC-5UKdu8,SBCekZXRJ,0
+496,台達娛樂公司,Rempel-Bailey,SBC-yh3wka,SBCY8IXHc,0
+499,豪客百貨,Pfannerstill-Turcotte,SBC-JPeA9B,SBCZs8fH2,0
