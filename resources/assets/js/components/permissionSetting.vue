@@ -34,7 +34,7 @@
                     <button class="btn btn-block btn-purple"  @click.prevent="deleteProfile">刪除 Delete</button>
                 </div>
                 <div class="col-sm-3" v-show="existingProfile">
-                    <button class="btn btn-block btn-purple"  @click.prevent="revertToDefault">返回原有設定 Revert to Default</button>
+                    <button class="btn btn-block btn-purple"  @click.prevent="revertToDefault">返回原有設定 Default</button>
                 </div>
             </div>
         </form>

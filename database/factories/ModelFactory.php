@@ -19,3 +19,13 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+$factory->define(App\Customer::class, function (Faker\Generator $faker) {
+    $cfaker = Faker\Factory::create('zh_TW');
+    return [
+        'chinese_name'=>$cfaker->company,
+        'english_name' =>$faker->unique()->company,
+        'status' => random_int(0, 10)>1? false:true,
+        'loginname' => "SBC-".str_random(6),
+        'password' => "SBC".str_random(6)
+    ];
+});

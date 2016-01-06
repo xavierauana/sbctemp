@@ -11,6 +11,7 @@
 |
 */
 
+
 Cache::forever('user1', [
     'cNumber'      => '8888',
     'login'        => 'testuser1',
@@ -93,6 +94,8 @@ Cache::forever('documents', [
 ]);
 
 
+factory(\App\Customer::class)->create();
+
 Route::get('/new', function () {
     return view('new');
 });
@@ -138,19 +141,16 @@ Route::get('/documentCenter', function () {
 });
 Route::get('/getpermissions', function () {
     return [
-        ["id" => "1001", "label" => "讀取客戶資料"],
-        ["id" => "1002", "label" => "讀取管理人員資料"],
-        ["id" => "1003", "label" => "上載文件"],
-        ["id" => "1004", "label" => "新增客戶"],
-        ["id" => "1005", "label" => "新增管理人員"],
-        ["id" => "1006", "label" => "刪除文件"],
-        ["id" => "1007", "label" => "更改客戶資料"],
-        ["id" => "1008", "label" => "更改管理人員資料"],
-        ["id" => "1009", "label" => "更改文件類別資料"],
-        ["id" => "1010", "label" => "刪除客戶"],
-        ["id" => "1011", "label" => "更改及刪除管理人員"],
-        ["id" => "1012", "label" => "讀取 / 更改客戶登入名稱及密碼"],
-        ["id" => "1013", "label" => "讀取 / 更改管理人員登入名稱及密碼"],
+        ["id" => "1001", "label" => "上載文件"],
+        ["id" => "1002", "label" => "讀取客戶資料"],
+        ["id" => "1003", "label" => "更改客戶資料"],
+        ["id" => "1004", "label" => "更改客戶登入權限"],
+        ["id" => "1005", "label" => "讀取管理人員資料"],
+        ["id" => "1006", "label" => "新增管理人員"],
+        ["id" => "1007", "label" => "更改管理人員資料"],
+        ["id" => "1008", "label" => "刪除管理人員"],
+        ["id" => "1009", "label" => "刪除文件"],
+        ["id" => "1010", "label" => "更改或刪除文件類別"],
     ];
 });
 Route::get('/getpermissionprofiles', function () {
@@ -223,15 +223,20 @@ Route::post("/uploadfile", function (\Illuminate\Http\Request $request) {
 });
 
 Route::get('/getUserDocuments/{cnumber}', function ($cnumber) {
-    if($cnumber == 8888){
+    if ($cnumber == 8888) {
         return Cache::get('documents');
     }
 });
-Route::get('/exportData', function(){
-   return response()->download(public_path('/files/allUsersCSV.csv'),"abc.csv",[
-       'Content-type'=>'text/csv',
-       'Content-disposition'=>'attachment'
-   ]);
+Route::get('/exportData', function () {
+    return response()->download(public_path('/files/allUsersCSV.csv'), "abc.csv", [
+        'Content-type'        => 'text/csv',
+        'Content-disposition' => 'attachment'
+    ]);
+});
+Route::get('/generate/dummy/customers', function () {
+    for($i=0; $i<50000; $i++){
+        factory(\App\Customer::class)->create();
+    }
 });
 
 

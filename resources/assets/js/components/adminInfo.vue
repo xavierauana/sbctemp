@@ -97,7 +97,7 @@
                 console.log('update user')
             },
             deleteAdmin: function(){
-                if(confirm('Are you sure you will delete the admin user, '+this.user.loginName)){
+                if(confirm('Are you sure you will delete the admin user, '+this.user.loginName+'? '+'你確定要刪除管理人員, '+this.user.loginName+'？' )){
                     console.log('post delete admin');
                     this.inputs.profile = "";
                     this.inputs.password = "";
