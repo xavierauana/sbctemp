@@ -95,10 +95,6 @@ Cache::forever('documents', [
         "docName"    => "AR-123-123-4",
     ]
 ]);
-//
-//for($i=0; $i<10; $i++){
-//    factory(\App\User::class)->create();
-//}
 
 Route::get('/new', function () {
     return view('new');
@@ -305,14 +301,14 @@ Route::get('/createLinkage/user/{userId}/company/{companyId}', function($userId,
     $company->save();
     return ['code'=>200];
 });
-
-Route::get('/generate/dummy/user', function () {
-    for($i=0; $i<1000; $i++){
-        factory(\App\User::class)->create();
-    }
-});
-
-
+//
+//Route::get('/generate/dummy/user', function () {
+//    for($i=0; $i<1000; $i++){
+//        factory(\App\User::class)->create();
+//    }
+//});
+//
+//
 
 
 
