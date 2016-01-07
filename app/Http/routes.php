@@ -282,11 +282,6 @@ Route::post('/exportData', function (\Illuminate\Http\Request $request) {
         'Content-disposition' => 'attachment'
     ]);
 });
-//Route::get('/generate/dummy/customers', function () {
-//    for($i=0; $i<50000; $i++){
-//        factory(\App\Customer::class)->create();
-//    }
-//});
 
 Route::get('/fetchUser/{userId}', function($userId){
     $user = User::whereId($userId)->first(['name']);
@@ -311,7 +306,11 @@ Route::get('/createLinkage/user/{userId}/company/{companyId}', function($userId,
     return ['code'=>200];
 });
 
-
+Route::get('/generate/dummy/user', function () {
+    for($i=0; $i<1000; $i++){
+        factory(\App\User::class)->create();
+    }
+});
 
 
 
