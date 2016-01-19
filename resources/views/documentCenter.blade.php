@@ -63,7 +63,7 @@
     </div>
     <component :is="currentView" :data="selectedCompany"></component>
 
-    <template id="template-table">
+    <script type="x-template" id="template-table">
         <div class="container">
             <ol class="breadcrumb">
                 <li><a href="#" @click.prevent="changeView">Home</a></li>
@@ -186,16 +186,17 @@
                 </div>
             </div>
         </div>
-    </template>
-    <template id="template-list">
+    </script>
+    <script type="x-template" id="template-list">
         <div class="container">
             <h3>Companies</h3>
             <ul class="list-group">
                 <li class="list-group-item" v-for="company in companies"><a href="" @click.prevent='changeView(company)'>@{{company.english_name}}</a></li>
             </ul>
         </div>
-    </template>
+    </script>
     <script>
+        import List from './../'
         new Vue({
             el:'body',
             data:{
