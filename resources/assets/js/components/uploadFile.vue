@@ -1,8 +1,9 @@
 <style>
-    .preview-container{
+    .preview-container {
         margin-bottom: 30px;
     }
-    .preview-container object{
+
+    .preview-container object {
         border: 2px solid #b9b9b9;
     }
 </style>
@@ -12,20 +13,27 @@
             <legend>上載文件 Upload Files</legend>
             <div class="form-group">
                 <label for="uploadDate" class="sr-only">Document Upload Date</label>
+
                 <div class="col-sm-8">
-                    <input type="text" v-model="inputs.uploadDate" :value="uploadDate" name="uploadDate" class="form-control" id="uploadDate" placeholder="文件日期" readonly>
+                    <input type="text" v-model="inputs.uploadDate" :value="uploadDate" name="uploadDate"
+                           class="form-control" id="uploadDate" placeholder="文件日期" readonly>
                 </div>
             </div>
             <div class="form-group">
                 <label for="cnumber" class="sr-only">C Number</label>
+
                 <div class="col-sm-8">
-                    <input type="number" name="cnumber" v-model="inputs.cNumber" class="form-control" placeholder="客戶公司序號 C Number" @change="checkValidity" pattern="/[1-9]{10}/" title="This is an error message" required autofocus>
+                    <input type="number" name="cnumber" v-model="inputs.cNumber" class="form-control"
+                           placeholder="客戶公司序號 C Number" @change="checkValidity" pattern="/[1-9]{10}/"
+                           title="This is an error message" required autofocus>
                 </div>
             </div>
             <div class="form-group">
                 <label for="cnumber" class="sr-only">Company Name</label>
+
                 <div class="col-sm-8">
-                    <input type="number" name="cnumber" v-model="customer.name" class="form-control" placeholder="客戶公司名稱 Company Name "  title="This is an error message" required>
+                    <input type="number" name="cnumber" v-model="customer.name" class="form-control"
+                           placeholder="客戶公司名稱 Company Name " title="This is an error message" required>
                 </div>
             </div>
             <div class="form-group">
@@ -33,7 +41,9 @@
 
                 <div class="col-sm-8">
                     <div class='input-group date' id='datetimepicker'>
-                        <input type='text' class="form-control" name="docDate"  v-model="inputs.docDate" id="docDate" placeholder="文件日期 Document Date (YYYY/MM/DD)" @keypress="showkeypress" pattern="/[0-9]\//" required/>
+                        <input type='text' class="form-control" name="docDate" v-model="inputs.docDate" id="docDate"
+                               placeholder="文件日期 Document Date (YYYY/MM/DD)" @keypress="showkeypress"
+                               pattern="/[0-9]\//" required/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -42,24 +52,29 @@
             </div>
             <div class="form-group">
                 <label for="docType" class="sr-only">Document Type</label>
+
                 <div class="col-sm-8">
-                    <select name="docType" id="docType" v-model="inputs.docType" class="form-control" style="width:100%">
-                        <option value="" selected> -- 文件類別 Document Type -- </option>
+                    <select name="docType" id="docType" v-model="inputs.docType" class="form-control"
+                            style="width:100%">
+                        <option value="" selected> -- 文件類別 Document Type --</option>
                         <option v-for="docType in documentTypes" :value="docType.id">{{docType.type}}</option>
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="docName" class="sr-only">Document Name</label>
+
                 <div class="col-sm-8">
-                    <input type="docName" name="docName" v-model="inputs.docName" class="form-control" id="docName" placeholder="文件描述 Document Description" required>
+                    <input type="docName" name="docName" v-model="inputs.docName" class="form-control" id="docName"
+                           placeholder="文件描述 Document Description" required>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-8">
                     <button class="btn btn-default" @click.prevent="browseFile">Browser File 瀏覽檔案</button>
                     <p class="help-block">File size should not bigger than 5MB. 文件容量不可超過5MB。</p>
-                    <input type="file" class="hidden" name="files" id="file" @change="checkFileInput" accept=".pdf, application/pdf" required>
+                    <input type="file" class="hidden" name="files" id="file" @change="checkFileInput"
+                           accept=".pdf, application/pdf" required>
                 </div>
             </div>
             <div v-show="hasFile" class="col-sm-8" style="padding-left: 0">
@@ -78,7 +93,9 @@
                             <td>{{inputFile.name}}</td>
                             <td>{{inputFile.size/(1000*1000)}} mb</td>
                             <td>
-                                <button class="btn btn-default btn-sm" @click.prevent="previewPDF">{{previewButtonText}}</button>
+                                <button class="btn btn-default btn-sm" @click.prevent="previewPDF">
+                                    {{previewButtonText}}
+                                </button>
                             </td>
                             <td>
                                 <button class="btn btn-sm btn-danger" @click.prevent="removeFile">刪除</button>
@@ -90,11 +107,14 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-8">
-                    <button type="submit" class="btn btn-block btn-purple" @click.prevent="uploadFile">Upload File 上載文件</button>
+                    <button type="submit" class="btn btn-block btn-purple" @click.prevent="uploadFile">Upload File
+                        上載文件
+                    </button>
                 </div>
             </div>
         </form>
-        <div class="row preview-container"  v-show="showPreview">
+        <iframe src="/js/pdfjs/web/viewer.html" frameborder="0" id="test-iframe"></iframe>
+        <div class="row preview-container" v-show="showPreview">
             <div class="col-sm-8">
                 <!--<iframe :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="100%" height="550"></iframe>-->
                 <object :data="previewSrc" type="application/pdf" width="100%" height="550">
@@ -107,49 +127,52 @@
 </template>
 
 <script>
+    var PDFDocument = require('pdfkit');
+    var blobStream = require('blob-stream');
+
     export default{
-        data: function(){
+        data: function () {
             return {
                 maxFileSize: 5,
-                documentTypes:[],
-                inputs:{
-                    cNumber:"",
-                    docType:"",
-                    docDate:"",
-                    uploadDate:"",
-                    docName:""
+                documentTypes: [],
+                inputs: {
+                    cNumber: "",
+                    docType: "",
+                    docDate: "",
+                    uploadDate: "",
+                    docName: ""
                 },
-                checking:{
-                    cNumberValidity:false,
-                    fileValidity:false
+                checking: {
+                    cNumberValidity: false,
+                    fileValidity: false
                 },
-                inputFile:{
-                    name:"",
-                    size:"",
-                    data:"",
+                inputFile: {
+                    name: "",
+                    size: "",
+                    data: "",
                 },
-                customer:{},
-                previewing:false,
-                previewSrc:""
+                customer: {},
+                previewing: false,
+                previewSrc: ""
             }
         },
-        computed:{
-            uploadDate: function(){
-                var date =moment().format('YYYY/MM/DD');
+        computed: {
+            uploadDate: function () {
+                var date = moment().format('YYYY/MM/DD');
                 return date;
-                return date.getFullYear()+"/"+ date.getMonth()+"/"+ date.getDate();
+                return date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
             },
-            hasFile: function(){
+            hasFile: function () {
                 return !!this.inputFile.name;
             },
-            showPreview: function(){
+            showPreview: function () {
                 return !!this.inputFile.name && this.previewing
             },
-            previewButtonText:function(){
-                return this.previewing? "Close Window" : "Preview"
+            previewButtonText: function () {
+                return this.previewing ? "Close Window" : "Preview"
             }
         },
-        methods:{
+        methods: {
             checkFileApiSupport: function checkForFileApiSupport() {
                 if (window.File && window.FileReader && window.FileList && window.Blob) {
                     return true
@@ -159,93 +182,94 @@
                     return false
                 }
             },
-            checkValidity: function(){
-                if(!this.inputs.cNumber){
+            checkValidity: function () {
+                if (!this.inputs.cNumber) {
                     alert('Have to input cnumber')
-                }else{
-                    var url = '/searchcustomer/'+this.inputs.cNumber;
-                    this.$http.get(url, function(response){
-                        if(!response){
+                } else {
+                    var url = '/searchcustomer/' + this.inputs.cNumber;
+                    this.$http.get(url, function (response) {
+                        if (!response) {
                             this.checking.cNumberValidity = false;
                             alert('that is a incorrect C number! Please verify')
-                        }else{
+                        } else {
                             this.checking.cNumberValidity = true;
                             this.customer = response;
                         }
                     })
                 }
             },
-            removeFile: function(){
+            removeFile: function () {
                 console.log('remove file');
-                for(var key in this.inputFile){
+                for (var key in this.inputFile) {
                     this.inputFile[key] = "";
                 }
                 $("#viewer").attr('src', "");
                 this.previewSrc = "";
                 this.previewing = false;
             },
-            validation:function(){
+            validation: function () {
                 var check = true;
-                if(!this.inputs.cNumber){
+                if (!this.inputs.cNumber) {
                     check = false;
                     alert('have input cNumber');
-                }else{
-                    if(!this.checking.cNumberValidity){
+                } else {
+                    if (!this.checking.cNumberValidity) {
                         check = false;
                         alert('You have input wrong C number! Please verify');
                     }
                 }
-                if(!this.inputs.docDate){
+                if (!this.inputs.docDate) {
                     check = false;
                     alert('You have to input Document Date');
                 }
-                if(!this.inputs.docName){
+                if (!this.inputs.docName) {
                     check = false;
                     alert('You have to input Document Name');
                 }
-                if(!this.inputs.docType){
+                if (!this.inputs.docType) {
                     check = false;
                     alert('You have to pick a document type');
                 }
-                if(!this.checking.fileValidity){
+                if (!this.checking.fileValidity) {
                     check = false;
                     alert('Something wrong with your file, please double check!');
                 }
                 return check;
             },
-            mergeData: function(){
+            mergeData: function () {
                 var data = new FormData();
-                for(var key in this.inputs){
+                for (var key in this.inputs) {
                     data.append(key, this.inputs[key])
                 }
                 data.append('file', this.inputFile.data);
 
                 return data;
             },
-            uploadFile: function(){
-                if(this.validation()){
+            uploadFile: function () {
+                if (this.validation()) {
                     var data = this.mergeData();
-                    this.$http.post('/uploadfile', data, function(response){
+                    this.$http.post('/uploadfile', data, function (response) {
                         console.log(response);
                         this.reset();
-                    },{
-                        headers:{
-                            "X-CSRF-TOKEN" : $('meta[name="token"]').attr("content")
+                    }, {
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="token"]').attr("content")
                         }
                     });
-                };
+                }
+                ;
                 console.log('upload file')
             },
-            checkFileInput: function(){
+            checkFileInput: function () {
                 var file = document.querySelector("#file").files[0];
-                if(file && file.size > 0){
-                    if(file.size > (this.maxFileSize * 1000 * 1000)){
+                if (file && file.size > 0) {
+                    if (file.size > (this.maxFileSize * 1000 * 1000)) {
                         alert('file size is too large!');
                         this.checking.fileValidity = false;
-                    }else if(file.type != "application/pdf"){
+                    } else if (file.type != "application/pdf") {
                         alert('Only pdf allowed!');
                         this.checking.fileValidity = false;
-                    }else{
+                    } else {
                         this.inputFile['name'] = file.name;
                         this.inputFile['data'] = file;
                         this.inputFile['size'] = file.size;
@@ -253,62 +277,59 @@
                     }
                 }
             },
-            browseFile:function(){
+            browseFile: function () {
                 console.log('browser file');
                 document.querySelector("#file").click();
             },
             previewPDF: function () {
                 console.log('preview pdf');
                 var url = "";
-                if(window.navigator.msSaveOrOpenBlob) {
-                    console.log('call reader approach');
-                   var reader = new FileReader();
-                    reader.readAsDataURL(this.inputFile.data);
-                    reader.onload = function(event){
-                        this.previewSrc = event.target.result;
-                        console.log(this.previewSrc);
-                    }.bind(this);
-                } else {
-                    console.log('standard');
-                    url = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
-                }
-                console.log(url);
-                this.previewSrc = this.previewing? "" : url;
+//                url = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
+//                this.previewSrc = this.previewing? "" : url;
+                var doc = new PDFDocument();
+                var stream = doc.pipe(blobStream());
+
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    document.querySelector('#test-iframe').src = e.target.result
+                };
+                url = reader.readAsDataURL(this.inputFile.data);
+                
                 this.previewing = !this.previewing;
             },
-            reset:function(){
-                for(var key in this.inputs){
+            reset: function () {
+                for (var key in this.inputs) {
                     this.inputs[key] = ""
                 }
-                for(var key in this.checking){
+                for (var key in this.checking) {
                     this.checking[key] = false
                 }
-                for(var key in this.inputFile){
+                for (var key in this.inputFile) {
                     this.inputFile[key] = ""
                 }
                 this.customer = {};
                 this.previewing = false;
 
                 var date = new Date();
-                this.inputs.uploadDate = date.getFullYear()+"/"+ date.getMonth()+"/"+ date.getDate();
+                this.inputs.uploadDate = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
 
             },
-            showkeypress: function(e){
+            showkeypress: function (e) {
                 console.log(e.keyCode);
-                if(e.keyCode < 47 || e.keyCode > 57 ) return false;
+                if (e.keyCode < 47 || e.keyCode > 57) return false;
             }
         },
-        created: function(){
-            this.$http.get('/getdoctypes', function(response){
-                response.map(function(type){
+        created: function () {
+            this.$http.get('/getdoctypes', function (response) {
+                response.map(function (type) {
                     type['status'] = false;
                 });
                 this.$set("documentTypes", response);
             })
         },
-        ready: function(){
+        ready: function () {
             $('#datetimepicker').datetimepicker({
-                format:"YYYY/MM/DD"
+                format: "YYYY/MM/DD"
             });
             this.checkFileApiSupport();
         }
