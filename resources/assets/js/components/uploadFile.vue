@@ -3,7 +3,7 @@
         margin-bottom: 30px;
     }
 
-    .preview-container object {
+    .preview-container iframe {
         border: 2px solid #b9b9b9;
     }
 </style>
@@ -113,23 +113,24 @@
                 </div>
             </div>
         </form>
-        <iframe src="/js/pdfjs/web/viewer.html?file={{previewSrc}}" frameborder="0" id="test-iframe"></iframe>
         <div class="row preview-container" v-show="showPreview">
             <div class="col-sm-8">
+                <iframe :src="previewSrc" frameborder="0" id="test-iframe" width="100%" height="550"></iframe>
+
                 <!--<iframe :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="100%" height="550"></iframe>-->
-                <object :data="previewSrc" type="application/pdf" width="100%" height="550">
-                    <embed :src="previewSrc" type="application/pdf">
-                </object>
+                <!--<object :data="previewSrc" type="application/pdf" width="100%" height="550">-->
+                    <!--<embed :src="previewSrc" type="application/pdf">-->
+                <!--</object>-->
             </div>
         </div>
+        <pre>
+            {{$data|json}}
+        </pre>
     </div>
 
 </template>
 
 <script>
-    var PDFDocument = require('pdfkit');
-    var blobStream = require('blob-stream');
-
     export default{
         data: function () {
             return {
@@ -282,14 +283,8 @@
                 document.querySelector("#file").click();
             },
             previewPDF: function () {
-                console.log('preview pdf');
-                var url = "";
-                url = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
-//                this.previewSrc = this.previewing? "" : url;
-                var doc = new PDFDocument();
-                var stream = doc.pipe(blobStream());
-                this.previewSrc = encodeURIComponent(url);
-
+                var url = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
+                this.previewSrc = this.previewing ? "" :  "/js/pdfjs/web/viewer.html?file="+encodeURIComponent(url);
                 this.previewing = !this.previewing;
             },
             reset: function () {
