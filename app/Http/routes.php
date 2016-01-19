@@ -209,7 +209,7 @@ Route::get('/getdoctypes', function () {
 
 Route::get('/searchcustomer/{cnumber}', function ($cnumber) {
     $customer = Customer::whereId($cnumber)->first();
-    return $customer;
+    return response()->json(compact('customer'));
     if ($cnumber == 8888) {
         return Cache::get('user1');
     }

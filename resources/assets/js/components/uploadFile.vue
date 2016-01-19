@@ -25,15 +25,23 @@
                 <div class="col-sm-8">
                     <input type="number" name="cnumber" v-model="inputs.cNumber" class="form-control"
                            placeholder="客戶公司序號 C Number" @change="checkValidity" pattern="/[1-9]{10}/"
-                           title="This is an error message" required autofocus>
+                           title="This is an error message" required autofocus id="cnumber">
                 </div>
             </div>
             <div class="form-group">
-                <label for="cnumber" class="sr-only">Company Name</label>
+                <label for="cnumber" class="sr-only">Company English Name</label>
 
                 <div class="col-sm-8">
-                    <input type="number" name="cnumber" v-model="customer.name" class="form-control"
-                           placeholder="客戶公司名稱 Company Name " title="This is an error message" required>
+                    <input type="text" name="cnumber" :value="customer.english_name" class="form-control"
+                           placeholder="客戶公司英文名稱 English Company Name " title="This is an error message" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cnumber" class="sr-only">Company Chinese Name</label>
+
+                <div class="col-sm-8">
+                    <input type="text" name="cnumber" :value="customer.chinese_name" class="form-control"
+                           placeholder="客戶公司中文名稱 Chinese Company Name " title="This is an error message" disabled>
                 </div>
             </div>
             <div class="form-group">
@@ -116,14 +124,11 @@
         <div class="row preview-container" v-show="showPreview">
             <div class="col-sm-8">
                 <preview-iframe :file="inputFile.data | passFileObjectOnly" :show="previewing"></preview-iframe>
-                <!--<iframe :src="previewSrc" frameborder="2" id="test-iframe" width="100%" height="550"></iframe>-->
-
-                <!--<iframe :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="100%" height="550"></iframe>-->
-                <!--<object :data="previewSrc" type="application/pdf" width="100%" height="550">-->
-                    <!--<embed :src="previewSrc" type="application/pdf">-->
-                <!--</object>-->
             </div>
         </div>
+        <pre>
+            {{$data|json}}
+        </pre>
     </div>
 
 </template>
@@ -193,17 +198,12 @@
             },
             checkValidity: function () {
                 if (!this.inputs.cNumber) {
+                    this.customer = {};
                     alert('Have to input cnumber')
                 } else {
                     var url = '/searchcustomer/' + this.inputs.cNumber;
-                    this.$http.get(url, function (response) {
-                        if (!response) {
-                            this.checking.cNumberValidity = false;
-                            alert('that is a incorrect C number! Please verify')
-                        } else {
-                            this.checking.cNumberValidity = true;
-                            this.customer = response;
-                        }
+                    this.$http.get(url, function(response){
+                        this.$set('customer',response.customer)
                     })
                 }
             },
