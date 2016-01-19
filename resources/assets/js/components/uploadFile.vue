@@ -263,7 +263,7 @@
                 if(window.navigator.msSaveOrOpenBlob) {
                     console.log('call reader approach');
                    var reader = new FileReader();
-                    reader.readAsDataURL(this.inputFile.data);
+                    reader.readAsDataURL(document.querySelector("#file").files[0]);
                     reader.onload(function(event){
                         this.previewSrc = event.target.result
                     }.bind(this));
