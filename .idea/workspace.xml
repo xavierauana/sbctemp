@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="64d4783c-c0c5-44db-91c7-8d658ba95881" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/documentCenter.blade.php" afterPath="$PROJECT_DIR$/resources/views/documentCenter.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SBCTemp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,13 +27,13 @@
       <file leaf-file-name="documentCenter.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/documentCenter.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.58208954">
-              <caret line="189" column="28" selection-start-line="189" selection-start-column="28" selection-end-line="189" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.33283582">
+              <caret line="198" column="0" selection-start-line="198" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
               <folding>
                 <element signature="n#script#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#script#1;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="e#10382#11177#0#HTML" expanded="false" />
-                <element signature="e#11202#11967#0#HTML" expanded="false" />
+                <element signature="e#10349#11144#0#HTML" expanded="false" />
+                <element signature="e#11169#11934#0#HTML" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -746,13 +745,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/documentCenter.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58208954">
-          <caret line="189" column="28" selection-start-line="189" selection-start-column="28" selection-end-line="189" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.33283582">
+          <caret line="198" column="0" selection-start-line="198" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
           <folding>
             <element signature="n#script#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#1;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="e#10382#11177#0#HTML" expanded="false" />
-            <element signature="e#11202#11967#0#HTML" expanded="false" />
+            <element signature="e#10349#11144#0#HTML" expanded="false" />
+            <element signature="e#11169#11934#0#HTML" expanded="false" />
           </folding>
         </state>
       </provider>

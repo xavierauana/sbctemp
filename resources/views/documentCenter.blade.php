@@ -196,7 +196,6 @@
         </div>
     </script>
     <script>
-        import List from './../'
         new Vue({
             el:'body',
             data:{
