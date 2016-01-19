@@ -136,10 +136,18 @@
             },
             previewButtonText:function(){
                 return this.previewing? "Close Window" : "Preview"
-            },
-
+            }
         },
         methods:{
+            checkFileApiSupport: function checkForFileApiSupport() {
+                if (window.File && window.FileReader && window.FileList && window.Blob) {
+                    return true
+                }
+                else {
+                    alert("The File APIs are not fully supported in this browser.");
+                    return false
+                }
+            },
             checkValidity: function(){
                 if(!this.inputs.cNumber){
                     alert('Have to input cnumber')
@@ -276,6 +284,7 @@
             $('#datetimepicker').datetimepicker({
                 format:"YYYY/MM/DD"
             });
+            this.checkFileApiSupport();
         }
     }
 </script>
