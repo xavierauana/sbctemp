@@ -12058,6 +12058,7 @@ exports["default"] = {
                 reader.readAsDataURL(this.inputFile.data);
                 reader.onload = (function (event) {
                     this.previewSrc = event.target.result;
+                    console.log(this.previewSrc);
                 }).bind(this);
             } else {
                 console.log('standard');
