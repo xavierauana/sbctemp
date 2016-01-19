@@ -113,7 +113,7 @@
                 </div>
             </div>
         </form>
-        <iframe src="/js/pdfjs/web/viewer.html" frameborder="0" id="test-iframe"></iframe>
+        <iframe src="/js/pdfjs/web/viewer.html?file={{previewSrc}}" frameborder="0" id="test-iframe"></iframe>
         <div class="row preview-container" v-show="showPreview">
             <div class="col-sm-8">
                 <!--<iframe :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="100%" height="550"></iframe>-->
@@ -284,17 +284,12 @@
             previewPDF: function () {
                 console.log('preview pdf');
                 var url = "";
-//                url = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
+                url = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
 //                this.previewSrc = this.previewing? "" : url;
                 var doc = new PDFDocument();
                 var stream = doc.pipe(blobStream());
+                this.previewSrc = encodeURIComponent(url);
 
-                var reader = new FileReader();
-                reader.onload = function(e){
-                    document.querySelector('#test-iframe').src = e.target.result
-                };
-                url = reader.readAsDataURL(this.inputFile.data);
-                
                 this.previewing = !this.previewing;
             },
             reset: function () {
