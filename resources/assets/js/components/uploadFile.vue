@@ -96,10 +96,10 @@
         </form>
         <div class="row preview-container"  v-show="showPreview">
             <div class="col-sm-8">
-                <iframe :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="100%" height="550"></iframe>
-                <!--<object :data="previewSrc" type="application/pdf" width="100%" height="550">-->
-                    <!--<embed :src="previewSrc" type="application/pdf">-->
-                <!--</object>-->
+                <!--<iframe :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="100%" height="550"></iframe>-->
+                <object :data="previewSrc" type="application/pdf" width="100%" height="550">
+                    <embed :src="previewSrc" type="application/pdf">
+                </object>
             </div>
         </div>
     </div>
