@@ -12050,7 +12050,16 @@ exports["default"] = {
         },
         previewPDF: function previewPDF() {
             console.log('preview pdf');
-            var url = URL.createObjectURL(this.inputFile.data, { oneTimeOnly: true });
+            var url = "";
+            if (window.navigator.msSaveOrOpenBlob) {
+                console.log('ms part');
+                var blobObject = new Blob(this.inputFile.data);
+                var fileName = "temp";
+                url = window.navigator.msSaveOrOpenBlob(blobObject, fileName);
+            } else {
+                console.log('standard');
+                url = URL.createObjectURL(this.inputFile.data, { oneTimeOnly: true });
+            }
             console.log(url);
             this.previewSrc = this.previewing ? "" : url;
             this.previewing = !this.previewing;
