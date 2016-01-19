@@ -173,6 +173,8 @@
                     this.inputFile[key] = "";
                 }
                 $("#viewer").attr('src', "");
+                this.previewSrc = "";
+                this.previewing = false;
             },
             validation:function(){
                 var check = true;
@@ -249,11 +251,8 @@
             },
             previewPDF: function () {
                 console.log('preview pdf');
-                var test = new Blob([this.inputFile.data], { type: 'application/pdf' });
-                var url = URL.createObjectURL(test, {oneTimeOnly: true});
-                var url1 = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
+                var url = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
                 console.log(url);
-                console.log(url1);
                 this.previewSrc = this.previewing? "" : url;
                 this.previewing = !this.previewing;
             },
