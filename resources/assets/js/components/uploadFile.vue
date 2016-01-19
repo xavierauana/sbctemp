@@ -254,7 +254,7 @@
                 var url = "";
                 if(window.navigator.msSaveOrOpenBlob) {
                     console.log('ms part');
-                    var blobObject = new Blob(this.inputFile.data);
+                    var blobObject = new Blob([this.inputFile.data]);
                     var fileName = "temp"
                     url = window.navigator.msSaveOrOpenBlob(blobObject, fileName);
                 } else {
