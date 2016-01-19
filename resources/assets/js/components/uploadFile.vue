@@ -1,3 +1,11 @@
+<style>
+    .preview-container{
+        margin-bottom: 30px;
+    }
+    .preview-container object{
+        border: 2px solid #b9b9b9;
+    }
+</style>
 <template>
     <div>
         <form class="form-horizontal" method="POST" encrtype="multipart/form-data">
@@ -86,12 +94,12 @@
                 </div>
             </div>
         </form>
-        <div class="row"  v-show="showPreview">
+        <div class="row preview-container"  v-show="showPreview">
             <div class="col-sm-8">
-                <!--<iframe :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="100%" height="550"></iframe>-->
-                <object :data="previewSrc" type="application/pdf" width="100%" height="550">
-                    <embed :src="previewSrc" type="application/pdf">
-                </object>
+                <iframe :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="100%" height="550"></iframe>
+                <!--<object :data="previewSrc" type="application/pdf" width="100%" height="550">-->
+                    <!--<embed :src="previewSrc" type="application/pdf">-->
+                <!--</object>-->
             </div>
         </div>
     </div>
@@ -253,10 +261,9 @@
                 console.log('preview pdf');
                 var url = "";
                 if(window.navigator.msSaveOrOpenBlob) {
-                    console.log('ms part');
-                    var blobObject = new Blob([this.inputFile.data]);
-                    var fileName = "temp"
-                    url = window.navigator.msSaveOrOpenBlob(blobObject, fileName);
+                    var o = document.getElementsByTagName('iframe')[0];
+                    o.contentWindow.postMessage('Hello World', "*");
+                    console.log(o.contentWindow);
                 } else {
                     console.log('standard');
                     url = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
@@ -298,6 +305,16 @@
         ready: function(){
             $('#datetimepicker').datetimepicker({
                 format:"YYYY/MM/DD"
+            });
+            window.addEventListener('onmessage',function(e) {
+                if (e.domain == 'example.com') {
+                    if (e.data == 'Hello World') {
+                        console.log('event catch')
+                        e.source.postMessage('Hello', "*");
+                    } else {
+                        alert(e.data);
+                    }
+                }
             });
             this.checkFileApiSupport();
         }
