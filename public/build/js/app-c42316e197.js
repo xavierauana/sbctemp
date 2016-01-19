@@ -12048,7 +12048,8 @@ exports["default"] = {
         },
         previewPDF: function previewPDF() {
             console.log('preview pdf');
-            this.previewSrc = this.previewing ? "" : URL.createObjectURL(this.inputFile.data);
+            var test = new Blob([this.inputFile.data], { type: 'application/pdf' });
+            this.previewSrc = this.previewing ? "" : URL.createObjectURL(test, { oneTimeOnly: true });
             this.previewing = !this.previewing;
         },
         reset: function reset() {
