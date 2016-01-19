@@ -1,92 +1,98 @@
 <template>
-    <form class="form-horizontal" method="POST" encrtype="multipart/form-data">
-        <legend>上載文件 Upload Files</legend>
-        <div class="form-group">
-            <label for="uploadDate" class="sr-only">Document Upload Date</label>
-            <div class="col-sm-8">
-                <input type="text" v-model="inputs.uploadDate" :value="uploadDate" name="uploadDate" class="form-control" id="uploadDate" placeholder="文件日期" readonly>
+    <div>
+        <form class="form-horizontal" method="POST" encrtype="multipart/form-data">
+            <legend>上載文件 Upload Files</legend>
+            <div class="form-group">
+                <label for="uploadDate" class="sr-only">Document Upload Date</label>
+                <div class="col-sm-8">
+                    <input type="text" v-model="inputs.uploadDate" :value="uploadDate" name="uploadDate" class="form-control" id="uploadDate" placeholder="文件日期" readonly>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="cnumber" class="sr-only">C Number</label>
-            <div class="col-sm-8">
-                <input type="number" name="cnumber" v-model="inputs.cNumber" class="form-control" placeholder="客戶公司序號 C Number" @change="checkValidity" pattern="/[1-9]{10}/" title="This is an error message" required autofocus>
+            <div class="form-group">
+                <label for="cnumber" class="sr-only">C Number</label>
+                <div class="col-sm-8">
+                    <input type="number" name="cnumber" v-model="inputs.cNumber" class="form-control" placeholder="客戶公司序號 C Number" @change="checkValidity" pattern="/[1-9]{10}/" title="This is an error message" required autofocus>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="cnumber" class="sr-only">Company Name</label>
-            <div class="col-sm-8">
-                <input type="number" name="cnumber" v-model="customer.name" class="form-control" placeholder="客戶公司名稱 Company Name "  title="This is an error message" required>
+            <div class="form-group">
+                <label for="cnumber" class="sr-only">Company Name</label>
+                <div class="col-sm-8">
+                    <input type="number" name="cnumber" v-model="customer.name" class="form-control" placeholder="客戶公司名稱 Company Name "  title="This is an error message" required>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="docDate" class="sr-only">Document Date</label>
+            <div class="form-group">
+                <label for="docDate" class="sr-only">Document Date</label>
 
-            <div class="col-sm-8">
+                <div class="col-sm-8">
                     <div class='input-group date' id='datetimepicker'>
                         <input type='text' class="form-control" name="docDate"  v-model="inputs.docDate" id="docDate" placeholder="文件日期 Document Date (YYYY/MM/DD)" @keypress="showkeypress" pattern="/[0-9]\//" required/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                     </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="docType" class="sr-only">Document Type</label>
+                <div class="col-sm-8">
+                    <select name="docType" id="docType" v-model="inputs.docType" class="form-control" style="width:100%">
+                        <option value="" selected> -- 文件類別 Document Type -- </option>
+                        <option v-for="docType in documentTypes" :value="docType.id">{{docType.type}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="docName" class="sr-only">Document Name</label>
+                <div class="col-sm-8">
+                    <input type="docName" name="docName" v-model="inputs.docName" class="form-control" id="docName" placeholder="文件描述 Document Description" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-8">
+                    <button class="btn btn-default" @click.prevent="browseFile">Browser File 瀏覽檔案</button>
+                    <p class="help-block">File size should not bigger than 5MB. 文件容量不可超過5MB。</p>
+                    <input type="file" class="hidden" name="files" id="file" @change="checkFileInput" accept=".pdf, application/pdf" required>
+                </div>
+            </div>
+            <div v-show="hasFile">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>File Name</th>
+                            <th>File Size</th>
+                            <th>Preview</th>
+                            <th>Remove</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{inputFile.name}}</td>
+                            <td>{{inputFile.size/(1000*1000)}} mb</td>
+                            <td>
+                                <button class="btn btn-default btn-sm" @click.prevent="previewPDF">{{previewButtonText}}</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-danger" @click.prevent="removeFile">刪除</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-8">
+                    <button type="submit" class="btn btn-block btn-purple" @click.prevent="uploadFile">Upload File 上載文件</button>
+                </div>
+            </div>
+        </form>
+        <div class="row"  v-show="showPreview">
+            <div class="col-xs-12">
+                <iframe :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="100%" height="550"></iframe>
             </div>
         </div>
-        <div class="form-group">
-            <label for="docType" class="sr-only">Document Type</label>
-            <div class="col-sm-8">
-                <select name="docType" id="docType" v-model="inputs.docType" class="form-control" style="width:100%">
-                    <option value="" selected> -- 文件類別 Document Type -- </option>
-                    <option v-for="docType in documentTypes" :value="docType.id">{{docType.type}}</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="docName" class="sr-only">Document Name</label>
-            <div class="col-sm-8">
-                <input type="docName" name="docName" v-model="inputs.docName" class="form-control" id="docName" placeholder="文件描述 Document Description" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-8">
-                <button class="btn btn-default" @click.prevent="browseFile">Browser File 瀏覽檔案</button>
-                <p class="help-block">File size should not bigger than 5MB. 文件容量不可超過5MB。</p>
-                <input type="file" class="hidden" name="files" id="file" @change="checkFileInput" accept=".pdf, application/pdf" required>
-            </div>
-        </div>
-        <div class="panel panel-default" v-show="hasFile">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>File Name</th>
-                        <th>File Size</th>
-                        <th>Preview</th>
-                        <th>Remove</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>{{inputFile.name}}</td>
-                        <td>{{inputFile.size/(1000*1000)}} mb</td>
-                        <td>
-                            <button class="btn btn-default btn-sm" @click.prevent="previewPDF">{{previewButtonText}}</button>
-                        </td>
-                        <td>
-                            <button class="btn btn-sm btn-danger" @click.prevent="removeFile">刪除</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-8">
-                <button type="submit" class="btn btn-block btn-purple" @click.prevent="uploadFile">Upload File 上載文件</button>
-            </div>
-        </div>
+    </div>
 
-        <iframe v-show="showPreview" :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="500" height="770"></iframe>
-    </form>
 </template>
 
 <script>
@@ -211,11 +217,12 @@
             },
             checkFileInput: function(){
                 var file = document.querySelector("#file").files[0];
+                console.log(file.type);
                 if(file && file.size > 0){
                     if(file.size > (this.maxFileSize * 1000 * 1000)){
                         alert('file size is too large!');
                         this.checking.fileValidity = false;
-                    }else if(file.type !== "application/pdf"){
+                    }else if(file.type != "application/pdf"){
                         alert('Only pdf allowed!');
                         this.checking.fileValidity = false;
                     }else{
