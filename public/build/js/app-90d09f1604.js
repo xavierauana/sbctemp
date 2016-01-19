@@ -10976,7 +10976,7 @@ new Vue({
     }
 });
 
-},{"./components/adminInfo.vue":28,"./components/createLinkage.vue":29,"./components/createNewAdmin.vue":30,"./components/customerDocuments.vue":31,"./components/editDocumentType.vue":33,"./components/entryView.vue":34,"./components/exportData.vue":35,"./components/permissionSetting.vue":38,"./components/searchUser.vue":40,"./components/sideBarMenu.vue":41,"./components/uploadFile.vue":42,"vue":25,"vue-resource":18}],28:[function(require,module,exports){
+},{"./components/adminInfo.vue":28,"./components/createLinkage.vue":29,"./components/createNewAdmin.vue":30,"./components/customerDocuments.vue":31,"./components/editDocumentType.vue":33,"./components/entryView.vue":34,"./components/exportData.vue":35,"./components/permissionSetting.vue":38,"./components/searchUser.vue":41,"./components/sideBarMenu.vue":42,"./components/uploadFile.vue":43,"vue":25,"vue-resource":18}],28:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -11065,7 +11065,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./permissions.vue":39,"./sideBarMenu.vue":41,"./userTable.vue":43,"babel-runtime/helpers/interop-require-default":2,"vue":25,"vue-hot-reload-api":16}],29:[function(require,module,exports){
+},{"./permissions.vue":39,"./sideBarMenu.vue":42,"./userTable.vue":44,"babel-runtime/helpers/interop-require-default":2,"vue":25,"vue-hot-reload-api":16}],29:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -11748,6 +11748,43 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"vue":25,"vue-hot-reload-api":16}],40:[function(require,module,exports){
+var __vueify_style__ = require("vueify-insert-css").insert("\n    iframe{\n        width: 100%;\n        height: 550px;\n    }\n")
+'use strict';
+
+exports.__esModule = true;
+exports['default'] = {
+    props: ['file', 'show'],
+    computed: {
+        previewSrc: function previewSrc() {
+            var url = "";
+            if (this.file instanceof File && this.show) {
+                url = URL.createObjectURL(this.file, { oneTimeOnly: true });
+                if (window.navigator.msSaveOrOpenBlob) {
+                    url = "/js/pdfjs/web/viewer.html?file=" + encodeURIComponent(url);
+                }
+            }
+            return url;
+        }
+    }
+};
+module.exports = exports['default'];
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <iframe :src=\"previewSrc\" frameborder=\"2\"></iframe>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  var id = "/Users/adrianexavier/Code/SBCTemp/resources/assets/js/components/previewIframe.vue"
+  module.hot.dispose(function () {
+    require("vueify-insert-css").cache["\n    iframe{\n        width: 100%;\n        height: 550px;\n    }\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord(id, module.exports)
+  } else {
+    hotAPI.update(id, module.exports, module.exports.template)
+  }
+})()}
+},{"vue":25,"vue-hot-reload-api":16,"vueify-insert-css":26}],41:[function(require,module,exports){
 'use strict';
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -11862,7 +11899,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./grid.vue":36,"babel-runtime/helpers/interop-require-default":2,"vue":25,"vue-hot-reload-api":16}],41:[function(require,module,exports){
+},{"./grid.vue":36,"babel-runtime/helpers/interop-require-default":2,"vue":25,"vue-hot-reload-api":16}],42:[function(require,module,exports){
 var __vueify_style__ = require("vueify-insert-css").insert("\n    span.nav-item-span{\n        display:inline-block;\n        width: 50%;\n    }\n")
 'use strict';
 
@@ -11895,11 +11932,18 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":25,"vue-hot-reload-api":16,"vueify-insert-css":26}],42:[function(require,module,exports){
+},{"vue":25,"vue-hot-reload-api":16,"vueify-insert-css":26}],43:[function(require,module,exports){
 var __vueify_style__ = require("vueify-insert-css").insert("\n    .preview-container {\n        margin-bottom: 30px;\n    }\n\n    .preview-container iframe {\n        border: 2px solid #b9b9b9;\n    }\n")
 "use strict";
 
+var _interopRequireDefault = require("babel-runtime/helpers/interop-require-default")["default"];
+
 exports.__esModule = true;
+
+var _previewIframeVue = require('./previewIframe.vue');
+
+var _previewIframeVue2 = _interopRequireDefault(_previewIframeVue);
+
 exports["default"] = {
     data: function data() {
         return {
@@ -11941,6 +11985,15 @@ exports["default"] = {
         previewButtonText: function previewButtonText() {
             return this.previewing ? "Close Window" : "Preview";
         }
+    },
+    filters: {
+        passFileObjectOnly: function passFileObjectOnly(value) {
+            console.log('the value is ', value);
+            return typeof value === 'object' ? value : {};
+        }
+    },
+    components: {
+        PreviewIframe: _previewIframeVue2["default"]
     },
     methods: {
         checkFileApiSupport: function checkForFileApiSupport() {
@@ -12051,6 +12104,7 @@ exports["default"] = {
             document.querySelector("#file").click();
         },
         previewPDF: function previewPDF() {
+            console.log(this.inputFile.data instanceof File);
             var url = URL.createObjectURL(this.inputFile.data, { oneTimeOnly: true });
             if (window.navigator.msSaveOrOpenBlob) {
                 url = "/js/pdfjs/web/viewer.html?file=" + encodeURIComponent(url);
@@ -12095,7 +12149,7 @@ exports["default"] = {
     }
 };
 module.exports = exports["default"];
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <form class=\"form-horizontal\" method=\"POST\" encrtype=\"multipart/form-data\">\n            <legend>上載文件 Upload Files</legend>\n            <div class=\"form-group\">\n                <label for=\"uploadDate\" class=\"sr-only\">Document Upload Date</label>\n\n                <div class=\"col-sm-8\">\n                    <input type=\"text\" v-model=\"inputs.uploadDate\" :value=\"uploadDate\" name=\"uploadDate\" class=\"form-control\" id=\"uploadDate\" placeholder=\"文件日期\" readonly=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"cnumber\" class=\"sr-only\">C Number</label>\n\n                <div class=\"col-sm-8\">\n                    <input type=\"number\" name=\"cnumber\" v-model=\"inputs.cNumber\" class=\"form-control\" placeholder=\"客戶公司序號 C Number\" @change=\"checkValidity\" pattern=\"/[1-9]{10}/\" title=\"This is an error message\" required=\"\" autofocus=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"cnumber\" class=\"sr-only\">Company Name</label>\n\n                <div class=\"col-sm-8\">\n                    <input type=\"number\" name=\"cnumber\" v-model=\"customer.name\" class=\"form-control\" placeholder=\"客戶公司名稱 Company Name \" title=\"This is an error message\" required=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"docDate\" class=\"sr-only\">Document Date</label>\n\n                <div class=\"col-sm-8\">\n                    <div class=\"input-group date\" id=\"datetimepicker\">\n                        <input type=\"text\" class=\"form-control\" name=\"docDate\" v-model=\"inputs.docDate\" id=\"docDate\" placeholder=\"文件日期 Document Date (YYYY/MM/DD)\" @keypress=\"showkeypress\" pattern=\"/[0-9]\\//\" required=\"\">\n                    <span class=\"input-group-addon\">\n                        <span class=\"glyphicon glyphicon-calendar\"></span>\n                    </span>\n                    </div>\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"docType\" class=\"sr-only\">Document Type</label>\n\n                <div class=\"col-sm-8\">\n                    <select name=\"docType\" id=\"docType\" v-model=\"inputs.docType\" class=\"form-control\" style=\"width:100%\">\n                        <option value=\"\" selected=\"\"> -- 文件類別 Document Type --</option>\n                        <option v-for=\"docType in documentTypes\" :value=\"docType.id\">{{docType.type}}</option>\n                    </select>\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"docName\" class=\"sr-only\">Document Name</label>\n\n                <div class=\"col-sm-8\">\n                    <input type=\"docName\" name=\"docName\" v-model=\"inputs.docName\" class=\"form-control\" id=\"docName\" placeholder=\"文件描述 Document Description\" required=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <div class=\"col-sm-8\">\n                    <button class=\"btn btn-default\" @click.prevent=\"browseFile\">Browser File 瀏覽檔案</button>\n                    <p class=\"help-block\">File size should not bigger than 5MB. 文件容量不可超過5MB。</p>\n                    <input type=\"file\" class=\"hidden\" name=\"files\" id=\"file\" @change=\"checkFileInput\" accept=\".pdf, application/pdf\" required=\"\">\n                </div>\n            </div>\n            <div v-show=\"hasFile\" class=\"col-sm-8\" style=\"padding-left: 0\">\n                <div class=\"table-responsive\">\n                    <table class=\"table table-hover\">\n                        <thead>\n                        <tr>\n                            <th>File Name</th>\n                            <th>File Size</th>\n                            <th>Preview</th>\n                            <th>Remove</th>\n                        </tr>\n                        </thead>\n                        <tbody>\n                        <tr>\n                            <td>{{inputFile.name}}</td>\n                            <td>{{inputFile.size/(1000*1000)}} mb</td>\n                            <td>\n                                <button class=\"btn btn-default btn-sm\" @click.prevent=\"previewPDF\">\n                                    {{previewButtonText}}\n                                </button>\n                            </td>\n                            <td>\n                                <button class=\"btn btn-sm btn-danger\" @click.prevent=\"removeFile\">刪除</button>\n                            </td>\n                        </tr>\n                        </tbody>\n                    </table>\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <div class=\"col-sm-8\">\n                    <button type=\"submit\" class=\"btn btn-block btn-purple\" @click.prevent=\"uploadFile\">Upload File\n                        上載文件\n                    </button>\n                </div>\n            </div>\n        </form>\n        <div class=\"row preview-container\" v-show=\"showPreview\">\n            <div class=\"col-sm-8\">\n                <iframe :src=\"previewSrc\" frameborder=\"2\" id=\"test-iframe\" width=\"100%\" height=\"550\"></iframe>\n\n                <!--<iframe :src=\"previewSrc\" id=\"viewer\" frameborder=\"0\" scrolling=\"no\" width=\"100%\" height=\"550\"></iframe>-->\n                <!--<object :data=\"previewSrc\" type=\"application/pdf\" width=\"100%\" height=\"550\">-->\n                    <!--<embed :src=\"previewSrc\" type=\"application/pdf\">-->\n                <!--</object>-->\n            </div>\n        </div>\n    </div>\n\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <form class=\"form-horizontal\" method=\"POST\" encrtype=\"multipart/form-data\">\n            <legend>上載文件 Upload Files</legend>\n            <div class=\"form-group\">\n                <label for=\"uploadDate\" class=\"sr-only\">Document Upload Date</label>\n\n                <div class=\"col-sm-8\">\n                    <input type=\"text\" v-model=\"inputs.uploadDate\" :value=\"uploadDate\" name=\"uploadDate\" class=\"form-control\" id=\"uploadDate\" placeholder=\"文件日期\" readonly=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"cnumber\" class=\"sr-only\">C Number</label>\n\n                <div class=\"col-sm-8\">\n                    <input type=\"number\" name=\"cnumber\" v-model=\"inputs.cNumber\" class=\"form-control\" placeholder=\"客戶公司序號 C Number\" @change=\"checkValidity\" pattern=\"/[1-9]{10}/\" title=\"This is an error message\" required=\"\" autofocus=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"cnumber\" class=\"sr-only\">Company Name</label>\n\n                <div class=\"col-sm-8\">\n                    <input type=\"number\" name=\"cnumber\" v-model=\"customer.name\" class=\"form-control\" placeholder=\"客戶公司名稱 Company Name \" title=\"This is an error message\" required=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"docDate\" class=\"sr-only\">Document Date</label>\n\n                <div class=\"col-sm-8\">\n                    <div class=\"input-group date\" id=\"datetimepicker\">\n                        <input type=\"text\" class=\"form-control\" name=\"docDate\" v-model=\"inputs.docDate\" id=\"docDate\" placeholder=\"文件日期 Document Date (YYYY/MM/DD)\" @keypress=\"showkeypress\" pattern=\"/[0-9]\\//\" required=\"\">\n                    <span class=\"input-group-addon\">\n                        <span class=\"glyphicon glyphicon-calendar\"></span>\n                    </span>\n                    </div>\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"docType\" class=\"sr-only\">Document Type</label>\n\n                <div class=\"col-sm-8\">\n                    <select name=\"docType\" id=\"docType\" v-model=\"inputs.docType\" class=\"form-control\" style=\"width:100%\">\n                        <option value=\"\" selected=\"\"> -- 文件類別 Document Type --</option>\n                        <option v-for=\"docType in documentTypes\" :value=\"docType.id\">{{docType.type}}</option>\n                    </select>\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <label for=\"docName\" class=\"sr-only\">Document Name</label>\n\n                <div class=\"col-sm-8\">\n                    <input type=\"docName\" name=\"docName\" v-model=\"inputs.docName\" class=\"form-control\" id=\"docName\" placeholder=\"文件描述 Document Description\" required=\"\">\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <div class=\"col-sm-8\">\n                    <button class=\"btn btn-default\" @click.prevent=\"browseFile\">Browser File 瀏覽檔案</button>\n                    <p class=\"help-block\">File size should not bigger than 5MB. 文件容量不可超過5MB。</p>\n                    <input type=\"file\" class=\"hidden\" name=\"files\" id=\"file\" @change=\"checkFileInput\" accept=\".pdf, application/pdf\" required=\"\">\n                </div>\n            </div>\n            <div v-show=\"hasFile\" class=\"col-sm-8\" style=\"padding-left: 0\">\n                <div class=\"table-responsive\">\n                    <table class=\"table table-hover\">\n                        <thead>\n                        <tr>\n                            <th>File Name</th>\n                            <th>File Size</th>\n                            <th>Preview</th>\n                            <th>Remove</th>\n                        </tr>\n                        </thead>\n                        <tbody>\n                        <tr>\n                            <td>{{inputFile.name}}</td>\n                            <td>{{inputFile.size/(1000*1000)}} mb</td>\n                            <td>\n                                <button class=\"btn btn-default btn-sm\" @click.prevent=\"previewPDF\">\n                                    {{previewButtonText}}\n                                </button>\n                            </td>\n                            <td>\n                                <button class=\"btn btn-sm btn-danger\" @click.prevent=\"removeFile\">刪除</button>\n                            </td>\n                        </tr>\n                        </tbody>\n                    </table>\n                </div>\n            </div>\n            <div class=\"form-group\">\n                <div class=\"col-sm-8\">\n                    <button type=\"submit\" class=\"btn btn-block btn-purple\" @click.prevent=\"uploadFile\">Upload File\n                        上載文件\n                    </button>\n                </div>\n            </div>\n        </form>\n        <div class=\"row preview-container\" v-show=\"showPreview\">\n            <div class=\"col-sm-8\">\n                <preview-iframe :file=\"inputFile.data | passFileObjectOnly\" :show=\"previewing\"></preview-iframe>\n                <!--<iframe :src=\"previewSrc\" frameborder=\"2\" id=\"test-iframe\" width=\"100%\" height=\"550\"></iframe>-->\n\n                <!--<iframe :src=\"previewSrc\" id=\"viewer\" frameborder=\"0\" scrolling=\"no\" width=\"100%\" height=\"550\"></iframe>-->\n                <!--<object :data=\"previewSrc\" type=\"application/pdf\" width=\"100%\" height=\"550\">-->\n                    <!--<embed :src=\"previewSrc\" type=\"application/pdf\">-->\n                <!--</object>-->\n            </div>\n        </div>\n    </div>\n\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -12111,7 +12165,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"vue":25,"vue-hot-reload-api":16,"vueify-insert-css":26}],43:[function(require,module,exports){
+},{"./previewIframe.vue":40,"babel-runtime/helpers/interop-require-default":2,"vue":25,"vue-hot-reload-api":16,"vueify-insert-css":26}],44:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;

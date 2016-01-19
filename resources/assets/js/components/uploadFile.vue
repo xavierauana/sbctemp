@@ -115,7 +115,8 @@
         </form>
         <div class="row preview-container" v-show="showPreview">
             <div class="col-sm-8">
-                <iframe :src="previewSrc" frameborder="2" id="test-iframe" width="100%" height="550"></iframe>
+                <preview-iframe :file="inputFile.data | passFileObjectOnly" :show="previewing"></preview-iframe>
+                <!--<iframe :src="previewSrc" frameborder="2" id="test-iframe" width="100%" height="550"></iframe>-->
 
                 <!--<iframe :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="100%" height="550"></iframe>-->
                 <!--<object :data="previewSrc" type="application/pdf" width="100%" height="550">-->
@@ -128,6 +129,7 @@
 </template>
 
 <script>
+    import PreviewIframe from './previewIframe.vue';
     export default{
         data: function () {
             return {
@@ -169,6 +171,15 @@
             previewButtonText: function () {
                 return this.previewing ? "Close Window" : "Preview"
             }
+        },
+        filters:{
+          passFileObjectOnly: function(value){
+              console.log('the value is ', value);
+              return typeof value === 'object'? value:{};
+          }
+        },
+        components:{
+            PreviewIframe
         },
         methods: {
             checkFileApiSupport: function checkForFileApiSupport() {
@@ -280,6 +291,7 @@
                 document.querySelector("#file").click();
             },
             previewPDF: function () {
+                console.log(this.inputFile.data instanceof File);
                 var url = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
                 if(window.navigator.msSaveOrOpenBlob){
                     url = "/js/pdfjs/web/viewer.html?file="+encodeURIComponent(url);
