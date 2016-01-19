@@ -281,7 +281,7 @@
             },
             previewPDF: function () {
                 var url = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
-                if(window.navigator.mssaveoropenblob){
+                if(window.navigator.msSaveOrOpenBlob){
                     url = "/js/pdfjs/web/viewer.html?file="+encodeURIComponent(url);
                 }
                 this.previewSrc = this.previewing ? "" : url;
