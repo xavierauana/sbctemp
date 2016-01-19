@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64d4783c-c0c5-44db-91c7-8d658ba95881" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/build/js/app-dd0d544f9b.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/build/js/app-c42316e197.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/build/js/app.js.map" afterPath="$PROJECT_DIR$/public/build/js/app.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/app.js.map" afterPath="$PROJECT_DIR$/public/js/app.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/app.js" afterPath="$PROJECT_DIR$/public/js/app.js" />
@@ -47,8 +47,8 @@
       <file leaf-file-name="uploadFile.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/assets/js/components/uploadFile.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7200622">
-              <caret line="248" column="57" selection-start-line="248" selection-start-column="57" selection-end-line="248" selection-end-column="57" />
+            <state vertical-scroll-proportion="0.60653186">
+              <caret line="91" column="67" selection-start-line="91" selection-start-column="67" selection-end-line="91" selection-end-column="67" />
               <folding>
                 <element signature="n#div#1;n#form#0;n#div#0;n#template#0;n#!!top" expanded="false" />
                 <element signature="n#div#2;n#form#0;n#div#0;n#template#0;n#!!top" expanded="false" />
@@ -57,7 +57,7 @@
                 <element signature="n#div#5;n#form#0;n#div#0;n#template#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#div#7;n#form#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#div#7;n#form#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-                <element signature="e#9195#9715#0" expanded="false" />
+                <element signature="e#9390#9910#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -778,8 +778,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/assets/js/components/uploadFile.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7200622">
-          <caret line="248" column="57" selection-start-line="248" selection-start-column="57" selection-end-line="248" selection-end-column="57" />
+        <state vertical-scroll-proportion="0.60653186">
+          <caret line="91" column="67" selection-start-line="91" selection-start-column="67" selection-end-line="91" selection-end-column="67" />
           <folding>
             <element signature="n#div#1;n#form#0;n#div#0;n#template#0;n#!!top" expanded="false" />
             <element signature="n#div#2;n#form#0;n#div#0;n#template#0;n#!!top" expanded="false" />
@@ -788,7 +788,7 @@
             <element signature="n#div#5;n#form#0;n#div#0;n#template#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#7;n#form#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#div#7;n#form#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="e#9195#9715#0" expanded="false" />
+            <element signature="e#9390#9910#0" expanded="false" />
           </folding>
         </state>
       </provider>

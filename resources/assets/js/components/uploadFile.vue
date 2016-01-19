@@ -88,7 +88,10 @@
         </form>
         <div class="row"  v-show="showPreview">
             <div class="col-sm-8">
-                <iframe :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="100%" height="550"></iframe>
+                <!--<iframe :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="100%" height="550"></iframe>-->
+                <object :data="previewSrc" type="application/pdf" width="100%" height="550">
+                    <embed :src="previewSrc" type="application/pdf">
+                </object>
             </div>
         </div>
     </div>
@@ -247,7 +250,11 @@
             previewPDF: function () {
                 console.log('preview pdf');
                 var test = new Blob([this.inputFile.data], { type: 'application/pdf' });
-                this.previewSrc = this.previewing? "" : URL.createObjectURL(test, {oneTimeOnly: true});
+                var url = URL.createObjectURL(test, {oneTimeOnly: true});
+                var url1 = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
+                console.log(url);
+                console.log(url1);
+                this.previewSrc = this.previewing? "" : url;
                 this.previewing = !this.previewing;
             },
             reset:function(){
