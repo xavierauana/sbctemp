@@ -51,7 +51,7 @@
                 <div class="col-sm-8">
                     <button class="btn btn-default" @click.prevent="browseFile">Browser File 瀏覽檔案</button>
                     <p class="help-block">File size should not bigger than 5MB. 文件容量不可超過5MB。</p>
-                    <input type="file" class="hidden" name="files" id="file" @change="checkFileInput"  required>
+                    <input type="file" class="hidden" name="files" id="file" @change="checkFileInput" accept=".pdf, application/pdf" required>
                 </div>
             </div>
             <div v-show="hasFile" class="col-sm-8" style="padding-left: 0">
@@ -225,9 +225,6 @@
             },
             checkFileInput: function(){
                 var file = document.querySelector("#file").files[0];
-                console.log(typeof file);
-                console.log(file.name);
-                console.log(file.type);
                 if(file && file.size > 0){
                     if(file.size > (this.maxFileSize * 1000 * 1000)){
                         alert('file size is too large!');
