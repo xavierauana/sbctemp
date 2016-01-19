@@ -217,7 +217,7 @@
             },
             checkFileInput: function(){
                 var file = document.querySelector("#file").files[0];
-                console.log(file.type);
+                console.log(file);
                 if(file && file.size > 0){
                     if(file.size > (this.maxFileSize * 1000 * 1000)){
                         alert('file size is too large!');
