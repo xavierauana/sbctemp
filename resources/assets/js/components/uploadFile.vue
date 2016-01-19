@@ -261,9 +261,12 @@
                 console.log('preview pdf');
                 var url = "";
                 if(window.navigator.msSaveOrOpenBlob) {
-                    var o = document.getElementsByTagName('iframe')[0];
-                    o.contentWindow.postMessage('Hello World', "*");
-                    console.log(o.contentWindow);
+                    console.log('call reader approach');
+                   var reader = new FileReader();
+                    reader.readAsDataURL(this.inputFile.data);
+                    reader.onload(function(event){
+                        this.previewSrc = event.target.result
+                    }.bind(this));
                 } else {
                     console.log('standard');
                     url = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
@@ -305,18 +308,6 @@
         ready: function(){
             $('#datetimepicker').datetimepicker({
                 format:"YYYY/MM/DD"
-            });
-            window.addEventListener('onmessage',function(e) {
-                console.log('event catch');
-                console.log(e.domain);
-                if (e.domain == 'example.com') {
-                    if (e.data == 'Hello World') {
-
-                        e.source.postMessage('Hello', "*");
-                    } else {
-                        alert(e.data);
-                    }
-                }
             });
             this.checkFileApiSupport();
         }
