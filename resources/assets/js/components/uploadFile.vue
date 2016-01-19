@@ -307,9 +307,11 @@
                 format:"YYYY/MM/DD"
             });
             window.addEventListener('onmessage',function(e) {
+                console.log('event catch');
+                console.log(e.domain);
                 if (e.domain == 'example.com') {
                     if (e.data == 'Hello World') {
-                        console.log('event catch')
+
                         e.source.postMessage('Hello', "*");
                     } else {
                         alert(e.data);
