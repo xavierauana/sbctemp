@@ -51,7 +51,7 @@
                 <div class="col-sm-8">
                     <button class="btn btn-default" @click.prevent="browseFile">Browser File 瀏覽檔案</button>
                     <p class="help-block">File size should not bigger than 5MB. 文件容量不可超過5MB。</p>
-                    <input type="file" class="hidden" name="files" id="file" @change="checkFileInput" accept="application/pdf" required>
+                    <input type="file" class="hidden" name="files" id="file" @change="checkFileInput"  required>
                 </div>
             </div>
             <div v-show="hasFile" class="col-sm-8" style="padding-left: 0">
