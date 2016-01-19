@@ -115,7 +115,7 @@
         </form>
         <div class="row preview-container" v-show="showPreview">
             <div class="col-sm-8">
-                <iframe :src="previewSrc" frameborder="0" id="test-iframe" width="100%" height="550"></iframe>
+                <iframe :src="previewSrc" frameborder="2" id="test-iframe" width="100%" height="550"></iframe>
 
                 <!--<iframe :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="100%" height="550"></iframe>-->
                 <!--<object :data="previewSrc" type="application/pdf" width="100%" height="550">-->
@@ -123,9 +123,6 @@
                 <!--</object>-->
             </div>
         </div>
-        <pre>
-            {{$data|json}}
-        </pre>
     </div>
 
 </template>
@@ -284,7 +281,10 @@
             },
             previewPDF: function () {
                 var url = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
-                this.previewSrc = this.previewing ? "" :  "/js/pdfjs/web/viewer.html?file="+encodeURIComponent(url);
+                if(window.navigator.mssaveoropenblob){
+                    url = "/js/pdfjs/web/viewer.html?file="+encodeURIComponent(url);
+                }
+                this.previewSrc = this.previewing ? "" : url;
                 this.previewing = !this.previewing;
             },
             reset: function () {
