@@ -51,10 +51,10 @@
                 <div class="col-sm-8">
                     <button class="btn btn-default" @click.prevent="browseFile">Browser File 瀏覽檔案</button>
                     <p class="help-block">File size should not bigger than 5MB. 文件容量不可超過5MB。</p>
-                    <input type="file" class="hidden" name="files" id="file" @change="checkFileInput" accept=".pdf, application/pdf" required>
+                    <input type="file" class="hidden" name="files" id="file" @change="checkFileInput" accept="application/pdf" required>
                 </div>
             </div>
-            <div v-show="hasFile">
+            <div v-show="hasFile" class="col-sm-8" style="padding-left: 0">
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -87,7 +87,7 @@
             </div>
         </form>
         <div class="row"  v-show="showPreview">
-            <div class="col-xs-12">
+            <div class="col-sm-8">
                 <iframe :src="previewSrc" id="viewer" frameborder="0" scrolling="no" width="100%" height="550"></iframe>
             </div>
         </div>
