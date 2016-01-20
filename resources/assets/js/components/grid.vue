@@ -135,6 +135,7 @@
         <div>
             <div class="col-xs-6">
                 <span>There are total {{data.length}} records.</span>
+                <span>共有 {{data.length}} 個記錄。</span>
             </span>
             </div>
             <div class="col-xs-6" v-show="needPaginated">

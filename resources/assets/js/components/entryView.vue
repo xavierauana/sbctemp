@@ -33,11 +33,11 @@
                     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                         <ul class="list-group">
                             <!--<li class="list-group-item text-center"><a @click.prevent="changeViewTo('CustomerDocuments')" href="/">用戶文件</a></li>-->
-                            <li class="list-group-item text-center"><a @click.prevent="changeViewTo('CreateNewAdmin')" href="/">新增管理人員 Add New Admin</a></li>
-                            <li class="list-group-item text-center"><a @click.prevent="changeViewTo('AdminInfo')" href="/">管理人員資料 Admin Info</a></li>
-                             <li class="list-group-item text-center"><a @click.prevent="changeViewTo('EditDocumentType')" href="/">文件類別設定 Doc Type Setting</a></li>
+                            <li class="list-group-item text-center"><a @click.prevent="changeViewTo('CreateNewAdmin')" href="/">新增管理人員 Create Administrator</a></li>
+                            <li class="list-group-item text-center"><a @click.prevent="changeViewTo('AdminInfo')" href="/">管理人員資料 Administrator Info</a></li>
+                             <li class="list-group-item text-center"><a @click.prevent="changeViewTo('EditDocumentType')" href="/">文件類別設定 Doc Types Setting</a></li>
                              <li class="list-group-item text-center"><a @click.prevent="changeViewTo('PermissionSetting')" href="/">權限類別設定 Permissions Setting</a></li>
-                             <li class="list-group-item text-center"><a @click.prevent="changeViewTo('ExportData')" href="/">賬戶資料總匯表 Export User Info</a></li>
+                             <li class="list-group-item text-center"><a @click.prevent="changeViewTo('ExportData')" href="/">賬戶資料總匯表 Export Clients Info</a></li>
                              <li class="list-group-item text-center"><a @click.prevent="changeViewTo('CreateLinkage')" href="/">Create Linkage</a></li>
                         </ul>
                     </div>

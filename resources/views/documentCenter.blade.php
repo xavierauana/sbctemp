@@ -45,7 +45,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="" @click.prevent='backToList'>
-                        <span class="hidden-sm hidden-xs">駿業客戶文件管理中心</span> SBC Clients Document Center
+                        <span class="hidden-sm hidden-xs">駿業客戶文件中心</span> SBC Clients Document Center
                     </a>
                 </div>
 
@@ -53,9 +53,9 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#">
-                                Login Account: testing@sbc.com
+                                登入賬戶 Login Account: testing@sbc.com
                             </a></li>
-                        <li><a href="#">Logout</a></li>
+                        <li><a href="#">登出 Logout</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -66,12 +66,12 @@
     <script type="x-template" id="template-table">
         <div class="container">
             <ol class="breadcrumb">
-                <li><a href="#" @click.prevent="changeView">Home</a></li>
+                <li><a href="#" @click.prevent="changeView">主頁 Home</a></li>
             </ol>
             <div>
                 <h4>@{{data.chinese_name}}</h4>
                 <h4>@{{data.english_name}}</h4>
-                <h5>C Number: @{{data.cnumber}}</h5>
+                <h5>客戶公司序號 C Number: @{{data.cnumber}} <a class="pull-right" href="#" @click.prevent="changeView">返回 Back</a></h5>
             </div>
             <div class="panel panel-default">
                 <div class="table-responsive">
@@ -189,7 +189,7 @@
     </script>
     <script type="x-template" id="template-list">
         <div class="container">
-            <h3>Companies</h3>
+            <h3>Companies Names</h3>
             <ul class="list-group">
                 <li class="list-group-item" v-for="company in companies"><a href="" @click.prevent='changeView(company)'>@{{company.english_name}}</a></li>
             </ul>

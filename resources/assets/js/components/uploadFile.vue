@@ -90,10 +90,10 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>File Name</th>
-                            <th>File Size</th>
-                            <th>Preview</th>
-                            <th>Remove</th>
+                            <th>檔案名稱 File Name</th>
+                            <th>檔案容量 File Size</th>
+                            <th>預覽 Preview</th>
+                            <th>刪除 Remove</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -102,11 +102,11 @@
                             <td>{{inputFile.size/(1000*1000)}} mb</td>
                             <td>
                                 <button class="btn btn-default btn-sm" @click.prevent="previewPDF">
-                                    {{previewButtonText}}
+                                    <i class="fa fa-search"></i>
                                 </button>
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-danger" @click.prevent="removeFile">刪除</button>
+                                <button class="btn btn-sm btn-danger" @click.prevent="removeFile"><i class="fa fa-trash"></i> </button>
                             </td>
                         </tr>
                         </tbody>
@@ -126,9 +126,6 @@
                 <preview-iframe :file="inputFile.data | passFileObjectOnly" :show="previewing"></preview-iframe>
             </div>
         </div>
-        <pre>
-            {{$data|json}}
-        </pre>
     </div>
 
 </template>

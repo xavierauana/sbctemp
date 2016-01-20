@@ -27,19 +27,19 @@
                     </a></li>
                     <!--<li><a @click.prevent="changeViewTo('CustomerDocuments')" :class="{'active': isCurrentView('CustomerDocuments')}" href="/">用戶文件</a></li>-->
                     <li><a @click.prevent="changeViewTo('CreateNewAdmin')" :class="{'active': isCurrentView('CreateNewAdmin')}" href="/">
-                        <span class="nav-item-span">新增管理人員</span><span class="nav-item-span">Add New Admin</span>
+                        <span class="nav-item-span">新增管理人員</span><span class="nav-item-span">Create Administrator</span>
                     </a></li>
                     <li><a @click.prevent="changeViewTo('AdminInfo')" :class="{'active': isCurrentView('AdminInfo')}" href="/">
-                        <span class="nav-item-span">管理人員資料</span><span class="nav-item-span">Admin Info</span>
+                        <span class="nav-item-span">管理人員資料</span><span class="nav-item-span">Administrator Info</span>
                      </a></li>
                     <li><a @click.prevent="changeViewTo('EditDocumentType')" :class="{'active': isCurrentView('EditDocumentType')}" href="/">
-                        <span class="nav-item-span">文件類別設定</span><span class="nav-item-span">Doc Type Setting</span>
+                        <span class="nav-item-span">文件類別設定</span><span class="nav-item-span">Doc Types Setting</span>
                      </a></li>
                     <li><a @click.prevent="changeViewTo('PermissionSetting')" :class="{'active': isCurrentView('PermissionSetting')}" href="/">
                         <span class="nav-item-span">權限類別設定</span><span class="nav-item-span">Permissions Setting</span>
                      </a></li>
                     <li><a @click.prevent="changeViewTo('ExportData')" :class="{'active': isCurrentView('ExportData')}" href="/">
-                        <span class="nav-item-span">賬戶資料總匯表</span><span class="nav-item-span">Export Users Info</span>
+                        <span class="nav-item-span">賬戶資料總匯表</span><span class="nav-item-span">Export Clients Info</span>
                      </a></li>
                     <li><a @click.prevent="changeViewTo('CreateLinkage')" :class="{'active': isCurrentView('CreateLinkage')}" href="/">
                         <span class="nav-item-span">Create Linkage</span><span class="nav-item-span"></span>

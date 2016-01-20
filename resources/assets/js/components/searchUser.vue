@@ -28,7 +28,7 @@
 
                 <div class="col-sm-9">
                     <input type="text" class="form-control" v-model="inputs.chinese_name"
-                           placeholder="Chinese Company Name">
+                           placeholder="Chinese Company Name" @paste="pasteCompanyName" @keypress.prevent="pressOnCompanyName" @keydown="disableBackSpace" oncut="return false;">
                 </div>
             </div>
             <div class="form-group">
@@ -36,7 +36,7 @@
 
                 <div class="col-sm-9">
                     <input type="text" class="form-control" name="cNumber" v-model="inputs.english_name"
-                           placeholder="English Company Name">
+                           placeholder="English Company Name" @keypress.prevent="pressOnCompanyName"  @keydown="disableBackSpace" oncut="return false;">
                 </div>
             </div>
             <div class="form-group">
@@ -140,6 +140,16 @@
             }
         },
         methods: {
+            disableBackSpace: function(e){
+                if(e.keyCode == 8) e.preventDefault();
+            },
+            pasteCompanyName: function(e){
+                console.log('paste something')
+            },
+            pressOnCompanyName: function(e){
+                console.log(e.keyCode);
+                return false;
+            },
             sortBy: function (key) {
                 this.sortKey = key;
                 this.sortOrders[key] = this.sortOrders[key] * -1
@@ -161,8 +171,8 @@
                     this.$http.get(url, function (response) {
                         console.log(response);
                         if (response) {
-                            this.$set('user', response);
-                            this.$set('inputs', response);
+                            this.$set('user', response.customer);
+                            this.$set('inputs', response.customer);
                         } else {
                             alert('no one match the c number! Please verify.')
                         }

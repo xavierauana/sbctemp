@@ -5,9 +5,9 @@
             </div>
             <div class="col-xs-6 col-sm-6 col-md-8">
                 <ul class="list-inline list-unstyled pull-right">
-                    <li><a href="/admin">Home</a></li>
+                    <li><a href="/admin">主頁 Home</a></li>
                     <li>Hello, Admin Rainbow</li>
-                    <li><a href="#">Logout</a></li>
+                    <li><a href="#">登出 Logout</a></li>
                 </ul>
             </div>
         </div>

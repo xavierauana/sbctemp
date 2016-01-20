@@ -22,8 +22,8 @@
 <body>
 <div class="container">
     <div class="row purple titleBox">
-        <h4>駿客戶文件中心 - 賬戶啓動</h4>
-        <h4>SBC Clients Document Centre - Account Activation</h4>
+        <h4>駿業客戶文件中心 - 賬戶啓動</h4>
+        <h4>SBC Clients Document Center - Account Activation</h4>
     </div>
     <div class="form-container">
         <form class="form-horizontal">
@@ -56,6 +56,7 @@
                 <div class="col-sm-offset-2 col-sm-8">
                     <input type="email" class="form-control"  name="email_confirmation" id="email_confirmation" placeholder="確定電郵 Confirm Email">
                     <p class="help-block">此電郵賬戶是於你忘記密碼時作重新啟動賬戶用途</p>
+                    <p class="help-block">This email is used for resetting login account.</p>
                 </div>
             </div>
             <div class="col-xs-offset-4 col-xs-4">
