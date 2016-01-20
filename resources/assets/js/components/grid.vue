@@ -125,8 +125,8 @@
                     {{entry[key.code]}}
                 </td>
                 <td>
-                    <button class="btn btn-default btn-xs" @click.prevent="previewPDF(entry)">Preview 預覽</button>
-                    <button class="btn btn-danger btn-xs" @click.prevent="deleteDocument(entry)">Remove 刪除
+                    <button class="btn btn-default btn-xs" @click.prevent="previewPDF(entry)"><i class="fa fa-search"></i></button>
+                    <button class="btn btn-danger btn-xs" @click.prevent="deleteDocument(entry)"><i class="fa fa-trash"></i>
                     </button>
                 </td>
             </tr>

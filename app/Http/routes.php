@@ -140,18 +140,26 @@ Route::get('/documentCenter', function () {
     return view('documentCenter');
 });
 Route::get('/getpermissions', function () {
-    return [
-        ["id" => "1001", "label" => "上載文件"],
-        ["id" => "1002", "label" => "讀取客戶資料"],
-        ["id" => "1003", "label" => "更改客戶資料"],
-        ["id" => "1004", "label" => "更改客戶登入權限"],
-        ["id" => "1005", "label" => "讀取管理人員資料"],
-        ["id" => "1006", "label" => "新增管理人員"],
-        ["id" => "1007", "label" => "更改管理人員資料"],
-        ["id" => "1008", "label" => "刪除管理人員"],
-        ["id" => "1009", "label" => "刪除文件"],
-        ["id" => "1010", "label" => "更改或刪除文件類別"],
-    ];
+    return
+        [
+            [
+                ["id" => "1001", "label" => "Read clients information", "chi_label" => "讀取客戶資料"],
+                ["id" => "1002", "label" => "Edit clients information", "chi_label" => "更改客戶資料"],
+                ["id" => "1003", "label" => "Edit clients login permission", "chi_label" => "更改客戶登入權限"],
+                ["id" => "1004", "label" => "Export clients data", "chi_label" => "下載客戶資料"],
+            ],
+            [
+                ["id" => "1005", "label" => "Read admin information", "chi_label" => "讀取管理人員資料"],
+                ["id" => "1006", "label" => "Create administrator", "chi_label" => "新增管理人員"],
+                ["id" => "1007", "label" => "Edit administrator info", "chi_label" => "更改管理人員資料"],
+                ["id" => "1008", "label" => "Delete administrator", "chi_label" => "刪除管理人員"],
+            ],
+            [
+                ["id" => "1009", "label" => "Upload files", "chi_label" => "上載文件"],
+                ["id" => "1010", "label" => "Edit or Delete doc types", "chi_label" => "更改或刪除文件類別"],
+                ["id" => "1011", "label" => "Delete documents", "chi_label" => "刪除文件"],
+            ]
+        ];
 });
 Route::get('/getpermissionprofiles', function () {
     return [
@@ -209,6 +217,7 @@ Route::get('/getdoctypes', function () {
 
 Route::get('/searchcustomer/{cnumber}', function ($cnumber) {
     $customer = Customer::whereId($cnumber)->first();
+
     return response()->json(compact('customer'));
     if ($cnumber == 8888) {
         return Cache::get('user1');
@@ -263,43 +272,52 @@ Route::post('/exportData', function (\Illuminate\Http\Request $request) {
     }
 
     $headers = ['cnumber', 'chinese name', 'english name', 'login name', 'password', 'status'];
-    $records = array_map(function($row){
+    $records = array_map(function ($row) {
         return array_values($row);
     }, $records);
     array_unshift($records, $headers);
-    $path = storage_path().'/temp.csv';
+    $path = storage_path() . '/temp.csv';
     $csv = fopen($path, 'w');
     foreach ($records as $row) {
         fputcsv($csv, $row); // here you can change delimiter/enclosure
     }
     fclose($csv);
+
     return response()->download($path, "user_info.csv", [
         'Content-type'        => 'text/csv',
         'Content-disposition' => 'attachment'
     ]);
 });
 
-Route::get('/fetchUser/{userId}', function($userId){
+Route::get('/fetchUser/{userId}', function ($userId) {
     $user = User::whereId($userId)->first(['name']);
-    return $user?['code'=>200,'data'=>$user]:['code'=>404,'data'=>$user];
+
+    return $user ? ['code' => 200, 'data' => $user] : ['code' => 404, 'data' => $user];
 });
 
-Route::get('/fetchCompany/{companyId}/user/{userId}', function($companyId, $userId){
-   $company = Customer::whereId($companyId)->first();
-    if($company){
-        if($company->pnumber == $userId) return ['code'=>201,'data'=>['english_name'=>$company->english_name]];
-        if($company->pnumber > 0 && $company->pnumber !=$userId ) return ['code'=>202,'data'=>['english_name'=>$company->english_name]];
-        if($company->pnumber == 0) return ['code'=>200,'data'=>['english_name'=>$company->english_name]];
+Route::get('/fetchCompany/{companyId}/user/{userId}', function ($companyId, $userId) {
+    $company = Customer::whereId($companyId)->first();
+    if ($company) {
+        if ($company->pnumber == $userId) {
+            return ['code' => 201, 'data' => ['english_name' => $company->english_name]];
+        }
+        if ($company->pnumber > 0 && $company->pnumber != $userId) {
+            return ['code' => 202, 'data' => ['english_name' => $company->english_name]];
+        }
+        if ($company->pnumber == 0) {
+            return ['code' => 200, 'data' => ['english_name' => $company->english_name]];
+        }
     }
 
-    return ['code'=>404,'data'=>$company];
+    return ['code' => 404, 'data' => $company];
 });
 
-Route::get('/createLinkage/user/{userId}/company/{companyId}', function($userId, $companyId){
+Route::get('/createLinkage/user/{userId}/company/{companyId}', function ($userId, $companyId) {
     $company = Customer::whereId($companyId)->first();
     $company->pnumber = $userId;
     $company->save();
-    return ['code'=>200];
+
+    return ['code' => 200];
 });
 //
 //Route::get('/generate/dummy/user', function () {

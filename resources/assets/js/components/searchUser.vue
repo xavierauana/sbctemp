@@ -28,7 +28,8 @@
 
                 <div class="col-sm-9">
                     <input type="text" class="form-control" v-model="inputs.chinese_name"
-                           placeholder="Chinese Company Name" @paste="pasteCompanyName" @keypress.prevent="pressOnCompanyName" @keydown="disableBackSpace" oncut="return false;">
+                           placeholder="Chinese Company Name" @paste="pasteCompanyName"
+                           @keypress.prevent="pressOnCompanyName" @keydown="disableBackSpace" oncut="return false;">
                 </div>
             </div>
             <div class="form-group">
@@ -36,7 +37,8 @@
 
                 <div class="col-sm-9">
                     <input type="text" class="form-control" name="cNumber" v-model="inputs.english_name"
-                           placeholder="English Company Name" @keypress.prevent="pressOnCompanyName"  @keydown="disableBackSpace" oncut="return false;">
+                           placeholder="English Company Name" @keypress.prevent="pressOnCompanyName"
+                           @keydown="disableBackSpace" oncut="return false;">
                 </div>
             </div>
             <div class="form-group">
@@ -68,17 +70,19 @@
 
                 <div class="col-sm-9" data-toggle="buttons">
                     <label class="btn {{getStatusButtonClass}}" @click.prevent="toggleInputStatus">
-                        <input type="checkbox" autocomplete="off" v-model="inputs.status"> {{showStatusButton}}
+                        <input type="checkbox" autocomplete="off" v-model="inputs.status" value="1"> {{showStatusButton}}
                     </label>
                 </div>
             </div>
             <div class="row button-group pull-right clearfix">
-                <button class="btn btn-purple" @click.prevent="update">更新 Update</button>
-                <button class="btn btn-purple" @click.prevent="reset">重設 Reset</button>
+                <button class="btn" :class="{'btn-purple':!isButtonActive}" @click.prevent="update" :disabled="isButtonActive">更新 Update</button>
+                <button class="btn" :class="{'btn-purple':!isButtonActive}" @click.prevent="reset" :disabled="isButtonActive">重設 Reset</button>
+                <button class="btn" :class="{'btn-purple':!isButtonActive}" @click.prevent="revert" :disabled="isButtonActive">返回原本設定 Revert to Default</button>
             </div>
         </form>
         <br>
         <br>
+
         <div v-show="hasDocuments">
             <grid
                     :data.sync="documents"
@@ -94,28 +98,29 @@
 <script>
     import Grid from './grid.vue'
     export default{
-        components:{
-          Grid
+        components: {
+            Grid
         },
         data: function () {
             return {
                 searchQuery: '',
                 columns: [{
-                    label:'上載日期 Upload Date',
-                    code:'uploadDate'
-                },{
-                    label:'文件類別 Document Type',
-                    code:'docType'
-                },{
-                    label:'文件名稱 Document Name',
-                    code:'docName'
+                    label: '上載日期 Upload Date',
+                    code: 'uploadDate'
+                }, {
+                    label: '文件類別 Document Type',
+                    code: 'docType'
+                }, {
+                    label: '文件名稱 Document Name',
+                    code: 'docName'
                 }],
                 cNumber: "",
-                user: "",
+                user: {},
                 inputs: {},
                 documents: [],
                 table: "",
-                previewing: false
+                previewing: false,
+                isButtonActive: true
             }
         },
         computed: {
@@ -134,19 +139,37 @@
                 if (!!this.user) {
                     var url = '/getUserDocuments/' + this.user.id;
                     this.$http.get(url, function (response) {
-                        Array.isArray(response)? this.$set('documents', response):this.$set('documents', [])
+                        Array.isArray(response) ? this.$set('documents', response) : this.$set('documents', [])
                     })
                 }
+            },
+            inputs: {
+                handler: function(){
+                    var check = true;
+                     for( var key in this.inputs){
+                         if(this.inputs[key] !== this.user[key]){
+                             check = false;
+                             break
+                         }
+                     }
+                    this.isButtonActive = check
+                },
+                deep: true
             }
         },
         methods: {
-            disableBackSpace: function(e){
-                if(e.keyCode == 8) e.preventDefault();
+            revert: function(){
+              for(var key in this.user){
+                  this.inputs[key] = this.user[key];
+              }
             },
-            pasteCompanyName: function(e){
+            disableBackSpace: function (e) {
+                if (e.keyCode == 8) e.preventDefault();
+            },
+            pasteCompanyName: function (e) {
                 console.log('paste something')
             },
-            pressOnCompanyName: function(e){
+            pressOnCompanyName: function (e) {
                 console.log(e.keyCode);
                 return false;
             },
@@ -171,8 +194,8 @@
                     this.$http.get(url, function (response) {
                         console.log(response);
                         if (response) {
-                            this.$set('user', response.customer);
                             this.$set('inputs', response.customer);
+                            this.$set('user', JSON.parse(JSON.stringify(response.customer)));
                         } else {
                             alert('no one match the c number! Please verify.')
                         }
@@ -183,7 +206,7 @@
             },
             reset: function () {
                 for (var key in this.inputs) {
-                    if (key !== 'cNumber') this.inputs[key] = "";
+                    if (key !== 'id') this.inputs[key] = "";
                 }
             },
             update: function () {
