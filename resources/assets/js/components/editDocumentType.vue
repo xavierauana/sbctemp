@@ -8,7 +8,7 @@
             <div class="form-group">
                 <label for="docTypeIndex" class="col-sm-3 control-label">編號</label>
                 <div class="col-sm-9">
-                    <input type="number"
+                    <input type="text"
                            class="form-control"
                            id="docTypeIndex"
                            v-model="inputs.index"
@@ -23,10 +23,10 @@
             </div>
             <div class="row button-group">
                 <div class="col-sm-3">
-                    <button class="btn btn-block btn-purple" @click.prevent="addNewDocumentType">新增 Create</button>
+                    <button class="btn btn-block" :class="{'btn-purple':isButtonActive}" @click.prevent="addNewDocumentType" :disabled="!isButtonActive">新增 Create</button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-block btn-purple" @click.prevent="reset">重設 Reset</button>
+                    <button class="btn btn-block btn-purple" :class="{'btn-purple':isButtonActive}"  @click.prevent="reset" :disabled="!isButtonActive">重設 Reset</button>
                 </div>
             </div>
         </form>
@@ -42,8 +42,21 @@
                 inputs:{
                     type:"",
                     index:""
-                }
+                },
+                isButtonActive: false
             }
+        },
+        watch:{
+          inputs:{
+              handler: function(){
+                  var check = false;
+                  for(var key in this.inputs){
+                      if(this.inputs[key]) check = true;
+                  }
+                  this.$set('isButtonActive', check)
+              },
+              deep: true
+          }
         },
         components:{
             DocumentTypeTable

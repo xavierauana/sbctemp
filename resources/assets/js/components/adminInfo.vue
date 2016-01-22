@@ -47,9 +47,6 @@
                 </div>
             </div>
         </form>
-        <pre>
-            {{$data|json}}
-        </pre>
     </div>
 </template>
 

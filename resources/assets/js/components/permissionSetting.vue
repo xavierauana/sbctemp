@@ -7,7 +7,7 @@
                 <div class="col-sm-9">
                     <select name="profile" id="profile" class="form-control" v-model="existingProfile" @change="selectExistingProfile" autofocus>
                         <option  value="" selected> Can Select A Existing Profile </option>
-                        <option v-for="profile in profiles" :value="profile" > {{profile.label}}</option>
+                        <option v-for="profile in profiles" :value="getSelectedProfile(profile)" > {{profile.label}}</option>
                     </select>
                 </div>
             </div>
@@ -65,6 +65,11 @@
             Permissions
         },
         methods:{
+            getSelectedProfile: function(profile){
+                if(profile){
+                    return JSON.parse(JSON.stringify(profile));
+                }
+            },
             enterNewProfile: function(){
                 if(this.existingProfile) this.existingProfile = "";
             },
@@ -78,10 +83,9 @@
                 console.log('update profile')
             },
             reset: function(){
-                console.log('reset inputs')
+                console.log('reset inputs');
                 this.newProfile = "";
                 this.selectedPermissions = [];
-//                this.$broadcast('reset-selectedPermissions');
             },
             deleteProfile: function()  {
                 console.log('post to server to delete the profile');
@@ -91,7 +95,17 @@
                 }
             },
             revertToDefault: function(){
+                var self = this;
                 console.log('revert to default setting.');
+                if(this.existingProfile){
+                   this.profiles.map(function(profile){
+                        if(profile.id == self.existingProfile.id){
+                            self.existingProfile.permissions = profile.permissions;
+                            self.selectedPermissions = profile.permissions;
+                        }
+                    });
+                    console.log('will revert');
+                }
             }
         },
         created: function(){

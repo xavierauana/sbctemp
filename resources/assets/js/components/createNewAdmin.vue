@@ -36,10 +36,10 @@
 
             <div class="form-group">
                 <div class="col-xs-12 col-sm-4 pull-right">
-                    <button type="submit" class="btn btn-block btn-purple" @click.prevent="resetForm">重設 Reset</button>
+                    <button type="submit" class="btn btn-block" :class="{'btn-purple':isButtonActive}" :disabled="!isButtonActive"  @click.prevent="resetForm">重設 Reset</button>
                 </div>
                 <div class="col-xs-12 col-sm-4 pull-right">
-                    <button type="submit" class="btn btn-block btn-purple">新增 Create</button>
+                    <button type="submit" class="btn btn-block" :class="{'btn-purple':isButtonActive}" :disabled="!isButtonActive" >新增 Create</button>
                 </div>
             </div>
         </form>
@@ -62,8 +62,21 @@
                     profile: null,
                     password:"",
                     confirmation_password:""
-                }
+                },
+                isButtonActive:false
             }
+        },
+        watch:{
+          inputs:{
+              handler: function(){
+                  var check = false;
+                  for(var key in this.inputs){
+                      if(this.inputs[key]) check = true;
+                  }
+                  this.$set('isButtonActive', check)
+              },
+              deep: true
+          }
         },
         methods:{
             resetForm: function(e){
