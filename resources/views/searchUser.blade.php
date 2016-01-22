@@ -14,7 +14,6 @@
 <div class="container">
     <div class="well">
         <h3>Search User</h3>
-
         <form action="" method="POST">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search C Number" autofocus>

@@ -18,6 +18,7 @@ import UploadFile from './components/uploadFile.vue'
 import CustomerDocuments from './components/customerDocuments.vue'
 import ExportData from './components/exportData.vue'
 import CreateLinkage from './components/createLinkage.vue'
+import SearchPNumber from './components/searchPNumber.vue'
 
 
 new Vue({
@@ -43,6 +44,7 @@ new Vue({
         UploadFile,
         CustomerDocuments,
         ExportData,
-        CreateLinkage
+        CreateLinkage,
+        SearchPNumber
     }
 })

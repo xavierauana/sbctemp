@@ -1,14 +1,14 @@
 <template>
     <div>
         <div class="well">
-            <h3>搜尋用戶 Search User</h3>
+            <h3>Search P Number</h3>
 
-            <form action="" method="POST" @submit.prevent="searchUser">
+            <form action="" method="POST" @submit.prevent="searchForPNumber">
                 <div class="input-group">
-                    <input type="number" v-model="cNumber" id="searchCNumber" class="form-control"
-                           placeholder="客戶公司序號 C Number" autofocus>
+                    <input type="number" v-model="pNumber" id="searchPNumber" class="form-control"
+                           placeholder="P number" autofocus>
                   <span class="input-group-btn">
-                    <button class="btn" type="button" @click.prevent="searchUser">Go!</button>
+                    <button class="btn" type="button" @click.prevent="searchForPNumber">Go!</button>
                   </span>
                 </div>
             </form>
@@ -16,28 +16,27 @@
 
         <form class="form-horizontal" v-show="user">
             <div class="form-group">
-                <label for="cNumber" class="col-sm-3 control-label">客戶公司序號 C Number</label>
+                <label for="pNumber" class="col-sm-3 control-label">P Number</label>
 
                 <div class="col-sm-9">
-                    <input type="number" class="form-control" name="cNumber" v-model="inputs.id"
-                           placeholder="C Number" disabled>
+                    <input type="number" class="form-control" name="pNumber" v-model="inputs.id"
+                           placeholder="P Number" disabled>
                 </div>
             </div>
             <div class="form-group">
-                <label for="cNumber" class="col-sm-3 control-label">公司中文名稱 Chinese Company Name</label>
+                <label for="pNumber" class="col-sm-3 control-label">Person Name</label>
 
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" v-model="inputs.chinese_name"
-                           placeholder="Chinese Company Name" @paste="pasteCompanyName"
-                           @keypress.prevent="pressOnCompanyName" @keydown="disableBackSpace" oncut="return false;">
+                    <input type="text" class="form-control" v-model="inputs.name"
+                           placeholder="Info 1" disabled>
                 </div>
             </div>
             <div class="form-group">
-                <label for="cNumber" class="col-sm-3 control-label">公司英文名稱 English Company Name</label>
+                <label for="pNumber" class="col-sm-3 control-label">P number info 2</label>
 
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" name="cNumber" v-model="inputs.english_name"
-                           placeholder="English Company Name" @keypress.prevent="pressOnCompanyName"
+                    <input type="text" class="form-control" name="pNumber" v-model="inputs.english_name"
+                           placeholder="Info 2" @keypress.prevent="pressOnCompanyName"
                            @keydown="disableBackSpace" oncut="return false;">
                 </div>
             </div>
@@ -85,55 +84,78 @@
                 <button class="btn" :class="{'btn-purple':!isButtonActive}" @click.prevent="update" :disabled="isButtonActive">更新 Update</button>
                 <button class="btn" :class="{'btn-purple':!isButtonActive}" @click.prevent="reset" :disabled="isButtonActive">重設 Reset</button>
                 <button class="btn" :class="{'btn-purple':!isButtonActive}" @click.prevent="revert" :disabled="isButtonActive">返回原本設定 Revert to Default</button>
+                <button class="btn" :class="{'btn-purple':!isButtonActive}" @click.prevent="modalShow=true" :disabled="isButtonActive">Add Company Linkage</button>
             </div>
         </form>
         <br>
         <br>
+        <modal :show.sync="modalShow">
+            <h2 slot="header">Create Linkage</h2>
+            <div slot="body">
+                <div class="input-group">
+                    <input type="number" class="form-control" v-model="cnumber"
+                           placeholder="C number" autofocus>
+                  <span class="input-group-btn">
+                    <button class="btn" type="button" @click.prevent="searchForCompany">Go!</button>
+                  </span>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Company English Name" v-model="company.english_name" disabled>
+                </div>
+            </div>
+            <div slot="footer">
+                <button class="btn btn-default" @click.prevent="createLinkage">Link</button>
+                <button class="btn btn-default" @click.prevent="modalShow=false">Cancel</button>
+            </div>
+        </modal>
 
-        <div v-show="hasDocuments">
+
+        <div v-show="hasCompanies">
             <grid
-                    :data.sync="documents"
+                    :data.sync="companies"
                     :columns="columns"
-                    :can-preview="true"
                     :filter-key="searchQuery">
             </grid>
-            <iframe v-show="showPreview" id="viewer" :src="" frameborder="0" scrolling="no" width="500"
-                    height="770"></iframe>
         </div>
     </div>
 </template>
 
 <script>
     import Grid from './grid.vue'
+    import Modal from './modal.vue'
     export default{
         components: {
-            Grid
+            Grid,
+            Modal
         },
         data: function () {
             return {
                 searchQuery: '',
+                modalShow: false,
                 columns: [{
-                    label: '上載日期 Upload Date',
-                    code: 'uploadDate'
-                }, {
-                    label: '文件類別 Document Type',
-                    code: 'docType'
-                }, {
-                    label: '文件名稱 Document Name',
-                    code: 'docName'
+                    label: 'C Number',
+                    code: 'id'
+                },{
+                    label: 'Chinese Company Name',
+                    code: 'chinese_name'
+                },  {
+                    label: 'English Company Name',
+                    code: 'english_name'
                 }],
-                cNumber: "",
+                pNumber: "",
+                cnumber: "",
                 user: {},
                 inputs: {},
-                documents: [],
+                companies: [],
+                company: {},
                 table: "",
                 previewing: false,
                 isButtonActive: true
             }
         },
         computed: {
-            hasDocuments: function () {
-                return !!this.documents.length
+            hasCompanies: function () {
+                return !!this.companies.length
             },
             showStatusButton: function () {
                 return this.inputs.status ? "Active" : "Not Active";
@@ -143,33 +165,55 @@
             }
         },
         watch: {
-            user: function () {
-                if (!!this.user) {
-                    var url = '/getUserDocuments/' + this.user.id;
-                    this.$http.get(url, function (response) {
-                        Array.isArray(response) ? this.$set('documents', response) : this.$set('documents', [])
-                    })
-                }
+            user:function(){
+              if(this.user) this.companies = this.inputs.companies;
             },
             inputs: {
                 handler: function(){
                     var check = true;
-                     for( var key in this.inputs){
-                         if(this.inputs[key] !== this.user[key]){
-                             check = false;
-                             break
-                         }
-                     }
+                    for( var key in this.inputs){
+                        if(this.inputs[key] !== this.user[key]){
+                            check = false;
+                            break
+                        }
+                    }
                     this.isButtonActive = check
                 },
                 deep: true
             }
         },
         methods: {
-            revert: function(){
-              for(var key in this.user){
-                  this.inputs[key] = this.user[key];
+            createLinkage: function(){
+              if(this.pNumber && this.cnumber){
+                  this.$http.get('/createLinkage/user/'+this.pNumber+'/company/'+this.cnumber, function(response){
+                      if(response.code == 201){
+                          alert('the company already associate with other p number')
+                      }else if(response.code == 202){
+                          alert('the company already associate with you');
+                          this.$set('modalShow', false);
+                          this.$set('cnumber', "");
+                          this.$set('company', {});
+                      }else if(response.code == 200){
+                         alert('successfully create linkage');
+                        this.companies.push(this.company);
+                         this.$set('modalShow', false);
+                         this.$set('cnumber', "");
+                         this.$set('company', {});
+                     }
+                  });
               }
+            },
+            searchForCompany: function(){
+                this.$http.get('/searchcustomer/'+this.cnumber, function(response){
+                    if(response.customer){
+                        this.company = response.customer;
+                    }
+                })
+            },
+            revert: function(){
+                for(var key in this.user){
+                    this.inputs[key] = this.user[key];
+                }
             },
             disableBackSpace: function (e) {
                 if (e.keyCode == 8) e.preventDefault();
@@ -192,27 +236,27 @@
                 this.inputs.status = !this.inputs.status;
             },
             toggleTooltip: function (e) {
-                $('#searchCNumber').tooltip({
+                $('#searchPNumber').tooltip({
                     trigger: 'manual',
                     title: "只可輸入數字 number only"
                 });
-                (e.keyCode < 48 || e.keyCode > 57) && e.keyCode !== 13 ? $('#searchCNumber').tooltip('show') : $('#searchCNumber').tooltip('hide');
+                (e.keyCode < 48 || e.keyCode > 57) && e.keyCode !== 13 ? $('#searchPNumber').tooltip('show') : $('#searchPNumber').tooltip('hide');
             },
-            searchUser: function () {
+            searchForPNumber: function () {
                 console.log('get request to server to find the user');
-                if (this.cNumber) {
-                    var url = "/searchcustomer/" + this.cNumber;
+                if (this.pNumber) {
+                    var url = "/searchpumber/" + this.pNumber;
                     this.$http.get(url, function (response) {
                         console.log(response);
                         if (response) {
-                            this.$set('inputs', response.customer);
-                            this.$set('user', JSON.parse(JSON.stringify(response.customer)));
+                            this.$set('inputs', response.user);
+                            this.$set('user', JSON.parse(JSON.stringify(response.user)));
                         } else {
-                            alert('no one match the c number! Please verify.')
+                            alert('no one match the p number! Please verify.')
                         }
                     })
                 } else {
-                    alert('You have to input the C Number!');
+                    alert('You have to input the P Number!');
                 }
             },
             reset: function () {
@@ -225,7 +269,7 @@
             }
         },
         ready: function () {
-            document.getElementById("searchCNumber").addEventListener("keypress", this.toggleTooltip);
+            document.getElementById("searchPNumber").addEventListener("keypress", this.toggleTooltip);
         }
     }
 </script>

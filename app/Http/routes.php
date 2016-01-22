@@ -167,18 +167,18 @@ Route::get('/getpermissionprofiles', function () {
             "id"          => "1",
             "label"       => "General Staff",
             'permissions' => [
-                '1001',
-                '1011'
+                '1009'
             ]
         ],
         [
             "id"          => "2",
             "label"       => "Admin",
             'permissions' => [
-                '1003',
-                '1004',
+                '1009',
+                '1001',
                 '1005',
-                '1007'
+                '1011',
+                '1004',
             ]
         ],
         [
@@ -195,8 +195,7 @@ Route::get('/getpermissionprofiles', function () {
                 '1008',
                 '1009',
                 '1010',
-                '1011',
-                '1012'
+                '1011'
             ]
         ],
     ];
@@ -314,10 +313,22 @@ Route::get('/fetchCompany/{companyId}/user/{userId}', function ($companyId, $use
 
 Route::get('/createLinkage/user/{userId}/company/{companyId}', function ($userId, $companyId) {
     $company = Customer::whereId($companyId)->first();
-    $company->pnumber = $userId;
-    $company->save();
+    if($company->pnumber != 0){
+        return ['code' => 201];
+    }elseif($company->pnumber == $userId){
+        return ['code' => 202];
+    }else{
+        $company->pnumber = $userId;
+        $company->save();
 
-    return ['code' => 200];
+        return ['code' => 200];
+    }
+
+});
+
+Route::get('/searchpumber/{pnumber}', function($pnumber){
+   $user = User::with('companies')->whereId($pnumber)->firstOrFail();
+    return response()->json(compact('user'));
 });
 //
 //Route::get('/generate/dummy/user', function () {
