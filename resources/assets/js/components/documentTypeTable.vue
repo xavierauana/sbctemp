@@ -2,9 +2,9 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>編號</th>
-            <th>文件類別名稱</th>
-            <th>Actions</th>
+            <th>編號 Codes</th>
+            <th>文件類別名稱 Doc Type Name</th>
+            <th>指令 Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -20,12 +20,16 @@
                     <button type="submit"
                            class="btn btn-sm"
                            :class="{'btn-primary': !docType.status, 'btn-success': docType.status}"
-                           @click.prevent="edit($event, docType)">{{editInputValue(docType)}}</button>
+                           @click.prevent="edit($event, docType)"><i class="fa"
+                                                                     :class="{
+                                                                     'fa-pencil-square-o':editInputValue(docType),
+                                                                     'fa-floppy-o':!editInputValue(docType),
+                                                                     }"></i></button>
                 </div>
                 <div class="btn-group-vertical" role="group" aria-label="Basic example">
                     <button
                            class="btn btn-sm btn-danger"
-                           @click.prevent="deleteDocType($event, docType)">刪除</button>
+                           @click.prevent="deleteDocType($event, docType)"><i class="fa fa-trash"></i></button>
                 </div>
             </td>
         </tr>
@@ -48,7 +52,7 @@
         },
         methods:{
             editInputValue: function(docType){
-                return docType.status ? "更新":"編輯";
+                return docType.status ? false:true;
             },
             edit: function(e, docType){
                 if(!docType.status){

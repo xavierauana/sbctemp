@@ -106,7 +106,8 @@
                                 </button>
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-danger" @click.prevent="removeFile"><i class="fa fa-trash"></i> </button>
+                                <button class="btn btn-sm btn-danger" @click.prevent="removeFile"><i
+                                        class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                         </tbody>
@@ -174,13 +175,13 @@
                 return this.previewing ? "Close Window" : "Preview"
             }
         },
-        filters:{
-          passFileObjectOnly: function(value){
-              console.log('the value is ', value);
-              return typeof value === 'object'? value:{};
-          }
+        filters: {
+            passFileObjectOnly: function (value) {
+                console.log('the value is ', value);
+                return typeof value === 'object' ? value : {};
+            }
         },
-        components:{
+        components: {
             PreviewIframe
         },
         methods: {
@@ -199,8 +200,8 @@
                     alert('Have to input cnumber')
                 } else {
                     var url = '/searchcustomer/' + this.inputs.cNumber;
-                    this.$http.get(url, function(response){
-                        this.$set('customer',response.customer)
+                    this.$http.get(url, function (response) {
+                        this.$set('customer', response.customer)
                     })
                 }
             },
@@ -290,8 +291,8 @@
             previewPDF: function () {
                 console.log(this.inputFile.data instanceof File);
                 var url = URL.createObjectURL(this.inputFile.data, {oneTimeOnly: true});
-                if(window.navigator.msSaveOrOpenBlob){
-                    url = "/js/pdfjs/web/viewer.html?file="+encodeURIComponent(url);
+                if (window.navigator.msSaveOrOpenBlob) {
+                    url = "/js/pdfjs/web/viewer.html?file=" + encodeURIComponent(url);
                 }
                 this.previewSrc = this.previewing ? "" : url;
                 this.previewing = !this.previewing;

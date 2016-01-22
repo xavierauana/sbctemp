@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <h5 class="hidden"><strong>設定權限</strong></h5>
+            <h5 class="hidden"><strong>現有權限 Existing Permission</strong></h5>
 
             <permissions v-show="inputs.profile" :profile="inputs.profile"></permissions>
 

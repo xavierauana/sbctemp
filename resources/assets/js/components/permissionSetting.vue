@@ -3,39 +3,39 @@
         <h3>權限類別設定 Permissions Setting</h3>
         <form class="form-horizontal">
             <div class="form-group">
-                <label for="profile" class="col-sm-3 control-label">現有權限類別名稱</label>
+                <label for="profile" class="col-sm-3 control-label">現有權限類別</label>
                 <div class="col-sm-9">
                     <select name="profile" id="profile" class="form-control" v-model="existingProfile" @change="selectExistingProfile" autofocus>
-                        <option  value="" selected> Can Select A Existing Profile </option>
+                        <option  value="" selected> Existing Permission Type </option>
                         <option v-for="profile in profiles" :value="getSelectedProfile(profile)" > {{profile.label}}</option>
                     </select>
                 </div>
             </div>
             <div class="form-group">
-                <label for="newProfile"  class="col-sm-3 control-label">新增權限名稱</label>
+                <label for="newProfile"  class="col-sm-3 control-label">新增權限</label>
                 <div class="col-sm-9">
                     <input type="text" v-model="newProfile" @keyup="enterNewProfile" class="form-control" id="newProfile" placeholder="Create New Permission Profile">
                 </div>
             </div>
-            <h5><strong>設定權限</strong></h5>
-            <permissions v-show="showPermissionTable" :editable="true" :profile="existingProfile" :selected-permissions.sync="selectedPermissions"></permissions>
+            <h5><strong>現有權限 Existing Permission</strong></h5>
+            <permissions v-show="showPermissionTable" :editable="!!existingProfile||!!newProfile" :profile="existingProfile" :selected-permissions.sync="selectedPermissions"></permissions>
             <div class="row button-group">
-                <div class="col-sm-3" v-show="showCreate">
-                    <button class="btn btn-block btn-purple" @click.prevent="createNewProfile">新增 Create</button>
+                <div class="col-sm-3" v-show="!!newProfile">
+                    <button class="btn btn-block"  :class="{'btn-purple':!!newProfile}"  @click.prevent="createNewProfile" :disabled="!showCreate">新增 Create</button>
                 </div>
-                <div class="col-sm-3" v-show="existingProfile">
-                    <button class="btn btn-block btn-purple" @click.prevent="updateProfile">更新 Update</button>
+                <div class="col-sm-3" v-show="!newProfile">
+                    <button class="btn btn-block" :class="{'btn-purple':!!existingProfile}" :disabled="!existingProfile"   @click.prevent="updateProfile">更新 Update</button>
                 </div>
-                <div class="col-sm-3">
-                    <button class="btn btn-block btn-purple" @click.prevent="reset">重設 Reset</button>
+                <div class="col-sm-3" v-show="!newProfile">
+                    <button class="btn btn-block" :class="{'btn-purple':!!existingProfile}" :disabled="!existingProfile"   @click.prevent="reset">重設 Reset</button>
                 </div>
             </div>
             <div class="row button-group">
-                <div class="col-sm-3" v-show="existingProfile">
-                    <button class="btn btn-block btn-purple"  @click.prevent="deleteProfile">刪除 Delete</button>
+                <div class="col-sm-3" v-show="!newProfile">
+                    <button class="btn btn-block btn-purple" :class="{'btn-purple':!!existingProfile}" :disabled="!existingProfile"    @click.prevent="deleteProfile">刪除 Delete</button>
                 </div>
-                <div class="col-sm-3" v-show="existingProfile">
-                    <button class="btn btn-block btn-purple"  @click.prevent="revertToDefault">返回原有設定 Default</button>
+                <div class="col-sm-3" v-show="!newProfile">
+                    <button class="btn btn-block" :class="{'btn-purple':!!existingProfile}" :disabled="!existingProfile"  @click.prevent="revertToDefault">返回原有設定 Default</button>
                 </div>
             </div>
         </form>
@@ -55,6 +55,7 @@
         },
         computed:{
             showPermissionTable: function(){
+                return true;
                 return this.existingProfile || this.newProfile;
             },
             showCreate: function(){
