@@ -119,10 +119,13 @@ div.sidebar-nav {
   div.sidebar-nav li:last-child a {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px; }
-  div.sidebar-nav a:hover, div.sidebar-nav a.active {
+  div.sidebar-nav a.active {
     border: none;
     background-color: #edac23;
     color: black; }
+  div.sidebar-nav a:hover {
+    background-color: #f7d899;
+    color: #4f3587; }
   div.sidebar-nav button.navbar-toggle {
     border-color: white; }
     div.sidebar-nav button.navbar-toggle span.icon-bar {

@@ -11,11 +11,14 @@ div.sidebar-nav
     a
       border-bottom-left-radius: $sideBarBorderRadius
       border-bottom-right-radius: $sideBarBorderRadius
-  a:hover, a.active
+  a.active
     border: none
     background-color: $secondaryColor
     color: black
 
+  a:hover
+    background-color: lighten($secondaryColor, 25%)
+    color: $themeColor
 
   button.navbar-toggle
     border-color: white
