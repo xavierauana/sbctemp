@@ -14,7 +14,7 @@
             <div class="form-group">
                 <label for="uploadDate" class="sr-only">Document Upload Date</label>
 
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <input type="text" v-model="inputs.uploadDate" :value="uploadDate" name="uploadDate"
                            class="form-control" id="uploadDate" placeholder="文件日期" readonly>
                 </div>
@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label for="cnumber" class="sr-only">C Number</label>
 
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <input type="number" name="cnumber" v-model="inputs.cNumber" class="form-control"
                            placeholder="客戶公司序號 C Number" @change="checkValidity" pattern="/[1-9]{10}/"
                            title="This is an error message" required autofocus id="cnumber">
@@ -31,7 +31,7 @@
             <div class="form-group">
                 <label for="cnumber" class="sr-only">Company English Name</label>
 
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <input type="text" name="cnumber" :value="customer.english_name" class="form-control"
                            placeholder="客戶公司英文名稱 English Company Name " title="This is an error message" disabled>
                 </div>
@@ -39,7 +39,7 @@
             <div class="form-group">
                 <label for="cnumber" class="sr-only">Company Chinese Name</label>
 
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <input type="text" name="cnumber" :value="customer.chinese_name" class="form-control"
                            placeholder="客戶公司中文名稱 Chinese Company Name " title="This is an error message" disabled>
                 </div>
@@ -47,7 +47,7 @@
             <div class="form-group">
                 <label for="docDate" class="sr-only">Document Date</label>
 
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <div class='input-group date' id='datetimepicker'>
                         <input type='text' class="form-control" name="docDate" v-model="inputs.docDate" id="docDate"
                                placeholder="文件日期 Document Date (YYYY/MM/DD)" @keypress="showkeypress"
@@ -61,7 +61,7 @@
             <div class="form-group">
                 <label for="docType" class="sr-only">Document Type</label>
 
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <select name="docType" id="docType" v-model="inputs.docType" class="form-control"
                             style="width:100%">
                         <option value="" selected> -- 文件類別 Document Type --</option>
@@ -72,20 +72,20 @@
             <div class="form-group">
                 <label for="docName" class="sr-only">Document Name</label>
 
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <input type="docName" name="docName" v-model="inputs.docName" class="form-control" id="docName"
                            placeholder="文件描述 Document Description" required>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <button class="btn btn-default" @click.prevent="browseFile">Browser File 瀏覽檔案</button>
                     <p class="help-block">File size should not bigger than 5MB. 文件容量不可超過5MB。</p>
                     <input type="file" class="hidden" name="files" id="file" @change="checkFileInput"
                            accept=".pdf, application/pdf" required>
                 </div>
             </div>
-            <div v-show="hasFile" class="col-sm-8" style="padding-left: 0">
+            <div v-show="hasFile" class="col-sm-12" style="padding-left: 0">
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
