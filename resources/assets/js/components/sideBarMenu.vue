@@ -41,9 +41,6 @@
                     <li><a @click.prevent="changeViewTo('ExportData')" :class="{'active': isCurrentView('ExportData')}" href="/">
                         <span class="nav-item-span">賬戶資料總匯表</span><span class="nav-item-span">Export Clients Info</span>
                      </a></li>
-                    <li><a @click.prevent="changeViewTo('SearchPNumber')" :class="{'active': isCurrentView('SearchPNumber')}" href="/">
-                        <span class="nav-item-span">Create Linkage</span><span class="nav-item-span"></span>
-                     </a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

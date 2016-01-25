@@ -18,9 +18,9 @@
             <td style="min-width:30%">
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <button type="submit"
-                           class="btn btn-sm"
+                           class="btn btn-xs"
                            :class="{'btn-primary': !docType.status, 'btn-success': docType.status}"
-                           @click.prevent="edit($event, docType)"><i class="fa"
+                           @click.prevent="edit($event, docType)"><i class="fa fa-2x"
                                                                      :class="{
                                                                      'fa-pencil-square-o':editInputValue(docType),
                                                                      'fa-floppy-o':!editInputValue(docType),
@@ -28,8 +28,8 @@
                 </div>
                 <div class="btn-group-vertical" role="group" aria-label="Basic example">
                     <button
-                           class="btn btn-sm btn-danger"
-                           @click.prevent="deleteDocType($event, docType)"><i class="fa fa-trash"></i></button>
+                           class="btn btn-xs btn-danger"
+                           @click.prevent="deleteDocType($event, docType)"><i class="fa fa-trash fa-2x"></i></button>
                 </div>
             </td>
         </tr>
@@ -39,6 +39,14 @@
 
 <script>
     export default {
+        events:{
+          'restEdit': function(){
+              this.documentTypes.map(function(type){
+                  type.status = false;
+                  return type;
+              });
+          }
+        },
         data:function(){
           return {
               currentEditDocType:"",

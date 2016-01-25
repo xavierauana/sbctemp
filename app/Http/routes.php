@@ -202,8 +202,8 @@ Route::get('/getpermissionprofiles', function () {
 });
 Route::get('/getadminusers', function () {
     return [
-        ["id" => 1, "loginName" => "Admin-Rainbow", "profile_id" => '3', "password" => "123456"],
-        ["id" => 2, "loginName" => "Admin-RJ", "profile_id" => '1', "password" => "abcdefg"]
+        ["id" => 1, "loginName" => "Admin-Rainbow", "profile_id" => '1', "password" => "123456"],
+        ["id" => 2, "loginName" => "Admin-RJ", "profile_id" => '3', "password" => "abcdefg"]
     ];
 });
 

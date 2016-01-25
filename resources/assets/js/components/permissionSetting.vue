@@ -26,8 +26,8 @@
                 <div class="col-sm-3" v-show="!newProfile">
                     <button class="btn btn-block" :class="{'btn-purple':!!existingProfile}" :disabled="!existingProfile"   @click.prevent="updateProfile">更新 Update</button>
                 </div>
-                <div class="col-sm-3" v-show="!newProfile">
-                    <button class="btn btn-block" :class="{'btn-purple':!!existingProfile}" :disabled="!existingProfile"   @click.prevent="reset">重設 Reset</button>
+                <div class="col-sm-3">
+                    <button class="btn btn-block" :class="{'btn-purple':!!newProfile || !!existingProfile}" :disabled="!newProfile && !existingProfile" @click.prevent="reset">重設 Reset</button>
                 </div>
             </div>
             <div class="row button-group">

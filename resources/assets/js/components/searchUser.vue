@@ -75,9 +75,9 @@
             </div>
             <div class="form-group">
                 <label for="is_activated" class="col-sm-3 control-label">客戶己啟動賬戶 Client Activated Account</label>
-                <div class="col-sm-9" data-toggle="buttons">
-                    <label class="btn" :class="{'btn-danger':!inputs.is_activated, 'btn-success':inputs.is_activated}" @click.prevent="toggleInputIsActivate">
-                        <input type="checkbox" autocomplete="off" v-model="inputs.is_activated" id="is_activated" value="1"> {{showIsActivatedButton}}
+                <div class="col-sm-9">
+                    <label class="btn" :class="{'btn-danger':!inputs.is_activated, 'btn-success':inputs.is_activated}" >
+                        <span> {{showIsActivatedButton}}</span>
                     </label>
                 </div>
             </div>

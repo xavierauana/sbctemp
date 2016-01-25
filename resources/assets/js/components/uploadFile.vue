@@ -101,13 +101,13 @@
                             <td>{{inputFile.name}}</td>
                             <td>{{inputFile.size/(1000*1000)}} mb</td>
                             <td>
-                                <button class="btn btn-default btn-sm" @click.prevent="previewPDF">
-                                    <i class="fa fa-search"></i>
+                                <button class="btn btn-default btn-xs" @click.prevent="previewPDF">
+                                    <i class="fa fa-search fa-2x"></i>
                                 </button>
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-danger" @click.prevent="removeFile"><i
-                                        class="fa fa-trash"></i></button>
+                                <button class="btn btn-xs btn-danger" @click.prevent="removeFile"><i
+                                        class="fa fa-trash fa-2x"></i></button>
                             </td>
                         </tr>
                         </tbody>

@@ -14,6 +14,7 @@
                            class="form-control"
                            id="docTypeIndex"
                            v-model="inputs.index"
+                           @focus.prevent="resetEdit"
                            placeholder="Codes">
                 </div>
             </div>
@@ -22,7 +23,7 @@
 
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="docType" v-model="inputs.type"
-                           placeholder="Document Type Name">
+                           placeholder="Document Type Name" @focus.prevent="resetEdit">
                 </div>
             </div>
             <div class="row button-group">
@@ -78,7 +79,11 @@
             },
             addNewDocumentType: function () {
                 console.log('post to server to add a new document type')
+            },
+            resetEdit: function(){
+                this.$broadcast('restEdit')
             }
+
         }
     }
 </script>

@@ -125,8 +125,8 @@
                     {{entry[key.code]}}
                 </td>
                 <td>
-                    <button v-show="canPreview" class="btn btn-default btn-xs" @click.prevent="previewPDF(entry)"><i class="fa fa-search"></i></button>
-                    <button class="btn btn-danger btn-xs" @click.prevent="deleteDocument(entry)"><i class="fa fa-trash"></i>
+                    <button v-show="canPreview" class="btn btn-default btn-xs" @click.prevent="previewPDF(entry)"><i class="fa fa-search fa-2x"></i></button>
+                    <button class="btn btn-danger btn-xs" @click.prevent="deleteDocument(entry)"><i class="fa fa-trash fa-2x"></i>
                     </button>
                 </td>
             </tr>
