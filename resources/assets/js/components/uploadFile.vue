@@ -108,13 +108,15 @@
                             <td>
                                 <button class="btn btn-xs btn-danger" @click.prevent="removeFile"><i
                                         class="fa fa-trash fa-2x"></i></button>
+                                <button class="btn btn-xs btn-success pull-right" @click.prevent="uploadFile"><i
+                                        class="fa fa-save fa-2x"></i></button>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" v-show="false">
                 <div class="col-sm-8">
                     <button type="submit" class="btn btn-block btn-purple" @click.prevent="uploadFile">Upload File
                         上載文件

@@ -17,6 +17,7 @@ import SearchUser from './components/searchUser.vue'
 import UploadFile from './components/uploadFile.vue'
 import CustomerDocuments from './components/customerDocuments.vue'
 import ExportData from './components/exportData.vue'
+import ImportData from './components/importData.vue'
 import CreateLinkage from './components/createLinkage.vue'
 import SearchPNumber from './components/searchPNumber.vue'
 
@@ -44,6 +45,7 @@ new Vue({
         UploadFile,
         CustomerDocuments,
         ExportData,
+        ImportData,
         CreateLinkage,
         SearchPNumber
     }

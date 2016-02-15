@@ -1,21 +1,33 @@
+<style>
+    .docTypeCode{
+        width: 150px;
+    }
+    .docTypeName{
+    }
+    .actionButtons{
+        text-align: right;
+        width: 100px;
+    }
+</style>
+
 <template>
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>編號 Codes</th>
-            <th>文件類別名稱 Doc Type Name</th>
-            <th>指令 Actions</th>
+            <th class="docTypeCode">編號 Codes</th>
+            <th class="docTypeName">文件類別名稱 Doc Type Name</th>
+            <th class="actionButtons">指令 Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="docType in documentTypes">
-            <td style="max-width:25%">
+            <td style="max-width:25%" class="docTypeCode">
                 <input class="form-control" type="text" name="index" v-model="docType.index" :disabled="!docType.status">
             </td>
-            <td style="max-width:25%">
+            <td class="docTypeName">
                 <input class="form-control" type="text" name="type" v-model="docType.type" :disabled="!docType.status">
             </td>
-            <td style="min-width:30%">
+            <td class="actionButtons">
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <button type="submit"
                            class="btn btn-xs"

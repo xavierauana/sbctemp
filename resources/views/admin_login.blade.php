@@ -24,10 +24,14 @@
 
     <div class="col-sm-8 col-sm-offset-2 login-container">
         <div class="col-sm-11 hidden-xs title default">
-            駿業客戶文件中心管理人員登入
+            駿業客戶文件中心 - 管理人員登入
+            <br>
+            SBC Clients Document Center - Administrator Login
         </div>
         <div class="visible-xs title">
-            駿業客戶文件中心管理人員登入
+            駿業客戶文件中心 - 管理人員登入
+            <br>
+            SBC Clients Document Center - Administrator Login
         </div>
         <div class="row">
             <form class="form-horizontal">

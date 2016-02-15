@@ -38,6 +38,7 @@
                              <li class="list-group-item text-center"><a @click.prevent="changeViewTo('EditDocumentType')" href="/">文件類別設定 Doc Types Setting</a></li>
                              <li class="list-group-item text-center"><a @click.prevent="changeViewTo('PermissionSetting')" href="/">權限類別設定 Permissions Setting</a></li>
                              <li class="list-group-item text-center"><a @click.prevent="changeViewTo('ExportData')" href="/">賬戶資料總匯表 Export Clients Info</a></li>
+                             <li class="list-group-item text-center"><a @click.prevent="changeViewTo('ImportData')" href="/">匯入賬戶資料 Import Clients Info</a></li>
                         </ul>
                     </div>
                 </div>

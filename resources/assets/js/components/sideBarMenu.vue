@@ -41,6 +41,9 @@
                     <li><a @click.prevent="changeViewTo('ExportData')" :class="{'active': isCurrentView('ExportData')}" href="/">
                         <span class="nav-item-span">賬戶資料總匯表</span><span class="nav-item-span">Export Clients Info</span>
                      </a></li>
+                    <li><a @click.prevent="changeViewTo('ImportData')" :class="{'active': isCurrentView('ExportData')}" href="/">
+                        <span class="nav-item-span">匯入賬戶資料</span><span class="nav-item-span">Import Clients Info</span>
+                     </a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

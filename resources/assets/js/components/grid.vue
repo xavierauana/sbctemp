@@ -1,17 +1,17 @@
 <style>
-    body {
-        font-family: Helvetica Neue, Arial, sans-serif;
-        font-size: 14px;
-        color: #444;
-    }
+    /*body {*/
+        /*font-family: Helvetica Neue, Arial, sans-serif;*/
+        /*font-size: 14px;*/
+        /*color: #444;*/
+    /*}*/
 
-    table {
+    table.grid {
         border: 2px solid #42b983;
         border-radius: 3px;
         background-color: #fff;
     }
 
-    th {
+    table.grid th {
         background-color: #42b983;
         color: rgba(255,255,255,0.66);
         cursor: pointer;
@@ -20,25 +20,25 @@
         -user-select: none;
     }
 
-    td {
+    table.grid td {
         background-color: #f9f9f9;
     }
 
-    th, td {
+    table.grid th, table.grid td {
         min-width: 120px;
         padding: 10px 20px;
     }
 
-    .table>thead>tr>th.active {
+    table.grid.table>thead>tr>th.active {
         color: #fff;
         background-color: #00007b;
     }
 
-    th:active {
+    table.grid th:active {
         background-color: #00007b;
     }
 
-    th.active .arrow {
+    table.grid th.active .arrow {
         opacity: 1;
     }
 
@@ -63,11 +63,11 @@
         border-top: 4px solid #fff;
     }
 
-    #search {
+    table.grid #search {
         margin-bottom: 10px;
     }
 
-    .table-responsive{
+    table.grid .table-responsive{
         width:100%;
     }
 
@@ -102,7 +102,7 @@
                 </div>
             </form>
         </div>
-        <table class="table">
+        <table class="table grid">
             <thead>
             <tr>
                 <th v-for="key in columns"
