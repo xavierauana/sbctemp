@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>文件類別設定 Doc Type Setting</h3>
+        <h3>文件類別設定 Doc Types Setting</h3>
 
         <div class="panel panel-default">
             <document-type-table></document-type-table>

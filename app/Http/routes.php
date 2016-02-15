@@ -158,6 +158,7 @@ Route::get('/getpermissions', function () {
                 ["id" => "1009", "label" => "Upload files", "chi_label" => "上載文件"],
                 ["id" => "1010", "label" => "Edit or Delete doc types", "chi_label" => "更改或刪除文件類別"],
                 ["id" => "1011", "label" => "Delete documents", "chi_label" => "刪除文件"],
+                ["id" => "1012", "label" => "Edit Administrator Permissions", "chi_label" => "編輯管理人員權限"],
             ]
         ];
 });
@@ -195,7 +196,8 @@ Route::get('/getpermissionprofiles', function () {
                 '1008',
                 '1009',
                 '1010',
-                '1011'
+                '1011',
+                '1012'
             ]
         ],
     ];

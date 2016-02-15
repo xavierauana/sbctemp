@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>新增管理人員 Add New Admin</h3>
+        <h3>新增管理人員 Add New Administrator</h3>
         <form id="createNewAdmin" class="form-horizontal" @submit.prevent="submitForm">
             <div class="form-group">
                 <label for="loginName" class="col-sm-3 control-label">管理人員登入名稱</label>
@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <h5 class="hidden"><strong>現有權限 Existing Permission</strong></h5>
+            <h5 class="hidden"><strong>權限設定 Permission Setting</strong></h5>
 
             <permissions v-show="inputs.profile" :profile="inputs.profile"></permissions>
 

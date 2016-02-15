@@ -118,7 +118,11 @@
                 }
             },
             updateUser: function(){
-                console.log('update user')
+                if(this.inputs.password==""){
+                    alert('You have to give a password!')
+                }else{
+                    console.log('update user')
+                }
             },
             deleteAdmin: function(){
                 if(confirm('Are you sure you will delete the admin user, '+this.user.loginName+'? '+'你確定要刪除管理人員, '+this.user.loginName+'？' )){

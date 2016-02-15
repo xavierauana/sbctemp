@@ -68,14 +68,9 @@
 
 <script type="x-template" id="template-table">
     <div class="container">
-        <ol class="breadcrumb" v-show="false">
-            <li><a href="#" @click.prevent="changeView">主頁 Home</a></li>
-        </ol>
         <div>
             <h4>@{{data.chinese_name}}</h4>
             <h4>@{{data.english_name}}</h4>
-            <h5>客戶公司序號 C Number: @{{data.cnumber}} <a v-show="false" class="pull-right" href="#" @click.prevent="changeView">返回
-                    Back</a></h5>
         </div>
         <div class="panel panel-default">
             <div class="table-responsive">
@@ -247,7 +242,18 @@
                 },
                 ready: function () {
                     $(document).ready(function () {
-                        $('table').DataTable();
+                        $('table').DataTable({
+                            "language": {
+                                "paginate": {
+                                    "previous": "上一頁 Previous",
+                                    "next": "下一頁 Next",
+
+                                },
+                                "info": "顯示 _START_ 至 _END_ 檔案。 Showing _START_ to _END_ of _TOTAL_ entries. ",
+                                "search": "搜尋 Search:",
+                                "lengthMenu": "每頁顯示 Display _MENU_ 檔案 records"
+                            }
+                        });
                     });
                 }
             },
