@@ -8,7 +8,7 @@
                     <input type="number" v-model="cNumber" id="searchCNumber" class="form-control"
                            placeholder="客戶公司序號 C Number" autofocus>
                   <span class="input-group-btn">
-                    <button class="btn" type="button" @click.prevent="searchUser">Go!</button>
+                    <button class="btn" type="button" @click.prevent="searchUser">Search</button>
                   </span>
                 </div>
             </form>
