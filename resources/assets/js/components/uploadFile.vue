@@ -94,6 +94,7 @@
                             <th>檔案容量 File Size</th>
                             <th>預覽 Preview</th>
                             <th>刪除 Remove</th>
+                            <th>儲存 Save</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -108,7 +109,9 @@
                             <td>
                                 <button class="btn btn-xs btn-danger" @click.prevent="removeFile"><i
                                         class="fa fa-trash fa-2x"></i></button>
-                                <button class="btn btn-xs btn-success pull-right" @click.prevent="uploadFile"><i
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-success" @click.prevent="uploadFile"><i
                                         class="fa fa-save fa-2x"></i></button>
                             </td>
                         </tr>
