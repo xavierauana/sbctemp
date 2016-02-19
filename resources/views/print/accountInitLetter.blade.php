@@ -46,7 +46,7 @@
 </head>
 <body>
 <div class="container">
-    @if(count($letters) > 0)
+    @if(isset($letters) && count($letters) > 0)
         @foreach($letters as $letter)
             <div class="page">
                 {!! $letter !!}
