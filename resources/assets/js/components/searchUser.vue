@@ -85,6 +85,7 @@
                 <button class="btn" :class="{'btn-purple':!isButtonActive}" @click.prevent="update" :disabled="isButtonActive">更新 Update</button>
                 <button class="btn" :class="{'btn-purple':!isButtonActive}" @click.prevent="reset" :disabled="isButtonActive">重設 Reset</button>
                 <button class="btn" :class="{'btn-purple':!isButtonActive}" @click.prevent="revert" :disabled="isButtonActive">返回原本設定 Revert to Default</button>
+                <button class="btn" class="btn-purple" @click.prevent="printLetter" >Print Letter</button>
             </div>
         </form>
         <br>
@@ -222,6 +223,13 @@
             },
             update: function () {
                 console.log('put to server. and update info!');
+            },
+            printLetter:function(){
+                window.open(
+                        '/template/print/'+this.cNumber,
+                        '_blank' // <- This is what makes it open in a new window.
+                );
+                console.log('print letter');
             }
         },
         ready: function () {

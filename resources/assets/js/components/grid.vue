@@ -67,7 +67,7 @@
         margin-bottom: 10px;
     }
 
-    table.grid .table-responsive{
+    .table-responsive{
         width:100%;
     }
 

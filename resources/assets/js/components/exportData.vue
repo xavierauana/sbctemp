@@ -25,6 +25,14 @@
             </fieldset>
             <button class="btn btn-purple btn-lg" >匯出賬戶資料 Export Clients Data</button>
         </form>
+        <br>
+        <form action="/template/print" class="form" >
+            <div class="form-group">
+                <label for="ids">Print Account Activation Letters</label>
+                <input type="text" name="ids" id="ids" v-model="ids" class="form-control">
+                <a href="/template/print" class="btn btn-purple" @click.prevent="printLetters">Print</a>
+            </div>
+        </form>
     </div>
 </template>
 
@@ -34,12 +42,17 @@
             return {
                 token: document.getElementById('csrf_token').getAttribute('content'),
                 start: 0,
-                end: 1000
+                end: 1000,
+                ids:""
             }
         },
         methods:{
             checkInputs: function(e){
                 this.start > this.end? alert('Incorrect input for c number start and end!'): e.target.submit();
+            },
+            printLetters:function(){
+                var query="?ids="+this.ids;
+                window.open("/template/print"+query, '_blank')
             }
         }
     }

@@ -14,6 +14,8 @@
 
 use App\Customer;
 use App\User;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 Cache::forever('user1', [
     'cNumber'      => '8888',
@@ -315,11 +317,11 @@ Route::get('/fetchCompany/{companyId}/user/{userId}', function ($companyId, $use
 
 Route::get('/createLinkage/user/{userId}/company/{companyId}', function ($userId, $companyId) {
     $company = Customer::whereId($companyId)->first();
-    if($company->pnumber != 0){
+    if ($company->pnumber != 0) {
         return ['code' => 201];
-    }elseif($company->pnumber == $userId){
+    } elseif ($company->pnumber == $userId) {
         return ['code' => 202];
-    }else{
+    } else {
         $company->pnumber = $userId;
         $company->save();
 
@@ -328,18 +330,120 @@ Route::get('/createLinkage/user/{userId}/company/{companyId}', function ($userId
 
 });
 
-Route::get('/searchpumber/{pnumber}', function($pnumber){
-   $user = User::with('companies')->whereId($pnumber)->firstOrFail();
+Route::get('/searchpumber/{pnumber}', function ($pnumber) {
+    $user = User::with('companies')->whereId($pnumber)->firstOrFail();
+
     return response()->json(compact('user'));
 });
-//
-//Route::get('/generate/dummy/user', function () {
-//    for($i=0; $i<1000; $i++){
-//        factory(\App\User::class)->create();
-//    }
-//});
-//
-//
+
+Route::get('/template/print/{customerId}', function ($customerId=null) {
+    if($customerId){
+        $users = Customer::whereId($customerId)->get();
+    }else{
+        $users = Customer::whereId(1)->get();
+    }
+    $variableMapping = [
+        '/\%CHI_NAME\%/' => "chinese_name",
+        '/\%ENG_NAME\%/' => "english_name",
+        '/\%TODAY\%/'    => "today",
+        '/\%LOGIN\%/'    => "loginname",
+        '/\%PASSWORD\%/' => "password",
+    ];
+
+    $letter = \App\Template::firstOrFail()->template;
+    $letters = [];
+    foreach ($users as $user) {
+        foreach ($variableMapping as $pattern => $variable) {
+            if ($pattern == '/\%TODAY\%/') {
+                $today = \Carbon\Carbon::create()->toDateString();
+                $letter = preg_replace($pattern, $today, $letter);
+            } else {
+                $letter = preg_replace($pattern, $user->$variable, $letter);
+            }
+        }
+        $letters[] = $letter;
+    }
+
+    return view('print.accountInitLetter', compact('letters'));
+});
+
+
+/**
+ * Route should be protect by permission
+ */
+Route::get('/template/print', function (\Illuminate\Http\Request $request) {
+    $ids = $request->get('ids');
+    $idArray = array_map(function($item){
+        return trim($item);
+    }, preg_split('/,/', $ids));
+
+    // split and trim id range ids from query
+    $range = array_filter($idArray, function($item){
+        return preg_match('/-/', $item);
+    });
+    $individualIds = array_diff($idArray, $range);
+    $customers = new Collection();
+
+    //fetch users
+    if(count($range)){
+        foreach($range as $fromTo){
+            $rangeFromTo = array_map(function($item){
+                return trim($item);
+            }, preg_split('/-/', $fromTo));
+            $customers = $customers->merge(Customer::where('id',">=", $rangeFromTo[0])->where('id',"<=", $rangeFromTo[1])->get());
+        }
+    }
+    if(count($individualIds)){
+        foreach($individualIds as $id){
+            $id = trim($id);
+            $customers = $customers->merge(Customer::whereId($id)->get());
+        }
+    }
+
+    $variableMapping = [
+        '/\%CHI_NAME\%/' => "chinese_name",
+        '/\%ENG_NAME\%/' => "english_name",
+        '/\%TODAY\%/'    => "today",
+        '/\%LOGIN\%/'    => "loginname",
+        '/\%PASSWORD\%/' => "password",
+    ];
+
+    $template = \App\Template::firstOrFail()->template;
+    $letters = [];
+    foreach ($customers as $user) {
+        $letter = $template;
+        foreach ($variableMapping as $pattern => $variable) {
+            if ($pattern == '/\%TODAY\%/') {
+                $today = \Carbon\Carbon::create()->toDateString();
+                $letter = preg_replace($pattern, $today, $letter);
+            } else {
+                $letter = preg_replace($pattern, $user->$variable, $letter);
+            }
+        }
+        $letters[] = $letter;
+    }
+
+    return view('print.accountInitLetter', compact('letters'));
+});
+
+Route::get('/template/create', function () {
+    $template = \App\Template::first();
+
+    return view('print.createTemplate', compact('template'));
+});
+
+Route::put('/template/update', function (\Illuminate\Http\Request $request) {
+    $template = \App\Template::firstOrFail();
+    $template->update($request->all());
+
+    return view('print.createTemplate', compact('template'));
+});
+
+Route::post('/template/create', function (\Illuminate\Http\Request $request) {
+    \App\Template::create($request->all());
+
+    return view('print.accountInitLetter', compact('text'));
+});
 
 
 
