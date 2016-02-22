@@ -161,11 +161,12 @@ Route::get('/getpermissions', function () {
                 ["id" => "1010", "label" => "Edit or Delete doc types", "chi_label" => "更改或刪除文件類別"],
                 ["id" => "1011", "label" => "Delete documents", "chi_label" => "刪除文件"],
                 ["id" => "1012", "label" => "Edit Administrator Permissions", "chi_label" => "編輯管理人員權限"],
+                ["id" => "1013", "label" => "Change Letter Template", "chi_label" => "編輯信件樣本"],
             ]
         ];
 });
 Route::get('/getpermissionprofiles', function () {
-    return [
+    $profiles =  [
         [
             "id"          => "1",
             "label"       => "General Staff",
@@ -199,10 +200,19 @@ Route::get('/getpermissionprofiles', function () {
                 '1009',
                 '1010',
                 '1011',
-                '1012'
+                '1012',
+                '1013'
             ]
         ],
     ];
+    $ipAddresses = [
+        '192.168.1.1',
+        '192.168.1.2',
+        '192.168.1.3',
+        '192.168.1.4',
+    ];
+    return response()->json(['profiles'=>$profiles, 'ipAddresses'=>$ipAddresses]);
+
 });
 Route::get('/getadminusers', function () {
     return [
@@ -222,14 +232,6 @@ Route::get('/searchcustomer/{cnumber}', function ($cnumber) {
     $customer = Customer::whereId($cnumber)->first();
 
     return response()->json(compact('customer'));
-    if ($cnumber == 8888) {
-        return Cache::get('user1');
-    }
-    if ($cnumber == 9999) {
-        return Cache::get('user2');
-    }
-
-    return null;
 });
 
 Route::post("/uploadfile", function (\Illuminate\Http\Request $request) {

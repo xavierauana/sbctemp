@@ -30,7 +30,10 @@
             <div class="form-group">
                 <label for="ids">Print Account Activation Letters</label>
                 <input type="text" name="ids" id="ids" v-model="ids" class="form-control">
-                <a href="/template/print" class="btn btn-purple" @click.prevent="printLetters">Print</a>
+            </div>
+            <div class="form-group">
+                <a href="/template/print" class="btn btn-purple" @click.prevent="printLetters">Print Letter 打印信件</a>
+                <a href="/template/create" target="_blank" class="btn btn-purple">Edit Letter Template 編輯信件樣本</a>
             </div>
         </form>
     </div>
