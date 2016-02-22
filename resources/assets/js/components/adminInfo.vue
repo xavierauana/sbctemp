@@ -16,7 +16,7 @@
                 <div class="col-sm-9">
                     <select name="profile" id="profile" class="form-control" v-model="inputs.profile" :disabled="!user">
                         <option  value="" >-- Administrator Permission Type --</option>
-                        <option v-for="profile in profiles" :value="profile" > {{profile.label}}</option>
+                        <option v-for="profile in profiles.profiles" :value="profile" > {{profile.label}}</option>
                     </select>
                 </div>
             </div>
@@ -24,6 +24,12 @@
                 <label for="password" class="col-sm-3 control-label">登入密碼</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="password" v-model="inputs.password" :value="user.password" placeholder="Administrator Password" :disabled="!user">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">最後登入時間 </label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" :value="user.lastLogin" placeholder="Last Login Time" disabled>
                 </div>
             </div>
 
@@ -78,7 +84,7 @@
         watch:{
             user: function(){
                     if(this.user){
-                        this.inputs.profile = this.profiles.filter(function(profile){
+                        this.inputs.profile = this.profiles.profiles.filter(function(profile){
                             return profile.id == this.user.profile_id
                         }.bind(this))[0]
                     }

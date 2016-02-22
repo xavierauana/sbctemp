@@ -28,6 +28,7 @@
                 </div>
             </div>
 
+
             <h5><strong>設定權限</strong></h5>
             <permission :my-permissions.once="permissions" :profile="inputs.profile_id" :profiles="profiles"></permission>
             <div class="form-group">
